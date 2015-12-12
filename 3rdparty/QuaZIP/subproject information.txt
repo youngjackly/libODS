@@ -1,0 +1,4 @@
+QuaZIP is released under the GNU LGPL2.1+ license and can be downloaded from SourceForge.net:
+https://sourceforge.net/projects/quazip/
+
+As the QuaZIP project currently uses SVN for development, this project directory is composed of a working SVN repo that can be pulled/updated by common SVN clients like TortoiseSVN etc.
