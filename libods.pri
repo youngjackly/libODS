@@ -34,3 +34,4 @@ HEADERS += \
 # Sources
 SOURCES += \
 		$$PWD/ODSfile.cpp
+		
