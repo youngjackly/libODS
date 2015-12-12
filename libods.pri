@@ -31,9 +31,11 @@ include($$PWD/3rdparty/QuaZIP/quazip/quazip.pri)
 
 # Headers
 HEADERS += \
-		$$PWD/ODSfile.h
+		$$PWD/ODSfile.h \
+		$$PWD/ODSdocument.h
 
 # Sources
 SOURCES += \
-		$$PWD/ODSfile.cpp
+		$$PWD/ODSfile.cpp \
+		$$PWD/ODSdocument.cpp
 		
