@@ -1,5 +1,5 @@
 /*
-** ODSfile.h
+** ODScell.cpp
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,36 +22,35 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef ODSFILE_H
-#define ODSFILE_H
+#include "ODScell.h"
 
-#include <QFile>
-
-#include "3rdparty/QuaZIP/quazip/quazip/quazip.h"
-#include "3rdparty/QuaZIP/quazip/quazip/quazipfile.h"
-
-/**
- * @brief The ODSfile class is used internally by ODSdocument.
- */
-class ODSfile
+ODScell::ODScell()
 {
-public:
-	ODSfile(QString sFileName);
-	~ODSfile();
 
-	/**
-	 * @brief accessContainerElement allows to read from an element file of the ODS container.
-	 * This is limited to one file at a time due to limitations of the underlying zip library.
-	 * @param sName The file name + extension
-	 * @return NULL if unsuccessfull
-	 */
-	QIODevice* accessContainerElement(QString sName);
-	bool closeContainerElement(QIODevice *&pElement);
+}
 
-private:
-	QuaZip m_ioODScontainer;
+ODScell::~ODScell()
+{
 
-	QuaZipFile* m_pCurrentlyOpened;
-};
+}
+QString ODScell::getOther() const
+{
+	return m_sOther;
+}
 
-#endif // ODSFILE_H
+void ODScell::setOther(const QString &value)
+{
+	m_sOther = value;
+}
+
+QString ODScell::getText() const
+{
+	return m_sText;
+}
+
+void ODScell::setText(const QString &value)
+{
+	m_sText = value;
+}
+
+

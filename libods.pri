@@ -25,17 +25,25 @@
 QT_VERSION = $$[QT_VERSION]
 QT_VERSION = $$split(QT_VERSION, ".")
 
+QT += core
+QT += xml
+
 INCLUDEPATH += $$PWD
 
 include($$PWD/3rdparty/QuaZIP/quazip/quazip.pri)
 
 # Headers
 HEADERS += \
-		$$PWD/ODSfile.h \
-		$$PWD/ODSdocument.h
+	$$PWD/ODSfile.h \
+	$$PWD/ODSdocument.h \
+	$$PWD/ODSspreadsheet.h \
+	$$PWD/ODScell.h \
+	$$PWD/ODScontent.h
 
 # Sources
 SOURCES += \
-		$$PWD/ODSfile.cpp \
-		$$PWD/ODSdocument.cpp
-		
+	$$PWD/ODSfile.cpp \
+	$$PWD/ODSdocument.cpp \
+	$$PWD/ODSspreadsheet.cpp \
+	$$PWD/ODScell.cpp \
+	$$PWD/ODScontent.cpp

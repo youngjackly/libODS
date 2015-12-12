@@ -1,5 +1,5 @@
 /*
-** ODSfile.h
+** ODSspreadsheet.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,36 +22,31 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef ODSFILE_H
-#define ODSFILE_H
+#ifndef ODSSPREADSHEET_H
+#define ODSSPREADSHEET_H
 
-#include <QFile>
+#include <vector>
 
-#include "3rdparty/QuaZIP/quazip/quazip/quazip.h"
-#include "3rdparty/QuaZIP/quazip/quazip/quazipfile.h"
+#include <QtXml>
 
-/**
- * @brief The ODSfile class is used internally by ODSdocument.
- */
-class ODSfile
+#include "ODScell.h"
+
+class ODSspreadsheet
 {
-public:
-	ODSfile(QString sFileName);
-	~ODSfile();
+	typedef std::vector<ODScell*> ODSrow;
+	typedef std::vector<ODSrow*>  ODStable;
 
-	/**
-	 * @brief accessContainerElement allows to read from an element file of the ODS container.
-	 * This is limited to one file at a time due to limitations of the underlying zip library.
-	 * @param sName The file name + extension
-	 * @return NULL if unsuccessfull
-	 */
-	QIODevice* accessContainerElement(QString sName);
-	bool closeContainerElement(QIODevice *&pElement);
+	typedef ODSrow::size_type   ColT;
+	typedef ODStable::size_type RowT;
+
+public:
+	ODSspreadsheet();
+	~ODSspreadsheet();
+
+	ODScell& cell(RowT y, ColT x);
 
 private:
-	QuaZip m_ioODScontainer;
-
-	QuaZipFile* m_pCurrentlyOpened;
+	ODStable m_vTable;
 };
 
-#endif // ODSFILE_H
+#endif // ODSSPREADSHEET_H
