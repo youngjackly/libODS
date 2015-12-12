@@ -27,6 +27,8 @@ QT_VERSION = $$split(QT_VERSION, ".")
 
 INCLUDEPATH += $$PWD
 
+include($$PWD/3rdparty/QuaZIP/quazip/quazip.pri)
+
 # Headers
 HEADERS += \
 		$$PWD/ODSfile.h
