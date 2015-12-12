@@ -30,10 +30,18 @@ QT += xml
 
 INCLUDEPATH += $$PWD
 
+# Use zlib bundled with Qt to avoid external dependencies.
+# In case this causes problems, just remove this line and include
+# zlib externally.
+INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
+
+# This needs to be defined when building QuaZip directly into a project.
+DEFINES += QUAZIP_STATIC
 include($$PWD/3rdparty/QuaZIP/quazip/quazip.pri)
 
 # Headers
 HEADERS += \
+	$$[QT_INSTALL_HEADERS]/QtZlib/zlib.h \
 	$$PWD/ODSfile.h \
 	$$PWD/ODSdocument.h \
 	$$PWD/ODSspreadsheet.h \
