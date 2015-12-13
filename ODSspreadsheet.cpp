@@ -24,19 +24,48 @@
 
 #include "ODSspreadsheet.h"
 
-ODSspreadsheet::ODSspreadsheet()
+ODSspreadsheet::ODSspreadsheet(QDomElement sheet) :
+	m_oAssociatedDomElement( sheet )
 {
-
+	m_bValid = parse(sheet);
 }
 
 ODSspreadsheet::~ODSspreadsheet()
 {
-
+	qDeleteAll(m_vTables);
 }
 
-ODScell &ODSspreadsheet::cell(ODSspreadsheet::RowT y, ODSspreadsheet::ColT x)
+bool ODSspreadsheet::valid()
 {
-	ODScell bogus;
-	return bogus;
+	return m_bValid;
+}
+
+bool ODSspreadsheet::parse(QDomElement sheet)
+{
+	bool bReturn = false;
+
+	QDomNodeList tables = sheet.childNodes();
+	for ( int i = 0; i < tables.size(); ++i )
+	{
+		QDomElement table = tables.at(i).toElement();
+
+		// check for table elements
+		if ( !table.isNull() && !table.tagName().compare("table:table") )
+		{
+			ODStable *pNewTable = new ODStable(table);
+
+			if ( pNewTable->valid() )
+			{
+				bReturn = true;
+				m_vTables.push_back( pNewTable );
+			}
+			else
+			{
+				delete pNewTable;
+			}
+		}
+	}
+
+	return bReturn;
 }
 

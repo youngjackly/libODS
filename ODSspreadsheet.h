@@ -29,24 +29,22 @@
 
 #include <QtXml>
 
-#include "ODScell.h"
+#include "ODStable.h"
 
 class ODSspreadsheet
 {
-	typedef std::vector<ODScell*> ODSrow;
-	typedef std::vector<ODSrow*>  ODStable;
-
-	typedef ODSrow::size_type   ColT;
-	typedef ODStable::size_type RowT;
-
 public:
-	ODSspreadsheet();
+	ODSspreadsheet(QDomElement sheet);
 	~ODSspreadsheet();
 
-	ODScell& cell(RowT y, ColT x);
+	bool valid();
 
 private:
-	ODStable m_vTable;
+	bool m_bValid;
+	QDomElement m_oAssociatedDomElement;
+	std::vector<ODStable*> m_vTables;
+
+	bool parse(QDomElement sheet);
 };
 
 #endif // ODSSPREADSHEET_H

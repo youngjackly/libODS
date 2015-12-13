@@ -25,13 +25,32 @@
 #ifndef ODSCONTENT_H
 #define ODSCONTENT_H
 
+#include <vector>
+
+#include <QtXml>
+
 #include "ODSfile.h"
+#include "ODSspreadsheet.h"
 
 class ODScontent
 {
 public:
+	/**
+	 * @brief ODScontent represents the content.xml file within the ODS container.
+	 * Note that it is only considered to be valid in our case if it contains at least one valid <office:spreadsheet> element.
+	 * @param ioFile
+	 */
 	ODScontent(ODSfile& ioFile);
 	~ODScontent();
+
+private:
+	const QString m_sContentFileName = QString("content.xml");
+
+	bool m_bValid;
+	QDomDocument m_oContentFile;
+	std::vector<ODSspreadsheet*> m_vSheets;
+
+	bool parse(ODSfile& ioFile);
 };
 
 #endif // ODSCONTENT_H

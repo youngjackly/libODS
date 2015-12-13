@@ -26,11 +26,56 @@
 
 ODScontent::ODScontent(ODSfile &ioFile)
 {
-
+	m_bValid = parse(ioFile);
 }
 
 ODScontent::~ODScontent()
 {
+	qDeleteAll(m_vSheets);
+}
 
+bool ODScontent::parse(ODSfile &ioFile)
+{
+	QIODevice* pDevice = ioFile.accessContainerElement(m_sContentFileName);
+
+	bool bReturn = false;
+
+	m_oContentFile = QDomDocument();
+	int errorLine, errorCol;
+	QString sError;
+
+	if ( m_oContentFile.setContent(pDevice, &sError, &errorLine, &errorCol) )
+	{
+		QDomElement root = m_oContentFile.documentElement();
+		QDomNodeList officeSpreadsheets = root.elementsByTagName("office:spreadsheet");
+
+		// there should be only one, but in case there are several...
+		for ( int i = 0; i < officeSpreadsheets.size(); ++i )
+		{
+			QDomElement sheet = officeSpreadsheets.at(i).toElement();
+			if ( !sheet.isNull() )
+			{
+				ODSspreadsheet *pNewSheet = new ODSspreadsheet(sheet);
+				if ( pNewSheet->valid() )
+				{
+					m_vSheets.push_back(pNewSheet);
+					bReturn = true;
+				}
+				else
+				{
+					delete pNewSheet;
+				}
+			}
+		}
+	}
+	else
+	{
+		// TODO: improve warning with error string from above
+		qWarning("ODScontent::parse - Failed to parse file.");
+	}
+
+	ioFile.closeContainerElement(pDevice);
+
+	return bReturn;
 }
 

@@ -28,11 +28,19 @@ ODSdocument::ODSdocument(QString sFileName) :
 	m_ioFile(sFileName),
 	m_oContent(m_ioFile)
 {
-
 }
 
 ODSdocument::~ODSdocument()
 {
+}
 
+ODStable *ODSdocument::getFirstSheet()
+{
+	return NULL;
+}
+
+ODStable *ODSdocument::getSheet(const QString &sSheetName)
+{
+	return NULL;
 }
 

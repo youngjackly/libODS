@@ -33,7 +33,7 @@ ODSfile::ODSfile(QString sFileName) :
 
 ODSfile::~ODSfile()
 {
-
+	m_ioODScontainer.close();
 }
 
 QIODevice *ODSfile::accessContainerElement(QString sName)

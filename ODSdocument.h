@@ -27,6 +27,7 @@
 
 #include <QtXml>
 
+#include "ODStable.h"
 #include "ODSfile.h"
 #include "ODScontent.h"
 
@@ -35,6 +36,9 @@ class ODSdocument
 public:
 	ODSdocument(QString sFileName);
 	~ODSdocument();
+
+	ODStable *getFirstSheet();
+	ODStable *getSheet(const QString &sSheetName);
 
 private:
 	ODSfile     m_ioFile;
