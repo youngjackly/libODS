@@ -1,5 +1,5 @@
 /*
-** OSDprototypeXMLfamiliar.cpp
+** ODSrepeatableContent.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,32 +22,28 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "OSDprototypeXMLfamiliar.h"
+#ifndef ODSREPEATABLE_H
+#define ODSREPEATABLE_H
 
-OSDprototypeXMLfamiliar::OSDprototypeXMLfamiliar() :
-	m_bValid( false )
+#include "ODSprototypeXMLfamiliar.h"
+
+namespace ODSlib
 {
+class ODSrepeatableContent : public ODSprototypeXMLfamiliar
+{
+public:
+	ODSrepeatableContent(const QString &sElementFilter, const QString &sRepeatFilter, QDomElement &element);
+	~ODSrepeatableContent();
 
+protected:
+	void doMagic(ODSprototypeXMLfamiliar* pNew);
+	virtual ODSprototypeXMLfamiliar *item(ODSprototypeXMLfamiliar::TContainer::size_type pos);
+
+private:
+	const QString m_sRepeatFilter;
+	unsigned int m_nParseCounter;
+	std::map<ST,ST> m_mPositions;
+};
 }
 
-OSDprototypeXMLfamiliar::OSDprototypeXMLfamiliar(QDomElement &element) :
-	m_bValid( false ),
-	m_oAssociated( element )
-{
-}
-
-OSDprototypeXMLfamiliar::~OSDprototypeXMLfamiliar()
-{
-	qDeleteAll(m_vContainer);
-}
-
-bool OSDprototypeXMLfamiliar::valid()
-{
-	return m_bValid;
-}
-
-OSDprototypeXMLfamiliar *OSDprototypeXMLfamiliar::at(OSDprototypeXMLfamiliar::TContainer::size_type pos)
-{
-	return m_vContainer.at(pos);
-}
-
+#endif // ODSREPEATABLE_H

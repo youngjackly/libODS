@@ -25,18 +25,17 @@
 #ifndef ODSSPREADSHEET_H
 #define ODSSPREADSHEET_H
 
-#include "OSDprototypeXMLfamiliar.h"
+#include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
-class ODSspreadsheet : public OSDprototypeXMLfamiliar
+class ODSspreadsheet : public ODSprototypeXMLfamiliar
 {
 public:
 	ODSspreadsheet(QDomElement &element);
 	~ODSspreadsheet();
 
 private:
-	bool parse();
 };
 }
 

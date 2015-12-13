@@ -27,11 +27,11 @@
 
 #include <QString>
 
-#include "OSDprototypeXMLfamiliar.h"
+#include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
-class ODScell : public OSDprototypeXMLfamiliar
+class ODScell : public ODSprototypeXMLfamiliar
 {
 public:
 	ODScell(QDomElement &element);
@@ -42,6 +42,9 @@ public:
 
 	QString getOther() const;
 	void setOther(const QString &value);
+
+protected:
+	virtual bool parse();
 
 private:
 	QString m_sText;

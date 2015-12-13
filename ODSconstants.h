@@ -1,5 +1,5 @@
 /*
-** ODStable.cpp
+** ODSconstants.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,30 +22,18 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ODStable.h"
-#include "ODScell.h"
-#include "ODSrow.h"
-#include "ODSconstants.h"
+#ifndef ODSCONSTANTS
+#define ODSCONSTANTS
 
-using namespace ODSlib;
+#define ODS_TAG_OFFICE_BODY         "office:body"
+#define ODS_TAG_OFFICE_SPREADSHEET  "office:spreadsheet"
+#define ODS_TAG_TABLE               "table:table"
+#define ODS_TAG_TABLE_ROW           "table:table-row"
+#define ODS_TAG_TABLE_CELL          "table:table-cell"
+#define ODS_TAG_TEXT                "text:p"
 
-ODStable::ODStable(QDomElement &element) :
-	ODSrepeatableContent( ODS_TAG_TABLE_ROW, ODS_ATTR_TBL_ROW_REPEAT, element )
-{
-}
+#define ODS_ATTR_TBL_ROW_REPEAT     "table:number-rows-repeated"
+#define ODS_ATTR_TBL_CELL_REPEAT    "table:number-columns-repeated"
 
-ODStable::~ODStable()
-{
-}
-
-ODScell *ODStable::cell(ST y, ST x)
-{
-	ODSprototypeXMLfamiliar* pRow = item(y);
-
-	if ( pRow )
-	{
-		return (ODScell *)(pRow->item(x));
-	}
-
-}
+#endif // ODSCONSTANTS
 

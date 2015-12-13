@@ -23,9 +23,12 @@
 */
 
 #include "ODSrow.h"
+#include "ODSconstants.h"
+
+using namespace ODSlib;
 
 ODSrow::ODSrow(QDomElement &element) :
-	OSDprototypeXMLfamiliar(element)
+	ODSrepeatableContent( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_CELL_REPEAT, element )
 {
 
 }
@@ -33,62 +36,4 @@ ODSrow::ODSrow(QDomElement &element) :
 ODSrow::~ODSrow()
 {
 
-}
-
-bool ODSrow::parse()
-{
-	bool bReturn = false;
-
-	// TODO: finish here
-	QDomNodeList cells = m_oAssociated.childNodes();
-	for ( int i = 0; i < cells.size(); ++i )
-	{
-		QDomElement cell = cells.at(i).toElement();
-
-		// check for table elements
-		if ( !cell.isNull() && !cell.tagName().compare("table:table-cell") )
-		{
-			 bReturn |= parseCellEntry(cell);
-		}
-	}
-
-	return bReturn;
-}
-
-bool ODSrow::parseCellEntry(QDomElement cell)
-{
-	int nRepetitions = 1;
-
-	if ( cell.hasAttribute("table:number-cells-repeated") )
-	{
-		bool bOK;
-		nRepetitions = cell.attribute("table:number-cells-repeated").toInt(&bOK);
-
-		// TODO: maybe catch some more errors
-		if ( !bOK || nRepetitions < 1 )
-		{
-			return false;
-		}
-	}
-
-	parseSingleCellEntry(cell);
-
-	if ( nRepetitions > 1 )
-	{
-		cell.removeAttribute("table:number-cells-repeated");
-
-		for ( int i = 1; i < nRepetitions; ++i )
-		{
-			QDomElement singleCell = cell.cloneNode(true).toElement();
-			singleCell = cell.parentNode().insertAfter(singleCell, cell).toElement();
-			parseSingleCellEntry(singleCell);
-		}
-	}
-
-	return true;
-}
-
-bool ODSrow::parseSingleCellEntry(QDomElement cell)
-{
-	return false;
 }

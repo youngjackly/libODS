@@ -25,19 +25,16 @@
 #ifndef ODSROW_H
 #define ODSROW_H
 
-#include "OSDprototypeXMLfamiliar.h"
+#include "ODSrepeatableContent.h"
 
-class ODSrow : public OSDprototypeXMLfamiliar
+namespace ODSlib
+{
+class ODSrow : public ODSrepeatableContent
 {
 public:
 	ODSrow(QDomElement &element);
 	~ODSrow();
-
-private:
-	bool parse();
-
-	bool parseCellEntry(QDomElement cell);
-	bool parseSingleCellEntry(QDomElement cell);
 };
+}
 
 #endif // ODSROW_H

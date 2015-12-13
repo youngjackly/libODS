@@ -25,24 +25,19 @@
 #ifndef ODSTABLE_H
 #define ODSTABLE_H
 
-#include "OSDprototypeXMLfamiliar.h"
+#include "ODSrepeatableContent.h"
 
 namespace ODSlib
 {
 class ODScell;
 
-class ODStable : public OSDprototypeXMLfamiliar
+class ODStable : public ODSrepeatableContent
 {
 public:
 	ODStable(QDomElement &element);
 	~ODStable();
 
-	ODScell &cell(ST y, ST x);
-
-private:
-	bool parse();
-	bool parseRowEntry(QDomElement row);
-	bool parseSingleRowEntry(QDomElement row);
+	ODScell *cell(ST y, ST x);
 };
 }
 

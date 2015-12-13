@@ -43,10 +43,13 @@ include($$PWD/3rdparty/QuaZIP/quazip/quazip.pri)
 HEADERS += \
 	$$[QT_INSTALL_HEADERS]/QtZlib/zlib.h \
 	$$PWD/ODScell.h \
+	$$PWD/ODSconstants.h \
 	$$PWD/ODScontent.h \
 	$$PWD/ODSdocument.h \
 	$$PWD/ODSfile.h \
-	$$PWD/OSDprototypeXMLfamiliar.h \
+	$$PWD/ODSprototypeFactory.h \
+	$$PWD/ODSprototypeXMLfamiliar.h \
+	$$PWD/ODSrepeatableContent.h \
 	$$PWD/ODSrow.h \
 	$$PWD/ODSspreadsheet.h \
 	$$PWD/ODStable.h
@@ -57,7 +60,9 @@ SOURCES += \
 	$$PWD/ODScontent.cpp \
 	$$PWD/ODSdocument.cpp \
 	$$PWD/ODSfile.cpp \
-	$$PWD/OSDprototypeXMLfamiliar.cpp \
+	$$PWD/ODSprototypeFactory.cpp \
+	$$PWD/ODSprototypeXMLfamiliar.cpp \
+	$$PWD/ODSrepeatableContent.cpp \
 	$$PWD/ODSrow.cpp \
 	$$PWD/ODSspreadsheet.cpp \
 	$$PWD/ODStable.cpp

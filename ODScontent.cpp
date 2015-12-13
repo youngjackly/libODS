@@ -24,11 +24,12 @@
 
 #include "ODScontent.h"
 #include "ODSspreadsheet.h"
+#include "ODSconstants.h"
 
 using namespace ODSlib;
 
 ODScontent::ODScontent(ODSfile &ioFile) :
-	OSDprototypeXMLfamiliar()
+	ODSprototypeXMLfamiliar( ODS_TAG_OFFICE_SPREADSHEET )
 {
 	QIODevice* pDevice = ioFile.accessContainerElement(m_sContentFileName);
 
@@ -57,33 +58,5 @@ ODScontent::~ODScontent()
 QString ODScontent::toString()
 {
 	return m_oContentFile.toString(-1);
-}
-
-bool ODScontent::parse()
-{
-	bool bReturn = false;
-
-	QDomNodeList officeSpreadsheets = m_oAssociated.elementsByTagName("office:spreadsheet");
-
-	// there should be only one, but in case there are several...
-	for ( int i = 0; i < officeSpreadsheets.size(); ++i )
-	{
-		QDomElement sheet = officeSpreadsheets.at(i).toElement();
-		if ( !sheet.isNull() )
-		{
-			ODSspreadsheet *pNewSheet = new ODSspreadsheet(sheet);
-			if ( pNewSheet->valid() )
-			{
-				m_vContainer.push_back(pNewSheet);
-				bReturn = true;
-			}
-			else
-			{
-				delete pNewSheet;
-			}
-		}
-	}
-
-	return bReturn;
 }
 

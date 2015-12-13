@@ -1,5 +1,5 @@
 /*
-** OSDprototypeXMLfamiliar.h
+** ODSprototypeFactory.cpp
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,32 +22,44 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef OSDPROTOTYPEXMLFAMILIAR_H
-#define OSDPROTOTYPEXMLFAMILIAR_H
+#include "ODSprototypeFactory.h"
+#include "ODScell.h"
+#include "ODSrow.h"
+#include "ODStable.h"
+#include "ODSspreadsheet.h"
 
-#include <QtXml>
+using namespace ODSlib;
 
-class OSDprototypeXMLfamiliar
+ODSprototypeFactory::ODSprototypeFactory()
 {
-public:
-	typedef std::vector<OSDprototypeXMLfamiliar*> TContainer;
+}
 
-protected:
-	OSDprototypeXMLfamiliar();
-	OSDprototypeXMLfamiliar(QDomElement &element);
+ODSprototypeFactory::~ODSprototypeFactory()
+{
+}
 
-public:
-	~OSDprototypeXMLfamiliar();
+ODSprototypeXMLfamiliar *ODSprototypeFactory::generate(QDomElement &element, const QString &sSelect)
+{
+	ODSprototypeXMLfamiliar *pReturn = NULL;
 
-	bool valid();
+	// clauses sorted by number of occurrences
+	if ( !sSelect.compare(ODS_TAG_TABLE_CELL) )
+	{
+		pReturn = new ODScell(element);
+	}
+	else if ( !sSelect.compare(ODS_TAG_TABLE_ROW) )
+	{
+		pReturn = new ODSrow(element);
+	}
+	else if ( !sSelect.compare(ODS_TAG_TABLE) )
+	{
+		pReturn = new ODStable(element);
+	}
+	else if ( !sSelect.compare(ODS_TAG_OFFICE_SPREADSHEET) )
+	{
+		pReturn = new ODSspreadsheet(element);
+	}
 
-	OSDprototypeXMLfamiliar *at(OSDprototypeXMLfamiliar::TContainer::size_type pos);
+	return pReturn;
+}
 
-protected:
-	bool m_bValid;
-	QDomElement m_oAssociated;
-	TContainer m_vContainer;
-};
-typedef OSDprototypeXMLfamiliar::TContainer::size_type ST;
-
-#endif // OSDPROTOTYPEXMLFAMILIAR_H

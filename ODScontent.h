@@ -26,11 +26,11 @@
 #define ODSCONTENT_H
 
 #include "ODSfile.h"
-#include "OSDprototypeXMLfamiliar.h"
+#include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
-class ODScontent : public OSDprototypeXMLfamiliar
+class ODScontent : public ODSprototypeXMLfamiliar
 {
 public:
 	/**
@@ -47,8 +47,6 @@ private:
 	const QString m_sContentFileName = QString("content.xml");
 
 	QDomDocument m_oContentFile;
-
-	bool parse();
 };
 }
 

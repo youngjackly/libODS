@@ -1,5 +1,5 @@
 /*
-** ODStable.cpp
+** ODSprototypeFactory.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,30 +22,26 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ODStable.h"
-#include "ODScell.h"
-#include "ODSrow.h"
+#ifndef ODSPROTOTYPEFACTORY_H
+#define ODSPROTOTYPEFACTORY_H
+
+#include <QDomElement>
+
 #include "ODSconstants.h"
 
-using namespace ODSlib;
-
-ODStable::ODStable(QDomElement &element) :
-	ODSrepeatableContent( ODS_TAG_TABLE_ROW, ODS_ATTR_TBL_ROW_REPEAT, element )
+namespace ODSlib
 {
+class ODSprototypeXMLfamiliar;
+
+class ODSprototypeFactory
+{
+private:
+	ODSprototypeFactory();
+	~ODSprototypeFactory();
+
+public:
+	static ODSprototypeXMLfamiliar *generate(QDomElement &element, const QString& sSelect);
+};
 }
 
-ODStable::~ODStable()
-{
-}
-
-ODScell *ODStable::cell(ST y, ST x)
-{
-	ODSprototypeXMLfamiliar* pRow = item(y);
-
-	if ( pRow )
-	{
-		return (ODScell *)(pRow->item(x));
-	}
-
-}
-
+#endif // ODSPROTOTYPEFACTORY_H

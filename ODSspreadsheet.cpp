@@ -24,11 +24,12 @@
 
 #include "ODSspreadsheet.h"
 #include "ODStable.h"
+#include "ODSconstants.h"
 
 using namespace ODSlib;
 
 ODSspreadsheet::ODSspreadsheet(QDomElement &element) :
-	OSDprototypeXMLfamiliar(element)
+	ODSprototypeXMLfamiliar( ODS_TAG_TABLE, element )
 {
 	m_bValid = parse();
 }
@@ -36,33 +37,3 @@ ODSspreadsheet::ODSspreadsheet(QDomElement &element) :
 ODSspreadsheet::~ODSspreadsheet()
 {
 }
-
-bool ODSspreadsheet::parse()
-{
-	bool bReturn = false;
-
-	QDomNodeList tables = m_oAssociated.childNodes();
-	for ( int i = 0; i < tables.size(); ++i )
-	{
-		QDomElement table = tables.at(i).toElement();
-
-		// check for table elements
-		if ( !table.isNull() && !table.tagName().compare("table:table") )
-		{
-			ODStable *pNewTable = new ODStable(table);
-
-			if ( pNewTable->valid() )
-			{
-				bReturn = true;
-				m_vContainer.push_back( pNewTable );
-			}
-			else
-			{
-				delete pNewTable;
-			}
-		}
-	}
-
-	return bReturn;
-}
-

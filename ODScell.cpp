@@ -23,11 +23,12 @@
 */
 
 #include "ODScell.h"
+#include "ODSconstants.h"
 
 using namespace ODSlib;
 
 ODScell::ODScell(QDomElement &element) :
-	OSDprototypeXMLfamiliar(element)
+	ODSprototypeXMLfamiliar( ODS_TAG_TEXT, element)
 {
 
 }
@@ -44,6 +45,13 @@ QString ODScell::getOther() const
 void ODScell::setOther(const QString &value)
 {
 	m_sOther = value;
+}
+
+bool ODScell::parse()
+{
+	// TODO
+
+	return true;
 }
 
 QString ODScell::getText() const
