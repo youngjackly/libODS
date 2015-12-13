@@ -23,29 +23,14 @@
 */
 
 #include "ODScontent.h"
+#include "ODSspreadsheet.h"
 
 using namespace ODSlib;
 
-ODScontent::ODScontent(ODSfile &ioFile)
-{
-	m_bValid = parse(ioFile);
-}
-
-ODScontent::~ODScontent()
-{
-	qDeleteAll(m_vSheets);
-}
-
-QString ODScontent::toString()
-{
-	return m_oContentFile.toString(-1);
-}
-
-bool ODScontent::parse(ODSfile &ioFile)
+ODScontent::ODScontent(ODSfile &ioFile) :
+	OSDprototypeXMLfamiliar()
 {
 	QIODevice* pDevice = ioFile.accessContainerElement(m_sContentFileName);
-
-	bool bReturn = false;
 
 	m_oContentFile = QDomDocument();
 	int errorLine, errorCol;
@@ -53,27 +38,8 @@ bool ODScontent::parse(ODSfile &ioFile)
 
 	if ( m_oContentFile.setContent(pDevice, &sError, &errorLine, &errorCol) )
 	{
-		QDomElement root = m_oContentFile.documentElement();
-		QDomNodeList officeSpreadsheets = root.elementsByTagName("office:spreadsheet");
-
-		// there should be only one, but in case there are several...
-		for ( int i = 0; i < officeSpreadsheets.size(); ++i )
-		{
-			QDomElement sheet = officeSpreadsheets.at(i).toElement();
-			if ( !sheet.isNull() )
-			{
-				ODSspreadsheet *pNewSheet = new ODSspreadsheet(sheet);
-				if ( pNewSheet->valid() )
-				{
-					m_vSheets.push_back(pNewSheet);
-					bReturn = true;
-				}
-				else
-				{
-					delete pNewSheet;
-				}
-			}
-		}
+		m_oAssociated = m_oContentFile.documentElement();
+		m_bValid = parse();
 	}
 	else
 	{
@@ -82,6 +48,41 @@ bool ODScontent::parse(ODSfile &ioFile)
 	}
 
 	ioFile.closeContainerElement(pDevice);
+}
+
+ODScontent::~ODScontent()
+{
+}
+
+QString ODScontent::toString()
+{
+	return m_oContentFile.toString(-1);
+}
+
+bool ODScontent::parse()
+{
+	bool bReturn = false;
+
+	QDomNodeList officeSpreadsheets = m_oAssociated.elementsByTagName("office:spreadsheet");
+
+	// there should be only one, but in case there are several...
+	for ( int i = 0; i < officeSpreadsheets.size(); ++i )
+	{
+		QDomElement sheet = officeSpreadsheets.at(i).toElement();
+		if ( !sheet.isNull() )
+		{
+			ODSspreadsheet *pNewSheet = new ODSspreadsheet(sheet);
+			if ( pNewSheet->valid() )
+			{
+				m_vContainer.push_back(pNewSheet);
+				bReturn = true;
+			}
+			else
+			{
+				delete pNewSheet;
+			}
+		}
+	}
 
 	return bReturn;
 }

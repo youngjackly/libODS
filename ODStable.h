@@ -25,37 +25,24 @@
 #ifndef ODSTABLE_H
 #define ODSTABLE_H
 
-#include <vector>
-
-#include <QtXml>
-
-#include "ODScell.h"
+#include "OSDprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
-class ODStable
+class ODScell;
+
+class ODStable : public OSDprototypeXMLfamiliar
 {
-private:
-	typedef std::vector<ODScell*> TODSrow;
-	typedef std::vector<TODSrow*> TODStable;
-
 public:
-	typedef TODSrow::size_type   TCol;
-	typedef TODStable::size_type TRow;
-
-	ODStable(QDomElement &table);
+	ODStable(QDomElement &element);
 	~ODStable();
 
-	ODScell &cell(TRow y, TCol x);
-	bool valid();
+	ODScell &cell(ST y, ST x);
 
 private:
-	bool m_bValid;
-	QDomElement m_oAssociatedDomElement;
-
-	TODStable m_vvTable;
-
 	bool parse();
+	bool parseRowEntry(QDomElement row);
+	bool parseSingleRowEntry(QDomElement row);
 };
 }
 

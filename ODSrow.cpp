@@ -1,5 +1,5 @@
 /*
-** ODStable.cpp
+** ODSrow.cpp
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,54 +22,47 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ODStable.h"
-#include "ODScell.h"
+#include "ODSrow.h"
 
-using namespace ODSlib;
-
-ODStable::ODStable(QDomElement &element) :
+ODSrow::ODSrow(QDomElement &element) :
 	OSDprototypeXMLfamiliar(element)
 {
-	m_bValid = parse();
+
 }
 
-ODStable::~ODStable()
+ODSrow::~ODSrow()
 {
+
 }
 
-ODScell &ODStable::cell(ST y, ST x)
-{
-	return *((ODScell*)(*m_vContainer[y]).at(x));
-}
-
-bool ODStable::parse()
+bool ODSrow::parse()
 {
 	bool bReturn = false;
 
-	QDomNodeList rows = m_oAssociated.childNodes();
-	const int size = rows.size();
-	for ( int i = 0; i < size; ++i )
+	// TODO: finish here
+	QDomNodeList cells = m_oAssociated.childNodes();
+	for ( int i = 0; i < cells.size(); ++i )
 	{
-		QDomElement row = rows.at(i).toElement();
+		QDomElement cell = cells.at(i).toElement();
 
 		// check for table elements
-		if ( !row.isNull() && !row.tagName().compare("table:table-row") )
+		if ( !cell.isNull() && !cell.tagName().compare("table:table-cell") )
 		{
-			bReturn |= parseRowEntry(row);
+			 bReturn |= parseCellEntry(cell);
 		}
 	}
 
 	return bReturn;
 }
 
-bool ODStable::parseRowEntry(QDomElement row)
+bool ODSrow::parseCellEntry(QDomElement cell)
 {
 	int nRepetitions = 1;
 
-	if ( row.hasAttribute("table:number-rows-repeated") )
+	if ( cell.hasAttribute("table:number-cells-repeated") )
 	{
 		bool bOK;
-		nRepetitions = row.attribute("table:number-rows-repeated").toInt(&bOK);
+		nRepetitions = cell.attribute("table:number-cells-repeated").toInt(&bOK);
 
 		// TODO: maybe catch some more errors
 		if ( !bOK || nRepetitions < 1 )
@@ -78,31 +71,24 @@ bool ODStable::parseRowEntry(QDomElement row)
 		}
 	}
 
-	bool bReturn = false;
-
-	bReturn |= parseSingleRowEntry(row);
+	parseSingleCellEntry(cell);
 
 	if ( nRepetitions > 1 )
 	{
-		row.removeAttribute("table:number-rows-repeated");
+		cell.removeAttribute("table:number-cells-repeated");
 
 		for ( int i = 1; i < nRepetitions; ++i )
 		{
-			QDomElement singleRow = row.cloneNode(true).toElement();
-			singleRow = row.parentNode().insertAfter(singleRow, row).toElement();
-			bReturn |= parseSingleRowEntry(singleRow);
+			QDomElement singleCell = cell.cloneNode(true).toElement();
+			singleCell = cell.parentNode().insertAfter(singleCell, cell).toElement();
+			parseSingleCellEntry(singleCell);
 		}
 	}
 
-	return bReturn;
+	return true;
 }
 
-bool ODStable::parseSingleRowEntry(QDomElement row)
+bool ODSrow::parseSingleCellEntry(QDomElement cell)
 {
-	bool bReturn = false;
-
-
-
-	return bReturn;
+	return false;
 }
-

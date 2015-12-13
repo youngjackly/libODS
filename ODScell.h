@@ -27,12 +27,14 @@
 
 #include <QString>
 
+#include "OSDprototypeXMLfamiliar.h"
+
 namespace ODSlib
 {
-class ODScell
+class ODScell : public OSDprototypeXMLfamiliar
 {
 public:
-	ODScell();
+	ODScell(QDomElement &element);
 	~ODScell();
 
 	QString getText() const;

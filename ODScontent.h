@@ -25,16 +25,12 @@
 #ifndef ODSCONTENT_H
 #define ODSCONTENT_H
 
-#include <vector>
-
-#include <QtXml>
-
 #include "ODSfile.h"
-#include "ODSspreadsheet.h"
+#include "OSDprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
-class ODScontent
+class ODScontent : public OSDprototypeXMLfamiliar
 {
 public:
 	/**
@@ -50,11 +46,9 @@ public:
 private:
 	const QString m_sContentFileName = QString("content.xml");
 
-	bool m_bValid;
 	QDomDocument m_oContentFile;
-	std::vector<ODSspreadsheet*> m_vSheets;
 
-	bool parse(ODSfile& ioFile);
+	bool parse();
 };
 }
 

@@ -1,5 +1,5 @@
 /*
-** ODSspreadsheet.h
+** ODSrow.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,22 +22,22 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef ODSSPREADSHEET_H
-#define ODSSPREADSHEET_H
+#ifndef ODSROW_H
+#define ODSROW_H
 
 #include "OSDprototypeXMLfamiliar.h"
 
-namespace ODSlib
-{
-class ODSspreadsheet : public OSDprototypeXMLfamiliar
+class ODSrow : public OSDprototypeXMLfamiliar
 {
 public:
-	ODSspreadsheet(QDomElement &element);
-	~ODSspreadsheet();
+	ODSrow(QDomElement &element);
+	~ODSrow();
 
 private:
 	bool parse();
-};
-}
 
-#endif // ODSSPREADSHEET_H
+	bool parseCellEntry(QDomElement cell);
+	bool parseSingleCellEntry(QDomElement cell);
+};
+
+#endif // ODSROW_H

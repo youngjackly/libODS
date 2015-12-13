@@ -26,7 +26,8 @@
 
 using namespace ODSlib;
 
-ODScell::ODScell()
+ODScell::ODScell(QDomElement &element) :
+	OSDprototypeXMLfamiliar(element)
 {
 
 }

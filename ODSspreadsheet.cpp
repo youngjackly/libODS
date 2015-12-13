@@ -23,30 +23,25 @@
 */
 
 #include "ODSspreadsheet.h"
+#include "ODStable.h"
 
 using namespace ODSlib;
 
-ODSspreadsheet::ODSspreadsheet(QDomElement &sheet) :
-	m_oAssociatedDomElement( sheet )
+ODSspreadsheet::ODSspreadsheet(QDomElement &element) :
+	OSDprototypeXMLfamiliar(element)
 {
 	m_bValid = parse();
 }
 
 ODSspreadsheet::~ODSspreadsheet()
 {
-	qDeleteAll(m_vTables);
-}
-
-bool ODSspreadsheet::valid()
-{
-	return m_bValid;
 }
 
 bool ODSspreadsheet::parse()
 {
 	bool bReturn = false;
 
-	QDomNodeList tables = m_oAssociatedDomElement.childNodes();
+	QDomNodeList tables = m_oAssociated.childNodes();
 	for ( int i = 0; i < tables.size(); ++i )
 	{
 		QDomElement table = tables.at(i).toElement();
@@ -59,7 +54,7 @@ bool ODSspreadsheet::parse()
 			if ( pNewTable->valid() )
 			{
 				bReturn = true;
-				m_vTables.push_back( pNewTable );
+				m_vContainer.push_back( pNewTable );
 			}
 			else
 			{

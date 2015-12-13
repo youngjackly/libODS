@@ -47,7 +47,9 @@ HEADERS += \
 	$$PWD/ODSspreadsheet.h \
 	$$PWD/ODScell.h \
 	$$PWD/ODScontent.h \
-	$$PWD/ODStable.h
+	$$PWD/ODStable.h \
+	$$PWD/ODSrow.h \
+	$$PWD/OSDprototypeXMLfamiliar.h
 
 # Sources
 SOURCES += \
@@ -56,4 +58,6 @@ SOURCES += \
 	$$PWD/ODSspreadsheet.cpp \
 	$$PWD/ODScell.cpp \
 	$$PWD/ODScontent.cpp \
-	$$PWD/ODStable.cpp
+	$$PWD/ODStable.cpp \
+	$$PWD/ODSrow.cpp \
+	$$PWD/OSDprototypeXMLfamiliar.cpp

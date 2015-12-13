@@ -1,5 +1,5 @@
 /*
-** ODSspreadsheet.h
+** OSDprototypeXMLfamiliar.cpp
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,22 +22,32 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef ODSSPREADSHEET_H
-#define ODSSPREADSHEET_H
-
 #include "OSDprototypeXMLfamiliar.h"
 
-namespace ODSlib
+OSDprototypeXMLfamiliar::OSDprototypeXMLfamiliar() :
+	m_bValid( false )
 {
-class ODSspreadsheet : public OSDprototypeXMLfamiliar
-{
-public:
-	ODSspreadsheet(QDomElement &element);
-	~ODSspreadsheet();
 
-private:
-	bool parse();
-};
 }
 
-#endif // ODSSPREADSHEET_H
+OSDprototypeXMLfamiliar::OSDprototypeXMLfamiliar(QDomElement &element) :
+	m_bValid( false ),
+	m_oAssociated( element )
+{
+}
+
+OSDprototypeXMLfamiliar::~OSDprototypeXMLfamiliar()
+{
+	qDeleteAll(m_vContainer);
+}
+
+bool OSDprototypeXMLfamiliar::valid()
+{
+	return m_bValid;
+}
+
+OSDprototypeXMLfamiliar *OSDprototypeXMLfamiliar::at(OSDprototypeXMLfamiliar::TContainer::size_type pos)
+{
+	return m_vContainer.at(pos);
+}
+
