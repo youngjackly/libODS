@@ -31,10 +31,12 @@
 
 #include "ODStable.h"
 
+namespace ODSlib
+{
 class ODSspreadsheet
 {
 public:
-	ODSspreadsheet(QDomElement sheet);
+	ODSspreadsheet(QDomElement &sheet);
 	~ODSspreadsheet();
 
 	bool valid();
@@ -44,7 +46,8 @@ private:
 	QDomElement m_oAssociatedDomElement;
 	std::vector<ODStable*> m_vTables;
 
-	bool parse(QDomElement sheet);
+	bool parse();
 };
+}
 
 #endif // ODSSPREADSHEET_H

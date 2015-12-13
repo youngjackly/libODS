@@ -24,6 +24,8 @@
 
 #include "ODScontent.h"
 
+using namespace ODSlib;
+
 ODScontent::ODScontent(ODSfile &ioFile)
 {
 	m_bValid = parse(ioFile);
@@ -32,6 +34,11 @@ ODScontent::ODScontent(ODSfile &ioFile)
 ODScontent::~ODScontent()
 {
 	qDeleteAll(m_vSheets);
+}
+
+QString ODScontent::toString()
+{
+	return m_oContentFile.toString(-1);
 }
 
 bool ODScontent::parse(ODSfile &ioFile)

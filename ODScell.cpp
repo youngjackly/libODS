@@ -24,6 +24,8 @@
 
 #include "ODScell.h"
 
+using namespace ODSlib;
+
 ODScell::ODScell()
 {
 

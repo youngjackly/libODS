@@ -30,6 +30,8 @@
 #include "3rdparty/QuaZIP/quazip/quazip/quazip.h"
 #include "3rdparty/QuaZIP/quazip/quazip/quazipfile.h"
 
+namespace ODSlib
+{
 /**
  * @brief The ODSfile class is used internally by ODSdocument.
  */
@@ -53,5 +55,6 @@ private:
 
 	QuaZipFile* m_pCurrentlyOpened;
 };
+}
 
 #endif // ODSFILE_H

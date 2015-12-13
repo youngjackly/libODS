@@ -31,6 +31,8 @@
 #include "ODSfile.h"
 #include "ODScontent.h"
 
+namespace ODSlib
+{
 class ODSdocument
 {
 public:
@@ -44,5 +46,6 @@ private:
 	ODSfile     m_ioFile;
 	ODScontent  m_oContent;
 };
+}
 
 #endif // ODSDOCUMENT_H

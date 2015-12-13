@@ -32,6 +32,8 @@
 #include "ODSfile.h"
 #include "ODSspreadsheet.h"
 
+namespace ODSlib
+{
 class ODScontent
 {
 public:
@@ -43,6 +45,8 @@ public:
 	ODScontent(ODSfile& ioFile);
 	~ODScontent();
 
+	QString toString();
+
 private:
 	const QString m_sContentFileName = QString("content.xml");
 
@@ -52,5 +56,6 @@ private:
 
 	bool parse(ODSfile& ioFile);
 };
+}
 
 #endif // ODSCONTENT_H

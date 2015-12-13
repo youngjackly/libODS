@@ -24,6 +24,9 @@
 
 #include "ODSdocument.h"
 
+using namespace ODSlib;
+
+
 ODSdocument::ODSdocument(QString sFileName) :
 	m_ioFile(sFileName),
 	m_oContent(m_ioFile)

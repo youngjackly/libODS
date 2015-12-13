@@ -27,6 +27,8 @@
 
 #include <QString>
 
+namespace ODSlib
+{
 class ODScell
 {
 public:
@@ -43,5 +45,6 @@ private:
 	QString m_sText;
 	QString m_sOther;
 };
+}
 
 #endif // ODSCELL_H

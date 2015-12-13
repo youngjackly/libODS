@@ -24,6 +24,8 @@
 
 #include "ODSfile.h"
 
+using namespace ODSlib;
+
 ODSfile::ODSfile(QString sFileName) :
 	m_ioODScontainer(   sFileName ),
 	m_pCurrentlyOpened( NULL )

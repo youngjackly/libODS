@@ -24,10 +24,12 @@
 
 #include "ODSspreadsheet.h"
 
-ODSspreadsheet::ODSspreadsheet(QDomElement sheet) :
+using namespace ODSlib;
+
+ODSspreadsheet::ODSspreadsheet(QDomElement &sheet) :
 	m_oAssociatedDomElement( sheet )
 {
-	m_bValid = parse(sheet);
+	m_bValid = parse();
 }
 
 ODSspreadsheet::~ODSspreadsheet()
@@ -40,11 +42,11 @@ bool ODSspreadsheet::valid()
 	return m_bValid;
 }
 
-bool ODSspreadsheet::parse(QDomElement sheet)
+bool ODSspreadsheet::parse()
 {
 	bool bReturn = false;
 
-	QDomNodeList tables = sheet.childNodes();
+	QDomNodeList tables = m_oAssociatedDomElement.childNodes();
 	for ( int i = 0; i < tables.size(); ++i )
 	{
 		QDomElement table = tables.at(i).toElement();
