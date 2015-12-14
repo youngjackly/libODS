@@ -35,5 +35,23 @@
 #define ODS_ATTR_TBL_ROW_REPEAT     "table:number-rows-repeated"
 #define ODS_ATTR_TBL_CELL_REPEAT    "table:number-columns-repeated"
 
+#define ODS_ATTR_TBL_FORMULA        "table:formula"
+
+#define ODS_ATTR_OFFICE_VALUE       "office:value"
+#define ODS_ATTR_OFFICE_BOOLVAL     "office:boolean-value"
+#define ODS_ATTR_OFFICE_DATEVAL     "office:date-value"
+#define ODS_ATTR_OFFICE_TIMEVAL     "office:time-value"
+
+#define ODS_ATTR_OFFICE_VAL_T       "office:value-type"
+#define ODS_ATTR_CALCEXT_VAL_T      "calcext:value-type"
+
+#define ODS_ATTRVAL_OFFICE_VAL_T_FLOAT      "float"
+#define ODS_ATTRVAL_OFFICE_VAL_T_PERCENTAGE "percentage"
+#define ODS_ATTRVAL_OFFICE_VAL_T_CURRENCY   "currency"
+#define ODS_ATTRVAL_OFFICE_VAL_T_DATE       "date"
+#define ODS_ATTRVAL_OFFICE_VAL_T_TIME       "time"
+#define ODS_ATTRVAL_OFFICE_VAL_T_STRING     "string"
+#define ODS_ATTRVAL_OFFICE_VAL_T_BOOL       "boolean"
+
 #endif // ODSCONSTANTS
 

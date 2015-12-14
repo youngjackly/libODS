@@ -47,5 +47,6 @@ ODScell *ODStable::cell(ST y, ST x)
 		return (ODScell *)(pRow->item(x));
 	}
 
+	return NULL;
 }
 

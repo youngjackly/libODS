@@ -34,21 +34,93 @@ namespace ODSlib
 class ODScell : public ODSprototypeXMLfamiliar
 {
 public:
+	enum CellType
+	{
+		unknown,        // unknown or unsupported cell type
+		error,          // indicates a parsing error
+		none,           // empty cell; no type specified
+		boolean,
+		number,
+		percentage,
+		currency,
+		stringContent,
+		date,
+		time
+	};
+
+private:
+	class CellContent
+	{
+		CellContent(QDomElement &element);
+		~CellContent();
+
+		void        clear();
+
+		CellType    type() const;
+
+		float       value() const;
+		bool        setValue(float value);
+
+		QString     contentString() const;
+		bool        setContentString(const QString &value);
+
+		QString*    m_pFormula;
+		QString*    m_pText;
+		bool        m_bHasCalcExtValueType;
+
+		void        parse();
+
+	private:
+		bool        parseType(const QString &sAttribute);
+		void        refreshText();
+
+		QDomElement m_oAssociated;
+		CellType    m_eType;
+		float       m_nValue;
+		QString     m_sData;
+
+		friend class ODScell;
+	};
+
+public:
 	ODScell(QDomElement &element);
 	~ODScell();
 
-	QString getText() const;
-	void setText(const QString &value);
+	void        clear();
 
-	QString getOther() const;
-	void setOther(const QString &value);
+	CellType    type() const;
+
+	float       value() const;
+	bool        setValue(float value);
+
+	/**
+	 * @brief hasText
+	 * @return
+	 */
+	bool        hasText() const;
+
+	/**
+	 * @brief text
+	 * @return The cell text if it exists. A string cell always has one; other cells might or might not.
+	 */
+	QString text() const;
+
+	/**
+	 * @brief string allows to access the content of string, date and time cells.
+	 * @return A string if the cell is of the above types; an empty string otherwise.
+	 */
+	QString     contentString() const;
+	bool setContentString(const QString &value);
 
 protected:
 	virtual bool parse();
 
 private:
-	QString m_sText;
-	QString m_sOther;
+	CellContent m_oContent;
+
+	void        setAttribute(float nAttr, QString sTag);
+	void        setAttribute(const QString &sAttr, QString sTag);
+	void        refreshXMLText();
 };
 }
 
