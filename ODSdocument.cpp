@@ -26,7 +26,6 @@
 
 using namespace ODSlib;
 
-
 ODSdocument::ODSdocument(QString sFileName) :
 	m_ioFile(sFileName),
 	m_oContent(m_ioFile)
@@ -37,13 +36,28 @@ ODSdocument::~ODSdocument()
 {
 }
 
-ODStable *ODSdocument::getFirstSheet()
+ODStable *ODSdocument::getFirstTable()
 {
+	TTableVector vTables = getTables();
+
+	if ( vTables.size() )
+	{
+		return vTables[0];
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+ODStable *ODSdocument::getTable(const QString &sSheetName)
+{
+	// TODO: implement (requires parsing sheet names)
 	return NULL;
 }
 
-ODStable *ODSdocument::getSheet(const QString &sSheetName)
+TTableVector ODSdocument::getTables()
 {
-	return NULL;
+	return m_oContent.tables();
 }
 

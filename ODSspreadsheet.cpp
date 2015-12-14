@@ -31,9 +31,19 @@ using namespace ODSlib;
 ODSspreadsheet::ODSspreadsheet(QDomElement &element) :
 	ODSprototypeXMLfamiliar( ODS_TAG_TABLE, element )
 {
-	m_bValid = parse();
 }
 
 ODSspreadsheet::~ODSspreadsheet()
 {
+}
+
+TTableVector ODSspreadsheet::tables()
+{
+	// The container of this node contains a vector of tables.
+	TTableVector vReturn;
+
+	for ( ST i = 0; i < m_vContainer.size(); ++i )
+		vReturn.push_back( (ODStable*)m_vContainer[i] );
+
+	return vReturn;
 }

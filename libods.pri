@@ -47,6 +47,7 @@ HEADERS += \
 	$$PWD/ODScontent.h \
 	$$PWD/ODSdocument.h \
 	$$PWD/ODSfile.h \
+	$$PWD/ODSglobal.h \
 	$$PWD/ODSprototypeFactory.h \
 	$$PWD/ODSprototypeXMLfamiliar.h \
 	$$PWD/ODSrepeatableContent.h \

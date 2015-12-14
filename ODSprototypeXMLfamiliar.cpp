@@ -27,27 +27,30 @@
 
 using namespace ODSlib;
 
-ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar() :
+/*ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar() :
 	m_bValid( false ),
 	m_bNull( true ),
 	m_sElementName( "" )
 {
 
-}
+}*/
 
 ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(const QString &sElementFilter) :
 	m_bValid( false ),
-	m_bNull( true ),
+	//m_bNull( false ),
 	m_sElementName( sElementFilter )
 {
 }
 
 ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(const QString &sElementFilter, QDomElement &element) :
 	m_bValid( false ),
-	m_bNull( true ),
+	//m_bNull( false ),
 	m_oAssociated( element ),
 	m_sElementName( sElementFilter )
 {
+	// BUG: Virtual methods called in the constructor will not call
+	// their overridden version of the respective child classes EVER!
+	m_bValid = parse();
 }
 
 ODSprototypeXMLfamiliar::~ODSprototypeXMLfamiliar()
@@ -60,9 +63,30 @@ bool ODSprototypeXMLfamiliar::valid()
 	return m_bValid;
 }
 
-bool ODSprototypeXMLfamiliar::isNull()
+/*bool ODSprototypeXMLfamiliar::isNull()
 {
 	return m_bNull;
+}*/
+
+TTableVector ODSprototypeXMLfamiliar::tables()
+{
+	TTableVector vTables;
+
+	// for all children of this node
+	const ST nContainerSize = m_vContainer.size();
+	for (ST i = 0; i < nContainerSize; ++i)
+	{
+		TTableVector vChildTables = m_vContainer[i]->tables();
+
+		// copy all tables of all children
+		const ST nChildTablesSize = vChildTables.size();
+		for (ST j = 0; j < nChildTablesSize; ++j)
+		{
+			vTables.push_back( vChildTables[j] );
+		}
+	}
+
+	return vTables;
 }
 
 bool ODSprototypeXMLfamiliar::parse()

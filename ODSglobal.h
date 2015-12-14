@@ -1,5 +1,5 @@
 /*
-** ODSdocument.h
+** ODSglobal.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,32 +22,16 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef ODSDOCUMENT_H
-#define ODSDOCUMENT_H
+#ifndef ODSGLOBAL
+#define ODSGLOBAL
 
-#include <QtXml>
-
-#include "ODSfile.h"
-#include "ODSglobal.h"
-#include "ODScontent.h"
+#include <vector>
 
 namespace ODSlib
 {
-class ODSdocument
-{
-public:
-	ODSdocument(QString sFileName);
-	~ODSdocument();
-
-	ODStable *getFirstTable();
-	ODStable *getTable(const QString &sSheetName);
-
-private:
-	ODSfile     m_ioFile;
-	ODScontent  m_oContent;
-
-	TTableVector getTables();
-};
+class ODStable;
+typedef std::vector<ODStable*> TTableVector;
 }
 
-#endif // ODSDOCUMENT_H
+#endif // ODSGLOBAL
+

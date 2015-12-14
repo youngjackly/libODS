@@ -82,6 +82,7 @@ ODSprototypeXMLfamiliar *ODSrepeatableContent::item(ODSprototypeXMLfamiliar::TCo
 		{
 			// should never happen except if there is a bug in the counting code...
 			throw(42);
+			return NULL;
 		}
 	}
 	else

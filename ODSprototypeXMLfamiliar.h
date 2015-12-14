@@ -27,6 +27,8 @@
 
 #include <QtXml>
 
+#include "ODSglobal.h"
+
 namespace ODSlib
 {
 class ODSprototypeXMLfamiliar
@@ -35,7 +37,7 @@ public:
 	typedef std::vector<ODSprototypeXMLfamiliar*> TContainer;
 
 protected:
-	ODSprototypeXMLfamiliar();
+	//ODSprototypeXMLfamiliar();
 	ODSprototypeXMLfamiliar(const QString &sElementFilter);
 	ODSprototypeXMLfamiliar(const QString &sElementFilter, QDomElement &element);
 
@@ -43,11 +45,13 @@ public:
 	~ODSprototypeXMLfamiliar();
 
 	bool valid();
-	bool isNull();
+	//bool isNull();
+
+	virtual TTableVector tables();
 
 protected:
 	bool m_bValid;
-	const bool m_bNull;
+	//const bool m_bNull;
 	QDomElement m_oAssociated;
 	TContainer m_vContainer;
 
