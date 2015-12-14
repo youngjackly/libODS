@@ -23,6 +23,8 @@
 */
 
 #include "ODSprototypeFactory.h"
+#include "ODSelementFactory.h"
+
 #include "ODScell.h"
 #include "ODSrow.h"
 #include "ODStable.h"
@@ -45,19 +47,19 @@ ODSprototypeXMLfamiliar *ODSprototypeFactory::generate(QDomElement &element, con
 	// clauses sorted by number of occurrences
 	if ( !sSelect.compare(ODS_TAG_TABLE_CELL) )
 	{
-		pReturn = new ODScell(element);
+		pReturn = ODSelementFactory::generateCell(element);
 	}
 	else if ( !sSelect.compare(ODS_TAG_TABLE_ROW) )
 	{
-		pReturn = new ODSrow(element);
+		pReturn = ODSelementFactory::generateRow(element);
 	}
 	else if ( !sSelect.compare(ODS_TAG_TABLE) )
 	{
-		pReturn = new ODStable(element);
+		pReturn = ODSelementFactory::generateTable(element);
 	}
 	else if ( !sSelect.compare(ODS_TAG_OFFICE_SPREADSHEET) )
 	{
-		pReturn = new ODSspreadsheet(element);
+		pReturn = ODSelementFactory::generateSpreadsheet(element);
 	}
 
 	return pReturn;

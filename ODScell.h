@@ -31,6 +31,8 @@
 
 namespace ODSlib
 {
+class ODSelementFactory;
+
 class ODScell : public ODSprototypeXMLfamiliar
 {
 public:
@@ -82,8 +84,10 @@ private:
 		friend class ODScell;
 	};
 
-public:
+private:
 	ODScell(QDomElement &element);
+
+public:
 	~ODScell();
 
 	void        clear();
@@ -113,7 +117,7 @@ public:
 	bool setContentString(const QString &value);
 
 protected:
-	virtual bool parse();
+	virtual void parse();
 
 private:
 	CellContent m_oContent;
@@ -121,6 +125,8 @@ private:
 	void        setAttribute(float nAttr, QString sTag);
 	void        setAttribute(const QString &sAttr, QString sTag);
 	void        refreshXMLText();
+
+	friend class ODSelementFactory;
 };
 }
 

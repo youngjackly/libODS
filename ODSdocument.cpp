@@ -23,17 +23,19 @@
 */
 
 #include "ODSdocument.h"
+#include "ODSelementFactory.h"
 
 using namespace ODSlib;
 
 ODSdocument::ODSdocument(QString sFileName) :
 	m_ioFile(sFileName),
-	m_oContent(m_ioFile)
+	m_pContent( ODSelementFactory::generateContentXML( m_ioFile ) )
 {
 }
 
 ODSdocument::~ODSdocument()
 {
+	delete m_pContent;
 }
 
 ODStable *ODSdocument::getFirstTable()
@@ -58,6 +60,6 @@ ODStable *ODSdocument::getTable(const QString &sSheetName)
 
 TTableVector ODSdocument::getTables()
 {
-	return m_oContent.tables();
+	return m_pContent->tables();
 }
 

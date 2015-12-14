@@ -35,22 +35,12 @@ using namespace ODSlib;
 
 }*/
 
-ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(const QString &sElementFilter) :
-	m_bValid( false ),
-	//m_bNull( false ),
-	m_sElementName( sElementFilter )
-{
-}
-
 ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(const QString &sElementFilter, QDomElement &element) :
 	m_bValid( false ),
 	//m_bNull( false ),
 	m_oAssociated( element ),
 	m_sElementName( sElementFilter )
 {
-	// BUG: Virtual methods called in the constructor will not call
-	// their overridden version of the respective child classes EVER!
-	m_bValid = parse();
 }
 
 ODSprototypeXMLfamiliar::~ODSprototypeXMLfamiliar()
@@ -89,9 +79,9 @@ TTableVector ODSprototypeXMLfamiliar::tables()
 	return vTables;
 }
 
-bool ODSprototypeXMLfamiliar::parse()
+void ODSprototypeXMLfamiliar::parse()
 {
-	bool bReturn = false;
+	bool bValid = false;
 
 	QDomNodeList list = m_oAssociated.elementsByTagName( m_sElementName );
 	const int nSize = list.size();
@@ -107,7 +97,7 @@ bool ODSprototypeXMLfamiliar::parse()
 			{
 				doMagic(pNew);
 				m_vContainer.push_back(pNew);
-				bReturn = true;
+				bValid = true;
 			}
 			else
 			{
@@ -118,7 +108,7 @@ bool ODSprototypeXMLfamiliar::parse()
 
 	m_vContainer.shrink_to_fit();
 
-	return bReturn;
+	m_bValid = bValid;
 }
 
 void ODSprototypeXMLfamiliar::doMagic(ODSprototypeXMLfamiliar *pNew)

@@ -1,5 +1,5 @@
 /*
-** ODSrow.h
+** ODSelementFactory.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,24 +22,32 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef ODSROW_H
-#define ODSROW_H
+#ifndef ODSELEMENTFACTORY_H
+#define ODSELEMENTFACTORY_H
 
-#include "ODSrepeatableContent.h"
+class QDomElement;
 
 namespace ODSlib
 {
-class ODSelementFactory;
+class ODScell;
+class ODSrow;
+class ODStable;
+class ODSspreadsheet;
+class ODScontent;
+class ODSfile;
 
-class ODSrow : public ODSrepeatableContent
+class ODSelementFactory
 {
 private:
-	ODSrow(QDomElement &element);
-public:
-	~ODSrow();
+	ODSelementFactory();
+	~ODSelementFactory();
 
-	friend class ODSelementFactory;
+public:
+	static ODScontent     *generateContentXML(ODSfile &ioFile);
+	static ODSspreadsheet *generateSpreadsheet(QDomElement &element);
+	static ODStable       *generateTable(QDomElement &element);
+	static ODSrow         *generateRow(QDomElement &element);
+	static ODScell        *generateCell(QDomElement &element);
 };
 }
-
-#endif // ODSROW_H
+#endif // ODSELEMENTFACTORY_H

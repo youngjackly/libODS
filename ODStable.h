@@ -30,14 +30,18 @@
 namespace ODSlib
 {
 class ODScell;
+class ODSelementFactory;
 
 class ODStable : public ODSrepeatableContent
 {
-public:
+private:
 	ODStable(QDomElement &element);
+public:
 	~ODStable();
 
 	ODScell *cell(ST y, ST x);
+
+	friend class ODSelementFactory;
 };
 }
 

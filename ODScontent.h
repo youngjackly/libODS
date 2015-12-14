@@ -25,28 +25,30 @@
 #ifndef ODSCONTENT_H
 #define ODSCONTENT_H
 
-#include "ODSfile.h"
 #include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
+class ODSelementFactory;
+
 class ODScontent : public ODSprototypeXMLfamiliar
 {
-public:
+private:
 	/**
 	 * @brief ODScontent represents the content.xml file within the ODS container.
 	 * Note that it is only considered to be valid in our case if it contains at least one valid <office:spreadsheet> element.
 	 * @param ioFile
 	 */
-	ODScontent(ODSfile& ioFile);
+	ODScontent(QDomDocument &doc);
+public:
 	~ODScontent();
 
 	QString toString();
 
 private:
-	const QString m_sContentFileName = QString("content.xml");
+	QDomDocument m_oContentDocument;
 
-	QDomDocument m_oContentFile;
+	friend class ODSelementFactory;
 };
 }
 

@@ -41,12 +41,12 @@ public:
 
 	ODStable *getFirstTable();
 	ODStable *getTable(const QString &sSheetName);
+	TTableVector getTables();
 
 private:
 	ODSfile     m_ioFile;
-	ODScontent  m_oContent;
+	ODScontent* m_pContent;
 
-	TTableVector getTables();
 };
 }
 

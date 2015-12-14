@@ -46,6 +46,7 @@ HEADERS += \
 	$$PWD/ODSconstants.h \
 	$$PWD/ODScontent.h \
 	$$PWD/ODSdocument.h \
+	$$PWD/ODSelementFactory.h \
 	$$PWD/ODSfile.h \
 	$$PWD/ODSglobal.h \
 	$$PWD/ODSprototypeFactory.h \
@@ -60,6 +61,7 @@ SOURCES += \
 	$$PWD/ODScell.cpp \
 	$$PWD/ODScontent.cpp \
 	$$PWD/ODSdocument.cpp \
+	$$PWD/ODSelementFactory.cpp \
 	$$PWD/ODSfile.cpp \
 	$$PWD/ODSprototypeFactory.cpp \
 	$$PWD/ODSprototypeXMLfamiliar.cpp \

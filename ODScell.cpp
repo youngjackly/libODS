@@ -128,10 +128,10 @@ bool ODScell::setContentString(const QString &value)
 	return bReturn1 && bReturn2;
 }
 
-bool ODScell::parse()
+void ODScell::parse()
 {
 	m_oContent.parse();
-	return true;
+	m_bValid = true;
 }
 
 void ODScell::setAttribute(float nAttr, QString sTag)

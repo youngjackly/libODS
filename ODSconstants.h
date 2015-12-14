@@ -25,6 +25,8 @@
 #ifndef ODSCONSTANTS
 #define ODSCONSTANTS
 
+#define ODS_CONTAINER_ELEMENT_CONTENT       "content.xml"
+
 #define ODS_TAG_OFFICE_BODY         "office:body"
 #define ODS_TAG_OFFICE_SPREADSHEET  "office:spreadsheet"
 #define ODS_TAG_TABLE               "table:table"

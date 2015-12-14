@@ -25,7 +25,7 @@
 #ifndef ODSPROTOTYPEFACTORY_H
 #define ODSPROTOTYPEFACTORY_H
 
-#include <QDomElement>
+#include <QtXml>
 
 #include "ODSconstants.h"
 
@@ -33,14 +33,19 @@ namespace ODSlib
 {
 class ODSprototypeXMLfamiliar;
 
+/**
+ * @brief The ODSprototypeFactory class is a private helper class for use during the parsing step of a ODSprototypeXMLfamiliar creation.
+ */
 class ODSprototypeFactory
 {
 private:
 	ODSprototypeFactory();
 	~ODSprototypeFactory();
 
-public:
+private:
 	static ODSprototypeXMLfamiliar *generate(QDomElement &element, const QString& sSelect);
+
+	friend class ODSprototypeXMLfamiliar;
 };
 }
 

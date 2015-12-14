@@ -30,14 +30,19 @@
 
 namespace ODSlib
 {
+class ODSelementFactory;
+
 class ODSspreadsheet : public ODSprototypeXMLfamiliar
 {
-public:
+private:
 	ODSspreadsheet(QDomElement &element);
+public:
 	~ODSspreadsheet();
 
 private:
 	virtual TTableVector tables();
+
+	friend class ODSelementFactory;
 };
 }
 

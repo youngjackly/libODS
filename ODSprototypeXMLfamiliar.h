@@ -31,6 +31,7 @@
 
 namespace ODSlib
 {
+class ODSelementFactory;
 class ODSprototypeXMLfamiliar
 {
 public:
@@ -38,7 +39,6 @@ public:
 
 protected:
 	//ODSprototypeXMLfamiliar();
-	ODSprototypeXMLfamiliar(const QString &sElementFilter);
 	ODSprototypeXMLfamiliar(const QString &sElementFilter, QDomElement &element);
 
 public:
@@ -55,7 +55,7 @@ protected:
 	QDomElement m_oAssociated;
 	TContainer m_vContainer;
 
-	virtual bool parse();
+	virtual void parse();
 	virtual void doMagic(ODSprototypeXMLfamiliar *pNew);
 
 	/**
@@ -77,6 +77,8 @@ private:
 
 	friend class ODStable;
 	friend class ODSrepeatableContent;
+
+	friend class ODSelementFactory;
 };
 typedef ODSprototypeXMLfamiliar::TContainer::size_type ST;
 }

@@ -28,27 +28,10 @@
 
 using namespace ODSlib;
 
-ODScontent::ODScontent(ODSfile &ioFile) :
-	ODSprototypeXMLfamiliar( ODS_TAG_OFFICE_SPREADSHEET )
+ODScontent::ODScontent(QDomDocument &doc) :
+	ODSprototypeXMLfamiliar( ODS_TAG_OFFICE_SPREADSHEET, doc.documentElement() ),
+	m_oContentDocument( doc )
 {
-	QIODevice* pDevice = ioFile.accessContainerElement(m_sContentFileName);
-
-	m_oContentFile = QDomDocument();
-	int errorLine, errorCol;
-	QString sError;
-
-	if ( m_oContentFile.setContent(pDevice, &sError, &errorLine, &errorCol) )
-	{
-		m_oAssociated = m_oContentFile.documentElement();
-		m_bValid = parse();
-	}
-	else
-	{
-		// TODO: improve warning with error string from above
-		qWarning("ODScontent::parse - Failed to parse file.");
-	}
-
-	ioFile.closeContainerElement(pDevice);
 }
 
 ODScontent::~ODScontent()
@@ -57,6 +40,6 @@ ODScontent::~ODScontent()
 
 QString ODScontent::toString()
 {
-	return m_oContentFile.toString(-1);
+	return m_oContentDocument.toString(-1);
 }
 
