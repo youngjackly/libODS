@@ -37,7 +37,7 @@ class ODSdocument
 {
 public:
 	ODSdocument(QString sFileName);
-	~ODSdocument();
+	virtual ~ODSdocument();
 
 	ODStable *getFirstTable();
 	ODStable *getTable(const QString &sSheetName);

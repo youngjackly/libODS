@@ -28,6 +28,9 @@ QT_VERSION = $$split(QT_VERSION, ".")
 QT += core
 QT += xml
 
+# std::vector::shrink_to_fit is required.
+CONFIG      += c++11
+
 INCLUDEPATH += $$PWD
 
 # Use zlib bundled with Qt to avoid external dependencies.

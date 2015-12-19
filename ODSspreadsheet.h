@@ -37,7 +37,7 @@ class ODSspreadsheet : public ODSprototypeXMLfamiliar
 private:
 	ODSspreadsheet(QDomElement &element);
 public:
-	~ODSspreadsheet();
+	virtual ~ODSspreadsheet();
 
 private:
 	virtual TTableVector tables();

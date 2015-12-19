@@ -31,34 +31,36 @@
 
 namespace ODSlib
 {
+
+namespace CellType
+{
+enum Type
+{
+	unknown,        // unknown or unsupported cell type
+	error,          // indicates a parsing error
+	none,           // empty cell; no type specified
+	boolean,
+	number,
+	percentage,
+	currency,
+	stringContent,
+	date,
+	time
+};
+}
+
 class ODSelementFactory;
 
 class ODScell : public ODSprototypeXMLfamiliar
 {
-public:
-	enum CellType
-	{
-		unknown,        // unknown or unsupported cell type
-		error,          // indicates a parsing error
-		none,           // empty cell; no type specified
-		boolean,
-		number,
-		percentage,
-		currency,
-		stringContent,
-		date,
-		time
-	};
-
 private:
 	class CellContent
 	{
 		CellContent(QDomElement &element);
-		~CellContent();
+		virtual ~CellContent();
 
-		void        clear();
-
-		CellType    type() const;
+		void            clear();
+		CellType::Type  type() const;
 
 		float       value() const;
 		bool        setValue(float value);
@@ -76,10 +78,10 @@ private:
 		bool        parseType(const QString &sAttribute);
 		void        refreshText();
 
-		QDomElement m_oAssociated;
-		CellType    m_eType;
-		float       m_nValue;
-		QString     m_sData;
+		QDomElement     m_oAssociated;
+		CellType::Type  m_eType;
+		float           m_nValue;
+		QString         m_sData;
 
 		friend class ODScell;
 	};
@@ -90,12 +92,12 @@ private:
 public:
 	~ODScell();
 
-	void        clear();
+	void            clear();
 
-	CellType    type() const;
+	CellType::Type  type() const;
 
-	float       value() const;
-	bool        setValue(float value);
+	float           value() const;
+	bool            setValue(float value);
 
 	/**
 	 * @brief hasText

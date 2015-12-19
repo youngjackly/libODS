@@ -37,7 +37,7 @@ class ODStable : public ODSrepeatableContent
 private:
 	ODStable(QDomElement &element);
 public:
-	~ODStable();
+	virtual ~ODStable();
 
 	ODScell *cell(ST y, ST x);
 

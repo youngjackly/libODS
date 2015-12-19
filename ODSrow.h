@@ -36,7 +36,7 @@ class ODSrow : public ODSrepeatableContent
 private:
 	ODSrow(QDomElement &element);
 public:
-	~ODSrow();
+	virtual ~ODSrow();
 
 	friend class ODSelementFactory;
 };

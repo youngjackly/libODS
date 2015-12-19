@@ -33,7 +33,7 @@ class ODSrepeatableContent : public ODSprototypeXMLfamiliar
 {
 public:
 	ODSrepeatableContent(const QString &sElementFilter, const QString &sRepeatFilter, QDomElement &element);
-	~ODSrepeatableContent();
+	virtual ~ODSrepeatableContent();
 
 protected:
 	void doMagic(ODSprototypeXMLfamiliar* pNew);

@@ -40,7 +40,7 @@ class ODSelementFactory
 {
 private:
 	ODSelementFactory();
-	~ODSelementFactory();
+	virtual ~ODSelementFactory();
 
 public:
 	static ODScontent     *generateContentXML(ODSfile &ioFile);

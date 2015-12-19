@@ -41,7 +41,7 @@ private:
 	 */
 	ODScontent(QDomDocument &doc);
 public:
-	~ODScontent();
+	virtual ~ODScontent();
 
 	QString toString();
 

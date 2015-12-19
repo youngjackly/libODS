@@ -39,7 +39,7 @@ class ODSfile
 {
 public:
 	ODSfile(QString sFileName);
-	~ODSfile();
+	virtual ~ODSfile();
 
 	/**
 	 * @brief accessContainerElement allows to read from an element file of the ODS container.

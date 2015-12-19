@@ -32,10 +32,9 @@ using namespace ODSlib;
 	m_bNull( true ),
 	m_sElementName( "" )
 {
-
 }*/
 
-ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(const QString &sElementFilter, QDomElement &element) :
+ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(QString sElementFilter, QDomElement element) :
 	m_bValid( false ),
 	//m_bNull( false ),
 	m_oAssociated( element ),

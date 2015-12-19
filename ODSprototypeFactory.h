@@ -40,7 +40,7 @@ class ODSprototypeFactory
 {
 private:
 	ODSprototypeFactory();
-	~ODSprototypeFactory();
+	virtual ~ODSprototypeFactory();
 
 private:
 	static ODSprototypeXMLfamiliar *generate(QDomElement &element, const QString& sSelect);

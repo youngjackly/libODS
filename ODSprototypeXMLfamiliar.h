@@ -39,10 +39,10 @@ public:
 
 protected:
 	//ODSprototypeXMLfamiliar();
-	ODSprototypeXMLfamiliar(const QString &sElementFilter, QDomElement &element);
+	ODSprototypeXMLfamiliar(QString sElementFilter, QDomElement element);
 
 public:
-	~ODSprototypeXMLfamiliar();
+	virtual ~ODSprototypeXMLfamiliar();
 
 	bool valid();
 	//bool isNull();

@@ -42,7 +42,7 @@ void ODScell::clear()
 	m_oContent.clear();
 }
 
-ODScell::CellType ODScell::type() const
+CellType::Type ODScell::type() const
 {
 	return m_oContent.type();
 }
@@ -71,6 +71,9 @@ bool ODScell::setValue(float value)
 	case CellType::boolean:
 		setAttribute( value, ODS_ATTR_OFFICE_BOOLVAL );
 		bReturn2 = true;
+		break;
+
+	default:
 		break;
 	}
 
@@ -213,7 +216,7 @@ void ODScell::CellContent::clear()
 	}
 }
 
-ODScell::CellType ODScell::CellContent::type() const
+CellType::Type ODScell::CellContent::type() const
 {
 	return m_eType;
 }
@@ -249,6 +252,9 @@ bool ODScell::CellContent::setValue(float value)
 	case CellType::boolean:
 		m_nValue = value;
 		bReturn = true;
+		break;
+
+	default:
 		break;
 	}
 
