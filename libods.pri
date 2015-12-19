@@ -41,7 +41,8 @@ include($$PWD/3rdparty/QuaZIP/quazip/quazip.pri)
 
 # Headers
 HEADERS += \
-	$$[QT_INSTALL_HEADERS]/QtZlib/zlib.h \
+	$$PWD/ODSlib.h \                        # this is a convenience header not used internally
+	$$[QT_INSTALL_HEADERS]/QtZlib/zlib.h \  # required for QuaZip compilation
 	$$PWD/ODScell.h \
 	$$PWD/ODSconstants.h \
 	$$PWD/ODScontent.h \
