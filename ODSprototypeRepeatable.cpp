@@ -1,5 +1,5 @@
 /*
-** ODSdocument.cpp
+** ODSprototypeRepeatable.cpp
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,55 +22,16 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ODSdocument.h"
-
-#include "ODStable.h"
-#include "ODSelementFactory.h"
+#include "ODSprototypeRepeatable.h"
 
 using namespace ODSlib;
 
-ODSdocument::ODSdocument(QString sFileName) :
-	m_ioFile(sFileName),
-	m_pContent( ODSelementFactory::generateContentXML( m_ioFile ) )
+ODSprototypeRepeatable::ODSprototypeRepeatable(const QString &sElementFilter, QDomElement &element) :
+	ODSprototypeXMLfamiliar( sElementFilter, element )
 {
 }
 
-ODSdocument::~ODSdocument()
+ODSprototypeRepeatable::~ODSprototypeRepeatable()
 {
-	delete m_pContent;
-}
-
-ODStable *ODSdocument::getFirstTable()
-{
-	TTableVector vTables = getTables();
-
-	if ( vTables.size() )
-	{
-		return vTables[0];
-	}
-	else
-	{
-		return NULL;
-	}
-}
-
-ODStable *ODSdocument::getTable(const QString &sTableName)
-{
-	TTableVector vTables = getTables();
-
-	for ( ST i = 0; i < vTables.size(); ++i )
-	{
-		ODStable* pTable = vTables[i];
-		if ( pTable->name().compare(sTableName) )
-		{
-			return pTable;
-		}
-	}
-	return NULL;
-}
-
-TTableVector ODSdocument::getTables()
-{
-	return m_pContent->tables();
 }
 

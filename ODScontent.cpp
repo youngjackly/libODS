@@ -23,8 +23,6 @@
 */
 
 #include "ODScontent.h"
-#include "ODSspreadsheet.h"
-#include "ODSconstants.h"
 
 using namespace ODSlib;
 
@@ -43,3 +41,16 @@ QString ODScontent::toString()
 	return m_oContentDocument.toString(-1);
 }
 
+/*ODSspreadsheet *ODScontent::sheet(const QString &sName)
+{
+	for ( ST i = 0; i < m_vContainer.size(); ++i )
+	{
+		ODSspreadsheet *pSheet = (ODSspreadsheet*)m_vContainer[i];
+
+	}
+}
+
+ODSprototypeXMLfamiliar::TContainer ODScontent::sheets()
+{
+	return m_vContainer;
+}*/

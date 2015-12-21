@@ -23,12 +23,13 @@
 */
 
 #include "ODSrow.h"
-#include "ODSconstants.h"
 
 using namespace ODSlib;
 
 ODSrow::ODSrow(QDomElement &element) :
-	ODSrepeatableContent( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_CELL_REPEAT, element )
+	ODSprototypeXMLfamiliar( ODS_TAG_TABLE_CELL, element ), // req due to virtual inheritance
+	ODSprototypeContentRepeatable( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_CELL_REPEAT, element ),
+	ODSprototypeRepeatable( ODS_TAG_TABLE_CELL, element )
 {
 
 }

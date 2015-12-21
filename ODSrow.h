@@ -25,13 +25,14 @@
 #ifndef ODSROW_H
 #define ODSROW_H
 
-#include "ODSrepeatableContent.h"
+#include "ODSprototypeRepeatable.h"
+#include "ODSprototypeContentRepeatable.h"
 
 namespace ODSlib
 {
 class ODSelementFactory;
 
-class ODSrow : public ODSrepeatableContent
+class ODSrow : public ODSprototypeContentRepeatable, public ODSprototypeRepeatable
 {
 private:
 	ODSrow(QDomElement &element);

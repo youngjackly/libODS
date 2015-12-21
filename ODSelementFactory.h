@@ -29,12 +29,12 @@ class QDomElement;
 
 namespace ODSlib
 {
-class ODScell;
-class ODSrow;
-class ODStable;
-class ODSspreadsheet;
-class ODScontent;
 class ODSfile;
+class ODScontent;
+class ODSspreadsheet;
+class ODStable;
+class ODSrow;
+class ODScell;
 
 class ODSelementFactory
 {

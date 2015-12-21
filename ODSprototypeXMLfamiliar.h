@@ -28,6 +28,7 @@
 #include <QtXml>
 
 #include "ODSglobal.h"
+#include "ODSconstants.h"
 
 namespace ODSlib
 {
@@ -76,7 +77,7 @@ private:
 	const QString m_sElementName;
 
 	friend class ODStable;
-	friend class ODSrepeatableContent;
+	friend class ODSprototypeContentRepeatable;
 
 	friend class ODSelementFactory;
 };

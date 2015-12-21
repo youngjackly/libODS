@@ -53,9 +53,10 @@ HEADERS += \
 	$$PWD/ODSelementFactory.h \
 	$$PWD/ODSfile.h \
 	$$PWD/ODSglobal.h \
+	$$PWD/ODSprototypeContentRepeatable.h \
 	$$PWD/ODSprototypeFactory.h \
+	$$PWD/ODSprototypeRepeatable.h \
 	$$PWD/ODSprototypeXMLfamiliar.h \
-	$$PWD/ODSrepeatableContent.h \
 	$$PWD/ODSrow.h \
 	$$PWD/ODSspreadsheet.h \
 	$$PWD/ODStable.h
@@ -67,9 +68,10 @@ SOURCES += \
 	$$PWD/ODSdocument.cpp \
 	$$PWD/ODSelementFactory.cpp \
 	$$PWD/ODSfile.cpp \
+	$$PWD/ODSprototypeContentRepeatable.cpp \
 	$$PWD/ODSprototypeFactory.cpp \
+	$$PWD/ODSprototypeRepeatable.cpp \
 	$$PWD/ODSprototypeXMLfamiliar.cpp \
-	$$PWD/ODSrepeatableContent.cpp \
 	$$PWD/ODSrow.cpp \
 	$$PWD/ODSspreadsheet.cpp \
 	$$PWD/ODStable.cpp

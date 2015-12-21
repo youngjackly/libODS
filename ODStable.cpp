@@ -23,19 +23,34 @@
 */
 
 #include "ODStable.h"
-#include "ODScell.h"
-#include "ODSrow.h"
-#include "ODSconstants.h"
 
 using namespace ODSlib;
 
 ODStable::ODStable(QDomElement &element) :
-	ODSrepeatableContent( ODS_TAG_TABLE_ROW, ODS_ATTR_TBL_ROW_REPEAT, element )
+	ODSprototypeXMLfamiliar( ODS_TAG_TABLE_ROW, element ), // req due to virtual inheritance
+	ODSprototypeContentRepeatable( ODS_TAG_TABLE_ROW, ODS_ATTR_TBL_ROW_REPEAT, element )
 {
 }
 
 ODStable::~ODStable()
 {
+}
+
+void ODStable::parse()
+{
+	m_sName = m_oAssociated.attribute( ODS_ATTR_TBL_NAME );
+	ODSprototypeXMLfamiliar::parse();
+}
+
+const QString &ODStable::name()
+{
+	return m_sName;
+}
+
+void ODStable::setName(const QString &name)
+{
+	m_oAssociated.setAttribute( ODS_ATTR_TBL_NAME, name );
+	m_sName = name;
 }
 
 ODScell *ODStable::cell(ST y, ST x)

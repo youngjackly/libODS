@@ -23,8 +23,6 @@
 */
 
 #include "ODSspreadsheet.h"
-#include "ODStable.h"
-#include "ODSconstants.h"
 
 using namespace ODSlib;
 
@@ -37,7 +35,7 @@ ODSspreadsheet::~ODSspreadsheet()
 {
 }
 
-TTableVector ODSspreadsheet::tables()
+/*TTableVector ODSspreadsheet::tables()
 {
 	// The container of this node contains a vector of tables.
 	TTableVector vReturn;
@@ -46,4 +44,4 @@ TTableVector ODSspreadsheet::tables()
 		vReturn.push_back( (ODStable*)m_vContainer[i] );
 
 	return vReturn;
-}
+}*/

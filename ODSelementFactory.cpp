@@ -1,5 +1,5 @@
 /*
-** ODSelementFactory.h
+** ODSelementFactory.cpp
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,18 +22,14 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include <QtXml>
-
 #include "ODSelementFactory.h"
 
 #include "ODSfile.h"
-#include "ODScell.h"
-#include "ODSrow.h"
-#include "ODStable.h"
-#include "ODSconstants.h"
 #include "ODScontent.h"
 #include "ODSspreadsheet.h"
-#include "ODSprototypeXMLfamiliar.h"
+#include "ODStable.h"
+#include "ODSrow.h"
+#include "ODScell.h"
 
 using namespace ODSlib;
 

@@ -25,7 +25,6 @@
 #ifndef ODSSPREADSHEET_H
 #define ODSSPREADSHEET_H
 
-#include "ODSglobal.h"
 #include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
@@ -40,7 +39,7 @@ public:
 	virtual ~ODSspreadsheet();
 
 private:
-	virtual TTableVector tables();
+	//virtual TTableVector tables();
 
 	friend class ODSelementFactory;
 };

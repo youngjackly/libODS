@@ -45,6 +45,9 @@ public:
 
 	QString toString();
 
+	/*ODSspreadsheet* sheet(const QString& sName);
+	TContainer sheets();*/
+
 private:
 	QDomDocument m_oContentDocument;
 

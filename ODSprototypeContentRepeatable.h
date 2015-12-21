@@ -22,18 +22,18 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef ODSREPEATABLE_H
-#define ODSREPEATABLE_H
+#ifndef ODSPROTOTYPEXMLFAMILIAR_H
+#define ODSPROTOTYPEXMLFAMILIAR_H
 
 #include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
-class ODSrepeatableContent : public ODSprototypeXMLfamiliar
+class ODSprototypeContentRepeatable : virtual public ODSprototypeXMLfamiliar
 {
 public:
-	ODSrepeatableContent(const QString &sElementFilter, const QString &sRepeatFilter, QDomElement &element);
-	virtual ~ODSrepeatableContent();
+	ODSprototypeContentRepeatable(const QString &sElementFilter, const QString &sRepeatFilter, QDomElement &element);
+	virtual ~ODSprototypeContentRepeatable();
 
 protected:
 	void doMagic(ODSprototypeXMLfamiliar* pNew);
@@ -46,4 +46,4 @@ private:
 };
 }
 
-#endif // ODSREPEATABLE_H
+#endif // ODSPROTOTYPEXMLFAMILIAR_H

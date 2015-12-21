@@ -22,15 +22,13 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-
+#ifndef ODSLIB_H
+#define ODSLIB_H
 
 /**
  * The ODSlib header is a convenience header.
- * It allows to include all relevant headers with a single include.
+ * It allows a library user to include all relevant headers with a single include.
  */
-
-#ifndef ODSLIB_H
-#define ODSLIB_H
 
 #include "ODSdocument.h"
 #include "ODStable.h"

@@ -1,5 +1,5 @@
 /*
-** ODSrepeatableContent.cpp
+** ODSprototypeContentRepeatable.cpp
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,11 +22,11 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ODSrepeatableContent.h"
+#include "ODSprototypeContentRepeatable.h"
 
 using namespace ODSlib;
 
-ODSrepeatableContent::ODSrepeatableContent(const QString &sElementFilter, const QString &sRepeatFilter, QDomElement &element) :
+ODSprototypeContentRepeatable::ODSprototypeContentRepeatable(const QString &sElementFilter, const QString &sRepeatFilter, QDomElement &element) :
 	ODSprototypeXMLfamiliar( sElementFilter, element ),
 	m_sRepeatFilter( sRepeatFilter ),
 	m_nParseCounter( 0 )
@@ -34,12 +34,11 @@ ODSrepeatableContent::ODSrepeatableContent(const QString &sElementFilter, const 
 
 }
 
-ODSrepeatableContent::~ODSrepeatableContent()
+ODSprototypeContentRepeatable::~ODSprototypeContentRepeatable()
 {
-
 }
 
-void ODSrepeatableContent::doMagic(ODSprototypeXMLfamiliar *pNew)
+void ODSprototypeContentRepeatable::doMagic(ODSprototypeXMLfamiliar *pNew)
 {
 	// remember the current position for faster lookup
 	m_mPositions[m_nParseCounter] = m_vContainer.size();
@@ -69,7 +68,7 @@ void ODSrepeatableContent::doMagic(ODSprototypeXMLfamiliar *pNew)
 	ODSprototypeXMLfamiliar::doMagic(pNew);
 }
 
-ODSprototypeXMLfamiliar *ODSrepeatableContent::item(ODSprototypeXMLfamiliar::TContainer::size_type pos)
+ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfamiliar::TContainer::size_type pos)
 {
 	if ( m_mPositions.count(pos) )
 	{

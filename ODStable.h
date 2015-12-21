@@ -25,22 +25,29 @@
 #ifndef ODSTABLE_H
 #define ODSTABLE_H
 
-#include "ODSrepeatableContent.h"
+#include "ODSprototypeContentRepeatable.h"
 
 namespace ODSlib
 {
 class ODScell;
 class ODSelementFactory;
 
-class ODStable : public ODSrepeatableContent
+class ODStable : public ODSprototypeContentRepeatable
 {
 private:
 	ODStable(QDomElement &element);
 public:
 	virtual ~ODStable();
 
+	virtual void parse();
+
+	const QString& name();
+	void setName(const QString &name);
+
 	ODScell *cell(ST y, ST x);
 
+private:
+	QString m_sName;
 	friend class ODSelementFactory;
 };
 }

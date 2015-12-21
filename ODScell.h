@@ -25,9 +25,7 @@
 #ifndef ODSCELL_H
 #define ODSCELL_H
 
-#include <QString>
-
-#include "ODSprototypeXMLfamiliar.h"
+#include "ODSprototypeRepeatable.h"
 
 namespace ODSlib
 {
@@ -51,7 +49,7 @@ enum Type
 
 class ODSelementFactory;
 
-class ODScell : public ODSprototypeXMLfamiliar
+class ODScell : public ODSprototypeRepeatable
 {
 private:
 	class CellContent

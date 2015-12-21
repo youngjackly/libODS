@@ -25,9 +25,8 @@
 #ifndef ODSPROTOTYPEFACTORY_H
 #define ODSPROTOTYPEFACTORY_H
 
-#include <QtXml>
-
-#include "ODSconstants.h"
+class QString;
+class QDomElement;
 
 namespace ODSlib
 {

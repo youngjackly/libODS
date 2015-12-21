@@ -23,12 +23,12 @@
 */
 
 #include "ODSprototypeFactory.h"
-#include "ODSelementFactory.h"
 
 #include "ODScell.h"
 #include "ODSrow.h"
 #include "ODStable.h"
 #include "ODSspreadsheet.h"
+#include "ODSelementFactory.h"
 
 using namespace ODSlib;
 

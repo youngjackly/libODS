@@ -32,12 +32,12 @@
 #define ODS_TAG_TABLE               "table:table"
 #define ODS_TAG_TABLE_ROW           "table:table-row"
 #define ODS_TAG_TABLE_CELL          "table:table-cell"
-#define ODS_TAG_TEXT                "text:p"
+#define ODS_TAG_TEXT_P              "text:p"
 
+#define ODS_ATTR_TBL_NAME           "table:name"
+#define ODS_ATTR_TBL_FORMULA        "table:formula"
 #define ODS_ATTR_TBL_ROW_REPEAT     "table:number-rows-repeated"
 #define ODS_ATTR_TBL_CELL_REPEAT    "table:number-columns-repeated"
-
-#define ODS_ATTR_TBL_FORMULA        "table:formula"
 
 #define ODS_ATTR_OFFICE_VALUE       "office:value"
 #define ODS_ATTR_OFFICE_BOOLVAL     "office:boolean-value"

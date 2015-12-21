@@ -23,12 +23,12 @@
 */
 
 #include "ODScell.h"
-#include "ODSconstants.h"
 
 using namespace ODSlib;
 
 ODScell::ODScell(QDomElement &element) :
-	ODSprototypeXMLfamiliar( ODS_TAG_TEXT, element),
+	ODSprototypeXMLfamiliar( ODS_TAG_TEXT_P, element), // req due to virtual inheritance
+	ODSprototypeRepeatable( ODS_TAG_TEXT_P, element),
 	m_oContent( element )
 {
 }
@@ -154,7 +154,7 @@ void ODScell::setAttribute(const QString &sAttr, QString sTag)
 void ODScell::refreshXMLText()
 {
 	// remove all XML text nodes (there should be only one)
-	QDomNodeList children = m_oAssociated.elementsByTagName( ODS_TAG_TEXT );
+	QDomNodeList children = m_oAssociated.elementsByTagName( ODS_TAG_TEXT_P );
 	for ( int i = 0; i < children.size(); ++i )
 	{
 		m_oAssociated.removeChild( children.at(i) );
@@ -163,7 +163,7 @@ void ODScell::refreshXMLText()
 	// refresh XML text node
 	if ( m_oContent.m_pText )
 	{
-		QDomElement textNode = m_oAssociated.ownerDocument().createElement( ODS_TAG_TEXT );
+		QDomElement textNode = m_oAssociated.ownerDocument().createElement( ODS_TAG_TEXT_P );
 		QDomNode text = m_oAssociated.ownerDocument().createTextNode( *m_oContent.m_pText );
 		textNode.appendChild( text );
 		m_oAssociated.appendChild( textNode );
@@ -328,7 +328,7 @@ void ODScell::CellContent::parse()
 		delete m_pText;
 		m_pText = NULL;
 	}
-	QDomNodeList children = m_oAssociated.elementsByTagName( ODS_TAG_TEXT );
+	QDomNodeList children = m_oAssociated.elementsByTagName( ODS_TAG_TEXT_P );
 	if ( children.size() )
 	{
 		QDomElement element = children.at(0).toElement();

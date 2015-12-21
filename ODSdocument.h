@@ -25,8 +25,6 @@
 #ifndef ODSDOCUMENT_H
 #define ODSDOCUMENT_H
 
-#include <QtXml>
-
 #include "ODSfile.h"
 #include "ODSglobal.h"
 #include "ODScontent.h"
@@ -40,13 +38,12 @@ public:
 	virtual ~ODSdocument();
 
 	ODStable *getFirstTable();
-	ODStable *getTable(const QString &sSheetName);
+	ODStable *getTable(const QString &sTableName);
 	TTableVector getTables();
 
 private:
 	ODSfile     m_ioFile;
 	ODScontent* m_pContent;
-
 };
 }
 
