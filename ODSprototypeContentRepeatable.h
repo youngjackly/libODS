@@ -29,10 +29,20 @@
 
 namespace ODSlib
 {
+/**
+ * @brief The ODSprototypeContentRepeatable class manages accessing an underlying item container with repeatable items.
+ */
 class ODSprototypeContentRepeatable : virtual public ODSprototypeXMLfamiliar
 {
+protected:
+	/**
+	 * @brief ODSprototypeContentRepeatable
+	 * @param sChildElementFilter The name of child elements to watch for/expect while parsing.
+	 * @param sRepeatFilter The element tag associated with the number of repetitions of the element with the above name tag.
+	 * @param associatedElement The XML element associated with this node.
+	 */
+	ODSprototypeContentRepeatable(const QString &sChildElementFilter, const QString &sRepeatFilter, QDomElement &associatedElement);
 public:
-	ODSprototypeContentRepeatable(const QString &sElementFilter, const QString &sRepeatFilter, QDomElement &element);
 	virtual ~ODSprototypeContentRepeatable();
 
 protected:

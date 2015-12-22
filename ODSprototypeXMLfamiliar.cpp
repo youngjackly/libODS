@@ -28,18 +28,11 @@
 
 using namespace ODSlib;
 
-/*ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar() :
-	m_bValid( false ),
-	m_bNull( true ),
-	m_sElementName( "" )
-{
-}*/
-
-ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(QString sElementFilter, QDomElement element) :
+ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(QString sChildElementFilter, QDomElement associatedElement) :
 	m_bValid( false ),
 	//m_bNull( false ),
-	m_oAssociated( element ),
-	m_sElementName( sElementFilter )
+	m_oAssociated( associatedElement ),
+	m_sElementName( sChildElementFilter )
 {
 }
 

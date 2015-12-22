@@ -33,14 +33,22 @@
 namespace ODSlib
 {
 class ODSelementFactory;
+
+/**
+ * @brief The ODSprototypeXMLfamiliar class represents a logical node in a tree parallel to an XML file tree structure.
+ */
 class ODSprototypeXMLfamiliar
 {
 public:
 	typedef std::vector<ODSprototypeXMLfamiliar*> TContainer;
 
 protected:
-	//ODSprototypeXMLfamiliar();
-	ODSprototypeXMLfamiliar(QString sElementFilter, QDomElement element);
+	/**
+	 * @brief ODSprototypeXMLfamiliar
+	 * @param sChildElementFilter The name of child elements to watch for/expect while parsing.
+	 * @param associatedElement The XML element associated with this node.
+	 */
+	ODSprototypeXMLfamiliar(QString sChildElementFilter, QDomElement associatedElement);
 
 public:
 	virtual ~ODSprototypeXMLfamiliar();

@@ -28,7 +28,7 @@ using namespace ODSlib;
 
 ODStable::ODStable(QDomElement &element) :
 	ODSprototypeXMLfamiliar( ODS_TAG_TABLE_ROW, element ), // req due to virtual inheritance
-	ODSprototypeContentRepeatable( ODS_TAG_TABLE_ROW, ODS_ATTR_TBL_ROW_REPEAT, element )
+	ODSprototypeContentRepeatable( ODS_TAG_TABLE_ROW, ODS_ATTR_TBL_ROW_REPEAT, element ) // child: row; child repetitions for: row
 {
 }
 
