@@ -26,12 +26,11 @@
 
 using namespace ODSlib;
 
-ODSprototypeContentRepeatable::ODSprototypeContentRepeatable(const QString &sElementFilter, const QString &sRepeatFilter, QDomElement &element) :
-	ODSprototypeXMLfamiliar( sElementFilter, element ),
+ODSprototypeContentRepeatable::ODSprototypeContentRepeatable(const QString &sChildElementFilter, const QString &sRepeatFilter, QDomElement &associatedElement) :
+	ODSprototypeXMLfamiliar( sChildElementFilter, associatedElement ),
 	m_sRepeatFilter( sRepeatFilter ),
 	m_nParseCounter( 0 )
 {
-
 }
 
 ODSprototypeContentRepeatable::~ODSprototypeContentRepeatable()
@@ -86,6 +85,30 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 	}
 	else
 	{
+		ST key = (*m_mPositions.begin()).first;
+		ST val = (*m_mPositions.begin()).second;
+
+		TContainer::iterator containerIt = m_vContainer.begin();
+
+		for ( std::map<ST,ST>::const_iterator it = m_mPositions.begin(); it != m_mPositions.end(); ++it )
+		{
+			if ( (*it).first < pos )
+			{
+				key = (*it).first;
+				val = (*it).second;
+
+				// always points to the position after the last item with a smaller position
+				++containerIt;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		// OK we know now which element to split
+
+
 		// TODO: fix
 		return NULL;
 	}

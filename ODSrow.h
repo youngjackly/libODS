@@ -39,6 +39,9 @@ private:
 public:
 	virtual ~ODSrow();
 
+protected:
+	virtual ODSprototypeRepeatable *clone();
+
 	friend class ODSelementFactory;
 };
 }

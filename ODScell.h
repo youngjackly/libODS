@@ -118,6 +118,7 @@ public:
 
 protected:
 	virtual void parse();
+	virtual ODSprototypeRepeatable *clone();
 
 private:
 	CellContent m_oContent;

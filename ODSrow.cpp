@@ -28,13 +28,23 @@ using namespace ODSlib;
 
 ODSrow::ODSrow(QDomElement &element) :
 	ODSprototypeXMLfamiliar( ODS_TAG_TABLE_CELL, element ), // req due to virtual inheritance
-	ODSprototypeContentRepeatable( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_CELL_REPEAT, element ),
-	ODSprototypeRepeatable( ODS_TAG_TABLE_CELL, element )
+	ODSprototypeContentRepeatable( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_CELL_REPEAT, element ), // child: cell; child repetitions for: cell
+	ODSprototypeRepeatable( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_ROW_REPEAT, element ) // child: cell; expecting repetitions for: row
 {
-
 }
 
 ODSrow::~ODSrow()
 {
+}
 
+ODSprototypeRepeatable *ODSrow::clone()
+{
+	// create a deep copy of this node
+	QDomElement cloneElement = m_oAssociated.cloneNode( true ).toElement();
+	m_oAssociated.parentNode().insertAfter( cloneElement, m_oAssociated );
+
+	// and create a cell out of it
+	ODSrow *pRow = new ODSrow( cloneElement );
+	pRow->parse();
+	return pRow;
 }

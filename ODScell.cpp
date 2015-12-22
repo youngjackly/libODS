@@ -28,7 +28,7 @@ using namespace ODSlib;
 
 ODScell::ODScell(QDomElement &element) :
 	ODSprototypeXMLfamiliar( ODS_TAG_TEXT_P, element), // req due to virtual inheritance
-	ODSprototypeRepeatable( ODS_TAG_TEXT_P, element),
+	ODSprototypeRepeatable( ODS_TAG_TEXT_P, ODS_ATTR_TBL_CELL_REPEAT, element), // child: text; expecting repetitions for: cell
 	m_oContent( element )
 {
 }
@@ -135,6 +135,18 @@ void ODScell::parse()
 {
 	m_oContent.parse();
 	m_bValid = true;
+}
+
+ODSprototypeRepeatable *ODScell::clone()
+{
+	// create a deep copy of this node
+	QDomElement cloneElement = m_oAssociated.cloneNode( true ).toElement();
+	m_oAssociated.parentNode().insertAfter( cloneElement, m_oAssociated );
+
+	// and create a cell out of it
+	ODScell *pCell = new ODScell( cloneElement );
+	pCell->parse();
+	return pCell;
 }
 
 void ODScell::setAttribute(float nAttr, QString sTag)

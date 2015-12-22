@@ -26,12 +26,40 @@
 
 using namespace ODSlib;
 
-ODSprototypeRepeatable::ODSprototypeRepeatable(const QString &sElementFilter, QDomElement &element) :
-	ODSprototypeXMLfamiliar( sElementFilter, element )
+ODSprototypeRepeatable::ODSprototypeRepeatable(const QString &sChildElementFilter, const QString &sRepeatFilter, QDomElement &associatedElement) :
+	ODSprototypeXMLfamiliar( sChildElementFilter, associatedElement ),
+	m_nMultiplicity( associatedElement.attribute( sRepeatFilter ).toUInt() ),
+	m_sRepeatAttribute( sRepeatFilter )
 {
 }
 
 ODSprototypeRepeatable::~ODSprototypeRepeatable()
 {
+}
+
+size_t ODSprototypeRepeatable::multiplicity() const
+{
+	return m_nMultiplicity;
+}
+
+ODSprototypeRepeatable *ODSprototypeRepeatable::split(size_t afterN)
+{
+	ODSprototypeRepeatable *pSplit = NULL;
+
+	if ( afterN > 0 && afterN < m_nMultiplicity )
+	{
+		pSplit = clone();
+		pSplit->setMultiplicity( m_nMultiplicity - afterN );
+
+		setMultiplicity( afterN );
+	}
+
+	return pSplit;
+}
+
+void ODSprototypeRepeatable::setMultiplicity(const size_t &multiplicity)
+{
+	m_oAssociated.setAttribute( m_sRepeatAttribute, multiplicity );
+	m_nMultiplicity = multiplicity;
 }
 
