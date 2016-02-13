@@ -46,11 +46,12 @@ TEMPLATE = app
 	PRE_TARGETDEPS += test_files
 }
 
-
 include($$PWD/../lib/libods.pri)
 
 SOURCES += main.cpp \
-	ReadData.cpp
+	ReadData.cpp \
+	ModifySave.cpp
 
 HEADERS += \
-	ReadData.h
+	ReadData.h \
+	ModifySave.h

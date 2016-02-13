@@ -1,5 +1,5 @@
 /*
-** main.cpp
+** ModifySave.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,19 +22,22 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ReadData.h"
-#include "ModifySave.h"
+#ifndef MODIFYSAVE_H
+#define MODIFYSAVE_H
 
-int main( int argc, char *argv[] )
+#include <QString>
+#include <QtTest>
+
+class ModifySave : public QObject
 {
-	ReadData*   pTest1 = new ReadData();
-	ModifySave* pTest2 = new ModifySave();
+	Q_OBJECT
+public:
+	ModifySave();
 
-	int nReturn = QTest::qExec(pTest1, argc, argv);
-	nReturn    += QTest::qExec(pTest2, argc, argv);
+private Q_SLOTS:
+	void initTestCase();
+	void cleanupTestCase();
+	void testCase1();
+};
 
-	delete pTest1;
-	delete pTest2;
-
-	return nReturn;
-}
+#endif // MODIFYSAVE_H
