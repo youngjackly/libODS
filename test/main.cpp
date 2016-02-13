@@ -22,19 +22,14 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#include "AllUnits.h"
 #include "ReadData.h"
 #include "ModifySave.h"
 
 int main( int argc, char *argv[] )
 {
-	ReadData*   pTest1 = new ReadData();
-	ModifySave* pTest2 = new ModifySave();
+	AllUnits::addTest( new ReadData() );
+	AllUnits::addTest( new ModifySave() );
 
-	int nReturn = QTest::qExec(pTest1, argc, argv);
-	nReturn    += QTest::qExec(pTest2, argc, argv);
-
-	delete pTest1;
-	delete pTest2;
-
-	return nReturn;
+	return AllUnits::run( argc, argv );
 }

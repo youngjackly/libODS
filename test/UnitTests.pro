@@ -47,6 +47,7 @@ TEMPLATE = app
 }
 
 include($$PWD/../lib/libods.pri)
+include($$PWD/allUnits/allunits.pri)
 
 SOURCES += main.cpp \
 	ReadData.cpp \
