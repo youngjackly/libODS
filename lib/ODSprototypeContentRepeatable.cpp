@@ -25,14 +25,50 @@
 #include "ODSprototypeContentRepeatable.h"
 #include "ODSprototypeRepeatable.h"
 
-using namespace ODSlib;
+namespace ODSlib
+{
 
-ODSprototypeContentRepeatable::ODSprototypeContentRepeatable(const QString &sChildElementFilter, const QString &sRepeatFilter, QDomElement &associatedElement) :
-	ODSprototypeXMLfamiliar( sChildElementFilter, associatedElement ),
-	m_sRepeatFilter( sRepeatFilter ),
+class ODSprototypeContentRepeatableData : public QSharedData
+{
+public:
+	const QString m_sRepeatFilter;
+	unsigned int m_nParseCounter;
+	std::map<st,st> m_mPositions;
+
+	ODSprototypeContentRepeatableData(const QString &sChild, const QString &sRepeat,
+	                                  QDomElement &element);
+};
+
+ODSprototypeContentRepeatableData::
+ODSprototypeContentRepeatableData(const QString &sChild, const QString &sRepeat,
+                                  QDomElement &element) :
+	m_sRepeatFilter( sRepeat ),
 	m_nParseCounter( 0 )
 {
+
 }
+
+ODSprototypeContentRepeatable::
+ODSprototypeContentRepeatable(const QString &sChild, const QString &sRepeat, QDomElement &element) :
+	ODSprototypeXMLfamiliar( sChild, element ),
+	m_pPCRData(new ODSprototypeContentRepeatableData)
+{
+
+}
+
+/*ODSprototypeContentRepeatable::
+ODSprototypeContentRepeatable(const ODSprototypeContentRepeatable &rhs) :
+    pPCRData(rhs.pPCRData)
+{
+}
+
+ODSprototypeContentRepeatable &ODSprototypeContentRepeatable::
+operator=(const ODSprototypeContentRepeatable &rhs)
+{
+	if (this != &rhs)
+		pPCRData.operator=(rhs.pPCRData);
+	return *this;
+}*/
 
 ODSprototypeContentRepeatable::~ODSprototypeContentRepeatable()
 {
@@ -142,3 +178,4 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 	}
 }
 
+} // namespace ODSlib

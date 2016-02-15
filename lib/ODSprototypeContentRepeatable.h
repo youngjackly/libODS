@@ -25,12 +25,17 @@
 #ifndef ODSPROTOTYPECONTENTREPEATABLE_H
 #define ODSPROTOTYPECONTENTREPEATABLE_H
 
+#include <QExplicitlySharedDataPointer>
+
 #include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
+class ODSprototypeContentRepeatableData;
+
 /**
- * @brief The ODSprototypeContentRepeatable class manages accessing an underlying item container with repeatable items.
+ * @brief The ODSprototypeContentRepeatable class manages accessing an underlying item container
+ * with repeatable items.
  */
 class ODSprototypeContentRepeatable : virtual public ODSprototypeXMLfamiliar
 {
@@ -38,11 +43,16 @@ protected:
 	/**
 	 * @brief ODSprototypeContentRepeatable
 	 * @param sChildElementFilter The name of child elements to watch for/expect while parsing.
-	 * @param sRepeatFilter The element tag associated with the number of repetitions of the element with the above name tag.
+	 * @param sRepeatFilter The element tag associated with the number of repetitions of the element
+	 * with the above name tag.
 	 * @param associatedElement The XML element associated with this node.
 	 */
-	ODSprototypeContentRepeatable(const QString &sChildElementFilter, const QString &sRepeatFilter, QDomElement &associatedElement);
+	ODSprototypeContentRepeatable( const QString &sChildElementFilter, const QString &sRepeatFilter,
+	                               QDomElement &associatedElement );
+
 public:
+	//ODSprototypeContentRepeatable(const ODSprototypeContentRepeatable &);
+	//ODSprototypeContentRepeatable &operator=(const ODSprototypeContentRepeatable &);
 	virtual ~ODSprototypeContentRepeatable();
 
 protected:
@@ -56,9 +66,7 @@ protected:
 	virtual ODSprototypeXMLfamiliar *item(ODSprototypeXMLfamiliar::TContainer::size_type pos);
 
 private:
-	const QString m_sRepeatFilter;
-	unsigned int m_nParseCounter;
-	std::map<st,st> m_mPositions;
+	QExplicitlySharedDataPointer<ODSprototypeContentRepeatableData> m_pPCRData;
 };
 }
 
