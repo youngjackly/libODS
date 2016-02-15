@@ -25,22 +25,30 @@
 #ifndef ODSCONTENT_H
 #define ODSCONTENT_H
 
+#include <QExplicitlySharedDataPointer>
+
 #include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
 class ODSelementFactory;
+class ODScontentData;
 
 class ODScontent : public ODSprototypeXMLfamiliar
 {
+	friend class ODSelementFactory;
+
 private:
 	/**
 	 * @brief ODScontent represents the content.xml file within the ODS container.
-	 * Note that it is only considered to be valid in our case if it contains at least one valid <office:spreadsheet> element.
+	 * Note that it is only considered to be valid in our case if it contains at least one valid
+	 * <office:spreadsheet> element.
 	 * @param ioFile
 	 */
 	ODScontent(QDomDocument &doc);
 public:
+	//ODScontent(const ODScontent &);
+	//ODScontent &operator=(const ODScontent &);
 	virtual ~ODScontent();
 
 	QString toString();
@@ -49,10 +57,9 @@ public:
 	TContainer sheets();*/
 
 private:
-	QDomDocument m_oContentDocument;
-
-	friend class ODSelementFactory;
+	QExplicitlySharedDataPointer<ODScontentData> m_pContentData;
 };
-}
+
+} // namespace ODSlib
 
 #endif // ODSCONTENT_H

@@ -24,13 +24,38 @@
 
 #include "ODScontent.h"
 
-using namespace ODSlib;
+namespace ODSlib
+{
 
-ODScontent::ODScontent(QDomDocument &doc) :
-	ODSprototypeXMLfamiliar( ODS_TAG_OFFICE_SPREADSHEET, doc.documentElement() ),
+class ODScontentData : public QSharedData
+{
+public:
+	QDomDocument m_oContentDocument;
+
+	ODScontentData(QDomDocument doc);
+};
+
+ODScontentData::ODScontentData(QDomDocument doc) :
 	m_oContentDocument( doc )
 {
 }
+
+ODScontent::ODScontent(QDomDocument &doc) :
+	ODSprototypeXMLfamiliar( ODS_TAG_OFFICE_SPREADSHEET, doc.documentElement() ),
+	m_pContentData( new ODScontentData( doc ) )
+{
+}
+
+/*ODScontent::ODScontent(const ODScontent &rhs) : pContentData(rhs.pContentData)
+{
+}
+
+ODScontent &ODScontent::operator=(const ODScontent &rhs)
+{
+	if (this != &rhs)
+		pContentData.operator=(rhs.pContentData);
+	return *this;
+}*/
 
 ODScontent::~ODScontent()
 {
@@ -38,7 +63,7 @@ ODScontent::~ODScontent()
 
 QString ODScontent::toString()
 {
-	return m_oContentDocument.toString(-1);
+	return m_pContentData->m_oContentDocument.toString(-1);
 }
 
 /*ODSspreadsheet *ODScontent::sheet(const QString &sName)
@@ -53,3 +78,5 @@ ODSprototypeXMLfamiliar::TContainer ODScontent::sheets()
 {
 	return m_vContainer;
 }*/
+
+} // namespace ODSlib
