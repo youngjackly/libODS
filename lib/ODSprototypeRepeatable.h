@@ -25,20 +25,30 @@
 #ifndef ODSPROTOTYPEREPEATABLE_H
 #define ODSPROTOTYPEREPEATABLE_H
 
+#include <QExplicitlySharedDataPointer>
+
 #include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
+class ODSprototypeRepeatableData;
+
 class ODSprototypeRepeatable : virtual public ODSprototypeXMLfamiliar
 {
 protected:
 	/**
 	 * @brief ODSprototypeContentRepeatable
 	 * @param sChildElementFilter The name of child elements to watch for/expect while parsing.
-	 * @param sRepeatFilter The element tag associated with the number of repetitions of THIS element.
+	 * @param sRepeatFilter The element tag associated with the number of repetitions of THIS
+	 * element.
 	 * @param associatedElement The XML element associated with this node.
 	 */
-	ODSprototypeRepeatable(const QString &sChildElementFilter, const QString &sRepeatFilter, QDomElement &associatedElement);
+	ODSprototypeRepeatable( const QString &sChildElementFilter, const QString &sRepeatFilter,
+	                        QDomElement &associatedElement );
+
+	//ODSprototypeRepeatable(const ODSprototypeRepeatable &);
+	//ODSprototypeRepeatable &operator=(const ODSprototypeRepeatable &);
+
 public:
 	virtual ~ODSprototypeRepeatable();
 
@@ -47,14 +57,14 @@ public:
 	ODSprototypeRepeatable *split(size_t afterN);
 
 protected:
-	virtual ODSprototypeRepeatable *clone() = 0;
+	//virtual ODSprototypeRepeatable *clone() = 0;
+
+	QExplicitlySharedDataPointer<ODSprototypeRepeatableData> m_pPRData;
 
 private:
-	size_t m_nMultiplicity;
-	const QString m_sRepeatAttribute;
-
 	void setMultiplicity(const size_t &multiplicity);
 };
-}
+
+} // namespace ODSlib
 
 #endif // ODSPROTOTYPEREPEATABLE_H
