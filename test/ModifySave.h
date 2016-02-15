@@ -36,9 +36,15 @@ class ModifySave : public SingleDocumentTestCase
 public:
 	ModifySave();
 
+private:
+	ODSlib::ODStable* m_pTable;
+
 private Q_SLOTS:
 	void checkDocumentValid();
-	void testCase1();
+	void readTable();
+	void readOverwriteCelly0x0();
+	void saveDocument();
+	void openVerifyDocument();
 };
 
 #endif // MODIFYSAVE_H

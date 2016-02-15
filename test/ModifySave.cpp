@@ -25,16 +25,49 @@
 #include "ModifySave.h"
 
 ModifySave::ModifySave() :
-	SingleDocumentTestCase( "testData/ModifySave.ods" )
+	SingleDocumentTestCase( "testData/ModifySave.ods" ),
+	m_pTable( NULL )
 {
 }
 
 void ModifySave::checkDocumentValid()
 {
+	QVERIFY2( m_pDoc->valid(), "The specified document could not be verified as valid." );
+	qDebug() << "\n   File: " << m_pDoc->fileName()
+			 << "\n   Path: " << m_pDoc->path();
+}
+
+void ModifySave::readTable()
+{
+	m_pTable = m_pDoc->getFirstTable();
+	QVERIFY2( m_pTable, "No table could be obtained from the ODS document." );
+	QVERIFY2( m_pTable->valid(), "Got an invalid table from within the ODS document." );
+}
+
+void ModifySave::readOverwriteCelly0x0()
+{
+	ODSlib::ODScell* pCell = m_pTable->cell(0,0);
+	QVERIFY2( pCell, "Expected a cell, got NULL." );
+	QVERIFY2( pCell->valid(), "Cell invalid." );
+	if ( pCell->value() != 0.0f )
+	{
+		qDebug() << "\n   Cell: (float value) " << QString::number(pCell->value()).toLatin1().constData();
+	}
+	QVERIFY2( pCell->value() == 0.0f, "Found an unexpected value in the target cell." );
+
+	pCell->setValue(42.0f);
+	QVERIFY2( pCell->value() == 42.0f, "Could not verify a successful write to the cell." );
+
+	ODSlib::ODScell* pCell2 = m_pTable->cell(0,0);
+	QVERIFY2( pCell2->value() == 42.0f, "Data not stored permanently in target cell!" );
+}
+
+void ModifySave::saveDocument()
+{
 
 }
 
-void ModifySave::testCase1()
+void ModifySave::openVerifyDocument()
 {
-	QVERIFY2(true, "Failure");
+
 }
