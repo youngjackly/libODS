@@ -24,20 +24,37 @@
 
 #include "ODSrow.h"
 
-using namespace ODSlib;
+namespace ODSlib
+{
+/*class ODSrowData : public QSharedData
+{
+public:
+};*/
 
 ODSrow::ODSrow(QDomElement &element) :
-	ODSprototypeXMLfamiliar( ODS_TAG_TABLE_CELL, element ), // req due to virtual inheritance
-	ODSprototypeContentRepeatable( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_CELL_REPEAT, element ), // child: cell; child repetitions for: cell
-	ODSprototypeRepeatable( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_ROW_REPEAT, element ) // child: cell; expecting repetitions for: row
+    ODSprototypeXMLfamiliar( ODS_TAG_TABLE_CELL, element ), // req due to virtual inheritance
+    ODSprototypeContentRepeatable( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_CELL_REPEAT, element ), // child: cell; child repetitions for: cell
+    ODSprototypeRepeatable( ODS_TAG_TABLE_CELL, ODS_ATTR_TBL_ROW_REPEAT, element ) // child: cell; expecting repetitions for: row
+    //,pRowData(new ODSrowData)
 {
 }
+
+/*ODSrow::ODSrow(const ODSrow &rhs) : pRowData(rhs.pRowData)
+{
+}
+
+ODSrow &ODSrow::operator=(const ODSrow &rhs)
+{
+	if (this != &rhs)
+		pRowData.operator=(rhs.pRowData);
+	return *this;
+}*/
 
 ODSrow::~ODSrow()
 {
 }
 
-ODSprototypeRepeatable *ODSrow::clone()
+/*ODSprototypeRepeatable *ODSrow::clone()
 {
 	// create a deep copy of this node
 	QDomElement cloneElement = m_oAssociated.cloneNode( true ).toElement();
@@ -47,4 +64,7 @@ ODSprototypeRepeatable *ODSrow::clone()
 	ODSrow *pRow = new ODSrow( cloneElement );
 	pRow->parse();
 	return pRow;
-}
+}*/
+
+} // namespace ODSlib
+

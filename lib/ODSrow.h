@@ -25,25 +25,32 @@
 #ifndef ODSROW_H
 #define ODSROW_H
 
+//#include <QExplicitlySharedDataPointer>
+
 #include "ODSprototypeRepeatable.h"
 #include "ODSprototypeContentRepeatable.h"
 
 namespace ODSlib
 {
+//class ODSrowData;
 class ODSelementFactory;
 
 class ODSrow : public ODSprototypeContentRepeatable, public ODSprototypeRepeatable
 {
+	friend class ODSelementFactory;
+
 private:
 	ODSrow(QDomElement &element);
+	//ODSrow(const ODSrow &);
+	//ODSrow &operator=(const ODSrow &);
 public:
-	virtual ~ODSrow();
+	~ODSrow();
 
 protected:
-	virtual ODSprototypeRepeatable *clone();
-
-	friend class ODSelementFactory;
+	//QExplicitlySharedDataPointer<ODSrowData> m_pRowData;
+	//virtual ODSprototypeRepeatable *clone();
 };
-}
+
+} // namespace ODSlib
 
 #endif // ODSROW_H
