@@ -24,22 +24,30 @@
 
 #include "ReadData.h"
 
-ReadData::ReadData()
+ReadData::ReadData() :
+	SingleDocumentTestCase( "./testData/ReadData.ods" )
 {
 }
 
-void ReadData::initTestCase()
+void ReadData::checkDocumentValid()
 {
+	QVERIFY2( m_pDoc->valid(), "The specified document could not be verified as valid." );
+	qDebug() << "\n   File: " << m_pDoc->fileName()
+			 << "\n   Path: " << m_pDoc->path();
 }
 
-void ReadData::cleanupTestCase()
+void ReadData::readFirstLine()
 {
+	ODSlib::ODStable* pTable = m_pDoc->getFirstTable();
+
+	QVERIFY2(pTable, "No table could be obtained from the ODS document.");
+
+	for ( uint x = 0; x < 8; ++x )
+	{
+		ODSlib::ODScell* pCell = pTable->cell( 0, x );
+		QString sPos = QString("(y:").append("0").append(";x:").append(QString::number(x)).append(")");
+
+		QVERIFY2( pCell->valid(), QString("Found invalid cell at ").append(sPos).toLatin1() );
+		QVERIFY2( x == pCell->value(), QString("Expected different value at ").append(sPos).toLatin1() );
+	}
 }
-
-void ReadData::testCase1()
-{
-	QVERIFY2(true, "Failure");
-}
-
-//#include "ReadData.moc"
-

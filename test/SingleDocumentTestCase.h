@@ -1,5 +1,5 @@
 /*
-** ReadData.h
+** SingleDocumentTestCase.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,23 +22,28 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef READDATA_H
-#define READDATA_H
+#ifndef SINGLEDOCUMENTTESTCASE_H
+#define SINGLEDOCUMENTTESTCASE_H
 
-#include <QString>
 #include <QtTest>
 
-#include "SingleDocumentTestCase.h"
+#include "ODSdocument.h"
+#include "ODStable.h"
+#include "ODScell.h"
 
-class ReadData : public SingleDocumentTestCase
+class SingleDocumentTestCase : public QObject
 {
 	Q_OBJECT
 public:
-	ReadData();
+	explicit SingleDocumentTestCase(QString sPath);
 
-private Q_SLOTS:
-	void checkDocumentValid();
-	void readFirstLine();
+protected:
+	QString              m_sPath;
+	ODSlib::ODSdocument* m_pDoc;
+
+protected Q_SLOTS:
+	virtual void initTestCase();
+	virtual void cleanupTestCase();
 };
 
-#endif // READDATA_H
+#endif // SINGLEDOCUMENTTESTCASE_H

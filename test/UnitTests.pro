@@ -36,7 +36,7 @@ TEMPLATE = app
 !equals(PWD, $$OUT_PWD){
 	!build_pass:message("Configuring for shadow build")
 
-	SRC_DIR = $$PWD/testData/*
+	SRC_DIR = $$PWD/testData
 	DST_DIR = $$OUT_PWD/testData/
 
 	test_files.commands = $(COPY_DIR) $$shell_path($$SRC_DIR) $$shell_path($$DST_DIR)
@@ -50,9 +50,11 @@ include($$PWD/../lib/libods.pri)
 include($$PWD/allUnits/allunits.pri)
 
 SOURCES += main.cpp \
+	ModifySave.cpp \
 	ReadData.cpp \
-	ModifySave.cpp
+	SingleDocumentTestCase.cpp
 
 HEADERS += \
+	ModifySave.h \
 	ReadData.h \
-	ModifySave.h
+	SingleDocumentTestCase.h

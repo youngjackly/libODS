@@ -28,15 +28,16 @@
 #include <QString>
 #include <QtTest>
 
-class ModifySave : public QObject
+#include "SingleDocumentTestCase.h"
+
+class ModifySave : public SingleDocumentTestCase
 {
 	Q_OBJECT
 public:
 	ModifySave();
 
 private Q_SLOTS:
-	void initTestCase();
-	void cleanupTestCase();
+	void checkDocumentValid();
 	void testCase1();
 };
 

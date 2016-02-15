@@ -24,16 +24,14 @@
 
 #include "ModifySave.h"
 
-ModifySave::ModifySave()
+ModifySave::ModifySave() :
+	SingleDocumentTestCase( "testData/ModifySave.ods" )
 {
 }
 
-void ModifySave::initTestCase()
+void ModifySave::checkDocumentValid()
 {
-}
 
-void ModifySave::cleanupTestCase()
-{
 }
 
 void ModifySave::testCase1()
