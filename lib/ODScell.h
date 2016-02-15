@@ -92,7 +92,7 @@ public:
 
 protected:
 	virtual void parse();
-	virtual ODSprototypeRepeatable *clone();
+	//virtual ODSprototypeRepeatable *clone();
 
 private:
 	QExplicitlySharedDataPointer<ODScellData> m_pCellData;

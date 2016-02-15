@@ -434,27 +434,27 @@ ODScell::~ODScell()
 
 void ODScell::clear()
 {
-	m_oContent.clear();
+	m_pCellData->clear();
 }
 
 CellType::Type ODScell::type() const
 {
-	return m_oContent.type();
+	return m_pCellData->type();
 }
 
 float ODScell::value() const
 {
-	return m_oContent.value();
+	return m_pCellData->value();
 }
 
 bool ODScell::setValue(float value)
 {
 	// manage data
-	bool bReturn1 = m_oContent.setValue( value );
+	bool bReturn1 = m_pCellData->setValue( value );
 	bool bReturn2 = false;
 
 	// manage XML
-	switch ( m_oContent.type() )
+	switch ( m_pCellData->type() )
 	{
 	case CellType::number:
 	case CellType::currency:
@@ -478,30 +478,30 @@ bool ODScell::setValue(float value)
 
 bool ODScell::hasText() const
 {
-	return m_oContent.m_pText != NULL;
+	return m_pCellData->m_pText != NULL;
 }
 
 QString ODScell::text() const
 {
 	if ( hasText() )
-		return *m_oContent.m_pText;
+		return *m_pCellData->m_pText;
 	else
 		return QString();
 }
 
 QString ODScell::contentString() const
 {
-	return m_oContent.contentString();
+	return m_pCellData->contentString();
 }
 
 bool ODScell::setContentString(const QString &value)
 {
 	// manage data
-	bool bReturn1 = m_oContent.setContentString(value);
+	bool bReturn1 = m_pCellData->setContentString(value);
 	bool bReturn2 = false;
 
 	// mange XML
-	switch ( m_oContent.type() )
+	switch ( m_pCellData->type() )
 	{
 	case CellType::stringContent:
 		// text node is updated by refreshXMLText();
@@ -528,11 +528,11 @@ bool ODScell::setContentString(const QString &value)
 
 void ODScell::parse()
 {
-	m_oContent.parse();
+	m_pCellData->parse();
 	m_bValid = true;
 }
 
-ODSprototypeRepeatable *ODScell::clone()
+/*ODSprototypeRepeatable *ODScell::clone()
 {
 	// create a deep copy of this node
 	QDomElement cloneElement = m_oAssociated.cloneNode( true ).toElement();
@@ -542,7 +542,7 @@ ODSprototypeRepeatable *ODScell::clone()
 	ODScell *pCell = new ODScell( cloneElement );
 	pCell->parse();
 	return pCell;
-}
+}*/
 
 void ODScell::setAttribute(float nAttr, QString sTag)
 {
@@ -568,10 +568,10 @@ void ODScell::refreshXMLText()
 	}
 
 	// refresh XML text node
-	if ( m_oContent.m_pText )
+	if ( m_pCellData->m_pText )
 	{
 		QDomElement textNode = m_oAssociated.ownerDocument().createElement( ODS_TAG_TEXT_P );
-		QDomNode text = m_oAssociated.ownerDocument().createTextNode( *m_oContent.m_pText );
+		QDomNode text = m_oAssociated.ownerDocument().createTextNode( *m_pCellData->m_pText );
 		textNode.appendChild( text );
 		m_oAssociated.appendChild( textNode );
 	}
