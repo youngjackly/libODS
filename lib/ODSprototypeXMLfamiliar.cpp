@@ -23,22 +23,57 @@
 */
 
 #include "ODSprototypeXMLfamiliar.h"
-
 #include "ODSprototypeFactory.h"
 
-using namespace ODSlib;
+namespace ODSlib
+{
 
-ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(QString sChildElementFilter, QDomElement associatedElement) :
+class ODSprototypeXMLfamiliarData : public QSharedData
+{
+public:
+	bool m_bValid;
+	//const bool m_bNull;
+	QDomElement m_oAssociated;
+	ODSprototypeXMLfamiliar::TContainer m_vContainer;
+
+	const QString m_sChildElementName;
+
+	ODSprototypeXMLfamiliarData(QString sFilter, QDomElement &element);
+	~ODSprototypeXMLfamiliarData();
+};
+
+ODSprototypeXMLfamiliarData::ODSprototypeXMLfamiliarData(QString sFilter, QDomElement &element) :
 	m_bValid( false ),
 	//m_bNull( false ),
-	m_oAssociated( associatedElement ),
-	m_sChildElementName( sChildElementFilter )
+	m_oAssociated( element ),
+	m_sChildElementName( sFilter )
 {
 }
 
-ODSprototypeXMLfamiliar::~ODSprototypeXMLfamiliar()
+ODSprototypeXMLfamiliarData::~ODSprototypeXMLfamiliarData()
 {
 	qDeleteAll(m_vContainer);
+}
+
+ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(QString sChildElementFilter, QDomElement element) :
+	m_pPXFData( new ODSprototypeXMLfamiliarData( sChildElementFilter, element ) )
+{
+}
+
+/*ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(const ODSprototypeXMLfamiliar &rhs) : pPXFData(rhs.pPXFData)
+{
+
+}
+
+ODSprototypeXMLfamiliar &ODSprototypeXMLfamiliar::operator=(const ODSprototypeXMLfamiliar &rhs)
+{
+	if (this != &rhs)
+		pPXFData.operator=(rhs.pPXFData);
+	return *this;
+}*/
+
+ODSprototypeXMLfamiliar::~ODSprototypeXMLfamiliar()
+{
 }
 
 bool ODSprototypeXMLfamiliar::valid()
@@ -54,19 +89,16 @@ bool ODSprototypeXMLfamiliar::valid()
 std::vector<ODStable*> ODSprototypeXMLfamiliar::tables()
 {
 	std::vector<ODStable*> vTables;
+	std::vector<ODSprototypeXMLfamiliar*> &vContainer = m_pPXFData->m_vContainer;
 
 	// for all children of this node
-	const st nContainerSize = m_vContainer.size();
+	const st nContainerSize = vContainer.size();
 	for (st i = 0; i < nContainerSize; ++i)
 	{
-		std::vector<ODStable*> vChildTables = m_vContainer[i]->tables();
+		std::vector<ODStable*> vChildTables = vContainer[i]->tables();
 
 		// copy all tables of all children
-		const st nChildTablesSize = vChildTables.size();
-		for (st j = 0; j < nChildTablesSize; ++j)
-		{
-			vTables.push_back( vChildTables[j] );
-		}
+		vTables.insert( vTables.end(), vChildTables.begin(), vChildTables.end() );
 	}
 
 	return vTables;
@@ -75,21 +107,22 @@ std::vector<ODStable*> ODSprototypeXMLfamiliar::tables()
 void ODSprototypeXMLfamiliar::parse()
 {
 	bool bValid = false;
+	std::vector<ODSprototypeXMLfamiliar*> &vContainer = m_pPXFData->m_vContainer;
 
-	QDomNodeList list = m_oAssociated.elementsByTagName( m_sChildElementName );
+	QDomNodeList list = m_pPXFData->m_oAssociated.elementsByTagName( m_pPXFData->m_sChildElementName );
 	const int nSize = list.size();
-	m_vContainer.reserve(nSize);
+	vContainer.reserve(nSize);
 
 	for ( int i = 0; i < nSize; ++i )
 	{
 		QDomElement element = list.at(i).toElement();
 		if ( !element.isNull() )
 		{
-			ODSprototypeXMLfamiliar *pNew = ODSprototypeFactory::generate( element, m_sChildElementName );
+			ODSprototypeXMLfamiliar *pNew = ODSprototypeFactory::generate( element, m_pPXFData->m_sChildElementName );
 			if ( pNew->valid() )
 			{
 				doMagic(pNew);
-				m_vContainer.push_back(pNew);
+				vContainer.push_back(pNew);
 				bValid = true;
 			}
 			else
@@ -99,9 +132,8 @@ void ODSprototypeXMLfamiliar::parse()
 		}
 	}
 
-	m_vContainer.shrink_to_fit();
-
-	m_bValid = bValid;
+	vContainer.shrink_to_fit();
+	m_pPXFData->m_bValid = bValid;
 }
 
 void ODSprototypeXMLfamiliar::doMagic(ODSprototypeXMLfamiliar *pNew)
@@ -109,13 +141,14 @@ void ODSprototypeXMLfamiliar::doMagic(ODSprototypeXMLfamiliar *pNew)
 	Q_UNUSED(pNew);
 }
 
-ODSprototypeXMLfamiliar *ODSprototypeXMLfamiliar::child(ODSprototypeXMLfamiliar::TContainer::size_type pos)
+ODSprototypeXMLfamiliar *ODSprototypeXMLfamiliar::child(st pos)
 {
-	return m_vContainer.at(pos);
+	return m_pPXFData->vContainer.at(pos);
 }
 
-ODSprototypeXMLfamiliar *ODSprototypeXMLfamiliar::item(ODSprototypeXMLfamiliar::TContainer::size_type pos)
+ODSprototypeXMLfamiliar *ODSprototypeXMLfamiliar::item(st pos)
 {
 	return child(pos);
 }
 
+} //namespace ODSlib

@@ -22,10 +22,11 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef ODSPROTOTYPEXMLFAMILIAR_H
-#define ODSPROTOTYPEXMLFAMILIAR_H
+#ifndef ODS_PROTOTYPE_XML_FAMILIAR_H
+#define ODS_PROTOTYPE_XML_FAMILIAR_H
 
 #include <QtXml>
+#include <QExplicitlySharedDataPointer>
 
 #include "ODSglobal.h"
 #include "ODSconstants.h"
@@ -33,12 +34,18 @@
 namespace ODSlib
 {
 class ODSelementFactory;
+class ODSprototypeXMLfamiliarData;
 
 /**
- * @brief The ODSprototypeXMLfamiliar class represents a logical node in a tree parallel to an XML file tree structure.
+ * @brief The ODSprototypeXMLfamiliar class represents a logical node in a tree parallel to an XML
+ * file tree structure.
  */
 class ODSprototypeXMLfamiliar
 {
+	//friend class ODStable;
+	//friend class ODSprototypeContentRepeatable;
+	friend class ODSelementFactory;
+
 public:
 	typedef std::vector<ODSprototypeXMLfamiliar*> TContainer;
 
@@ -48,9 +55,11 @@ protected:
 	 * @param sChildElementFilter The name of child elements to watch for/expect while parsing.
 	 * @param associatedElement The XML element associated with this node.
 	 */
-	ODSprototypeXMLfamiliar(QString sChildElementFilter, QDomElement associatedElement);
+	ODSprototypeXMLfamiliar(QString sChildElementFilter, QDomElement element);
 
 public:
+	//ODSprototypeXMLfamiliar(const ODSprototypeXMLfamiliar &);
+	//ODSprototypeXMLfamiliar &operator=(const ODSprototypeXMLfamiliar &);
 	virtual ~ODSprototypeXMLfamiliar();
 
 	bool valid();
@@ -59,11 +68,6 @@ public:
 	virtual std::vector<ODStable*> tables();
 
 protected:
-	bool m_bValid;
-	//const bool m_bNull;
-	QDomElement m_oAssociated;
-	TContainer m_vContainer;
-
 	virtual void parse();
 
 	/**
@@ -78,24 +82,21 @@ protected:
 	 * @param pos
 	 * @return
 	 */
-	ODSprototypeXMLfamiliar *child(ODSprototypeXMLfamiliar::TContainer::size_type pos);
+	ODSprototypeXMLfamiliar *child(st pos);
 
 	/**
-	 * @brief item allows to access a child of this node by its logical index. This also counts repeated nodes where implemented.
+	 * @brief item allows to access a child of this node by its logical index.
+	 * This also counts repeated nodes where implemented.
 	 * @param pos
 	 * @return
 	 */
-	virtual ODSprototypeXMLfamiliar *item(ODSprototypeXMLfamiliar::TContainer::size_type pos);
+	virtual ODSprototypeXMLfamiliar *item(st pos);
 
-private:
-	const QString m_sChildElementName;
-
-	friend class ODStable;
-	friend class ODSprototypeContentRepeatable;
-
-	friend class ODSelementFactory;
+protected:
+	QExplicitlySharedDataPointer<ODSprototypeXMLfamiliarData> m_pPXFData;
 };
+
 typedef ODSprototypeXMLfamiliar::TContainer::size_type st;
 }
 
-#endif // ODSPROTOTYPEXMLFAMILIAR_H
+#endif // ODS_PROTOTYPE_XML_FAMILIAR_H
