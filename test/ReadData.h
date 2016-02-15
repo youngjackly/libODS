@@ -38,7 +38,12 @@ public:
 
 private Q_SLOTS:
 	void checkDocumentValid();
-	void readFirstLine();
+	void readLine0();       // numbers
+	void readLine8();       // letters
+	void readLine30();      // percentages
+	void readCelly18x14();  // radom pos read / string
+	void readCelly0x100();  // read repeated cell (normal row)
+	void readCelly100x20(); // read repeated cell (repeated row)
 };
 
 #endif // READDATA_H

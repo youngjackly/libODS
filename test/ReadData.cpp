@@ -36,7 +36,7 @@ void ReadData::checkDocumentValid()
 			 << "\n   Path: " << m_pDoc->path();
 }
 
-void ReadData::readFirstLine()
+void ReadData::readLine0() // numbers
 {
 	ODSlib::ODStable* pTable = m_pDoc->getFirstTable();
 
@@ -50,4 +50,29 @@ void ReadData::readFirstLine()
 		QVERIFY2( pCell->valid(), QString("Found invalid cell at ").append(sPos).toLatin1() );
 		QVERIFY2( x == pCell->value(), QString("Expected different value at ").append(sPos).toLatin1() );
 	}
+}
+
+void ReadData::readLine8() // letters
+{
+
+}
+
+void ReadData::readLine30() // percentages
+{
+
+}
+
+void ReadData::readCelly18x14() // random position read (string)
+{
+
+}
+
+void ReadData::readCelly0x100() // read of repeated cell in standard row
+{
+
+}
+
+void ReadData::readCelly100x20() // read of repeated cell in repeated row
+{
+
 }
