@@ -22,8 +22,8 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef ODSPROTOTYPEXMLFAMILIAR_H
-#define ODSPROTOTYPEXMLFAMILIAR_H
+#ifndef ODSPROTOTYPECONTENTREPEATABLE_H
+#define ODSPROTOTYPECONTENTREPEATABLE_H
 
 #include "ODSprototypeXMLfamiliar.h"
 
@@ -46,7 +46,13 @@ public:
 	virtual ~ODSprototypeContentRepeatable();
 
 protected:
+	/**
+	 * @brief doMagic is used to store the children's positions in the m_mPositions map.
+	 * This allows for faster child lookup of in case of children containing repetitions.
+	 * @param pNew
+	 */
 	void doMagic(ODSprototypeXMLfamiliar* pNew);
+
 	virtual ODSprototypeXMLfamiliar *item(ODSprototypeXMLfamiliar::TContainer::size_type pos);
 
 private:
@@ -56,4 +62,4 @@ private:
 };
 }
 
-#endif // ODSPROTOTYPEXMLFAMILIAR_H
+#endif // ODSPROTOTYPECONTENTREPEATABLE_H

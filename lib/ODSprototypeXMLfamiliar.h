@@ -22,8 +22,8 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef OSDPROTOTYPEXMLFAMILIAR_H
-#define OSDPROTOTYPEXMLFAMILIAR_H
+#ifndef ODSPROTOTYPEXMLFAMILIAR_H
+#define ODSPROTOTYPEXMLFAMILIAR_H
 
 #include <QtXml>
 
@@ -65,6 +65,12 @@ protected:
 	TContainer m_vContainer;
 
 	virtual void parse();
+
+	/**
+	 * @brief doMagic is called once for every new child that is added to the current node.
+	 * It allows Child classes to do fancy stuff based on the event that a new child is added.
+	 * @param pNew
+	 */
 	virtual void doMagic(ODSprototypeXMLfamiliar *pNew);
 
 	/**
@@ -92,4 +98,4 @@ private:
 typedef ODSprototypeXMLfamiliar::TContainer::size_type st;
 }
 
-#endif // OSDPROTOTYPEXMLFAMILIAR_H
+#endif // ODSPROTOTYPEXMLFAMILIAR_H
