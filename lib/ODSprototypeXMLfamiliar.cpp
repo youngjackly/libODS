@@ -32,7 +32,7 @@ ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(QString sChildElementFilter, QD
 	m_bValid( false ),
 	//m_bNull( false ),
 	m_oAssociated( associatedElement ),
-	m_sElementName( sChildElementFilter )
+	m_sChildElementName( sChildElementFilter )
 {
 }
 
@@ -51,19 +51,19 @@ bool ODSprototypeXMLfamiliar::valid()
 	return m_bNull;
 }*/
 
-TTableVector ODSprototypeXMLfamiliar::tables()
+std::vector<ODStable*> ODSprototypeXMLfamiliar::tables()
 {
-	TTableVector vTables;
+	std::vector<ODStable*> vTables;
 
 	// for all children of this node
-	const ST nContainerSize = m_vContainer.size();
-	for (ST i = 0; i < nContainerSize; ++i)
+	const st nContainerSize = m_vContainer.size();
+	for (st i = 0; i < nContainerSize; ++i)
 	{
-		TTableVector vChildTables = m_vContainer[i]->tables();
+		std::vector<ODStable*> vChildTables = m_vContainer[i]->tables();
 
 		// copy all tables of all children
-		const ST nChildTablesSize = vChildTables.size();
-		for (ST j = 0; j < nChildTablesSize; ++j)
+		const st nChildTablesSize = vChildTables.size();
+		for (st j = 0; j < nChildTablesSize; ++j)
 		{
 			vTables.push_back( vChildTables[j] );
 		}
@@ -76,7 +76,7 @@ void ODSprototypeXMLfamiliar::parse()
 {
 	bool bValid = false;
 
-	QDomNodeList list = m_oAssociated.elementsByTagName( m_sElementName );
+	QDomNodeList list = m_oAssociated.elementsByTagName( m_sChildElementName );
 	const int nSize = list.size();
 	m_vContainer.reserve(nSize);
 
@@ -85,7 +85,7 @@ void ODSprototypeXMLfamiliar::parse()
 		QDomElement element = list.at(i).toElement();
 		if ( !element.isNull() )
 		{
-			ODSprototypeXMLfamiliar *pNew = ODSprototypeFactory::generate( element, m_sElementName );
+			ODSprototypeXMLfamiliar *pNew = ODSprototypeFactory::generate( element, m_sChildElementName );
 			if ( pNew->valid() )
 			{
 				doMagic(pNew);

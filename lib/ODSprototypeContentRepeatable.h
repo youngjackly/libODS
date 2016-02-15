@@ -52,7 +52,7 @@ protected:
 private:
 	const QString m_sRepeatFilter;
 	unsigned int m_nParseCounter;
-	std::map<ST,ST> m_mPositions;
+	std::map<st,st> m_mPositions;
 };
 }
 

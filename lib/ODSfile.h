@@ -50,7 +50,11 @@ public:
 	QIODevice* accessContainerElement(QString sName);
 	bool closeContainerElement(QIODevice *&pElement);
 
+	QString path() const;
+	QString fileName() const;
+
 private:
+	QString m_sFileName;
 	QuaZip m_ioODScontainer;
 
 	QuaZipFile* m_pCurrentlyOpened;

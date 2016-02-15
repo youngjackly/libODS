@@ -42,7 +42,7 @@ ODSdocument::~ODSdocument()
 
 ODStable *ODSdocument::getFirstTable()
 {
-	TTableVector vTables = getTables();
+	std::vector<ODStable*> vTables = getTables();
 
 	if ( vTables.size() )
 	{
@@ -56,9 +56,9 @@ ODStable *ODSdocument::getFirstTable()
 
 ODStable *ODSdocument::getTable(const QString &sTableName)
 {
-	TTableVector vTables = getTables();
+	std::vector<ODStable*> vTables = getTables();
 
-	for ( ST i = 0; i < vTables.size(); ++i )
+	for ( st i = 0; i < vTables.size(); ++i )
 	{
 		ODStable* pTable = vTables[i];
 		if ( pTable->name().compare(sTableName) )
@@ -69,8 +69,25 @@ ODStable *ODSdocument::getTable(const QString &sTableName)
 	return NULL;
 }
 
-TTableVector ODSdocument::getTables()
+std::vector<ODStable*> ODSdocument::getTables()
 {
 	return m_pContent->tables();
+}
+
+bool ODSdocument::valid() const
+{
+	// m_pContent is only non NULL if an zipped file was recognized and a content.xml
+	// found therein (QuaZIP). Additionally, it is valid if the content.xml could be parsed.
+	return m_pContent && m_pContent->valid();
+}
+
+QString ODSdocument::path() const
+{
+	return m_ioFile.path();
+}
+
+QString ODSdocument::fileName() const
+{
+	return m_ioFile.fileName();
 }
 

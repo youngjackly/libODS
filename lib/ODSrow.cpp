@@ -43,7 +43,7 @@ ODSprototypeRepeatable *ODSrow::clone()
 	QDomElement cloneElement = m_oAssociated.cloneNode( true ).toElement();
 	m_oAssociated.parentNode().insertAfter( cloneElement, m_oAssociated );
 
-	// and create a cell out of it
+	// and create a row out of it
 	ODSrow *pRow = new ODSrow( cloneElement );
 	pRow->parse();
 	return pRow;

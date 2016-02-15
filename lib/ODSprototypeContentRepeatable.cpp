@@ -71,7 +71,7 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 {
 	if ( m_mPositions.count(pos) )
 	{
-		ST nStoragePos = m_mPositions.at(pos);
+		st nStoragePos = m_mPositions.at(pos);
 		if ( nStoragePos < m_vContainer.size() )
 		{
 			return m_vContainer[nStoragePos];
@@ -85,12 +85,12 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 	}
 	else
 	{
-		ST key = (*m_mPositions.begin()).first;
-		ST val = (*m_mPositions.begin()).second;
+		st key = (*m_mPositions.begin()).first;
+		st val = (*m_mPositions.begin()).second;
 
 		TContainer::iterator containerIt = m_vContainer.begin();
 
-		for ( std::map<ST,ST>::const_iterator it = m_mPositions.begin(); it != m_mPositions.end(); ++it )
+		for ( std::map<st,st>::const_iterator it = m_mPositions.begin(); it != m_mPositions.end(); ++it )
 		{
 			if ( (*it).first < pos )
 			{

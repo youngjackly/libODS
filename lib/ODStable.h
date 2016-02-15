@@ -44,7 +44,7 @@ public:
 	const QString& name();
 	void setName(const QString &name);
 
-	ODScell *cell(ST y, ST x);
+	ODScell *cell(st y, st x);
 
 private:
 	QString m_sName;

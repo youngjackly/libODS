@@ -22,11 +22,14 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#include <QFileInfo>
+
 #include "ODSfile.h"
 
 using namespace ODSlib;
 
 ODSfile::ODSfile(QString sFileName) :
+	m_sFileName(        sFileName ),
 	m_ioODScontainer(   sFileName ),
 	m_pCurrentlyOpened( NULL )
 {
@@ -35,6 +38,12 @@ ODSfile::ODSfile(QString sFileName) :
 
 ODSfile::~ODSfile()
 {
+	if ( m_pCurrentlyOpened )
+	{
+		QIODevice* pDevice = m_pCurrentlyOpened;
+		closeContainerElement( pDevice );
+	}
+
 	m_ioODScontainer.close();
 }
 
@@ -66,7 +75,7 @@ QIODevice *ODSfile::accessContainerElement(QString sName)
 
 bool ODSfile::closeContainerElement(QIODevice *&pElement)
 {
-	if ( m_pCurrentlyOpened && m_pCurrentlyOpened == pElement )
+	if ( pElement && m_pCurrentlyOpened && m_pCurrentlyOpened == pElement )
 	{
 		pElement->close();
 		delete pElement;
@@ -77,7 +86,27 @@ bool ODSfile::closeContainerElement(QIODevice *&pElement)
 	}
 	else
 	{
-		qWarning("Error: Tried to close wrong element file.");
+		qWarning( "Error: Tried to close wrong or NULL element file." );
 		return false;
 	}
+}
+
+QString ODSfile::path() const
+{
+	QFileInfo info( m_sFileName );
+	if ( info.exists() )
+	{
+		return info.absolutePath();
+	}
+	return QString();
+}
+
+QString ODSfile::fileName() const
+{
+	QFileInfo info( m_sFileName );
+	if ( info.exists() )
+	{
+		return info.fileName();
+	}
+	return QString();
 }

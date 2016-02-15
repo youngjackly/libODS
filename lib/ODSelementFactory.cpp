@@ -50,18 +50,26 @@ ODScontent *ODSelementFactory::generateContentXML(ODSfile& ioFile)
 
 	QIODevice* pDevice = ioFile.accessContainerElement( ODS_CONTAINER_ELEMENT_CONTENT );
 
-	if ( oContentFile.setContent(pDevice, &sError, &errorLine, &errorCol) )
+	if ( pDevice )
 	{
-		pNew = new ODScontent(oContentFile);
-		pNew->parse();
+		if ( oContentFile.setContent(pDevice, &sError, &errorLine, &errorCol) )
+		{
+			pNew = new ODScontent(oContentFile);
+			pNew->parse();
+			pNew->valid();
+		}
+		else
+		{
+			// TODO: improve warning with error string from above
+			qWarning("ODScontent::parse - Failed to parse file.");
+		}
+
+		ioFile.closeContainerElement(pDevice);
 	}
 	else
 	{
-		// TODO: improve warning with error string from above
-		qWarning("ODScontent::parse - Failed to parse file.");
+		qWarning( "ODScontent::parse - Could not obtain content.xml from the specified ODS file. Wrong file name / path?" );
 	}
-
-	ioFile.closeContainerElement(pDevice);
 
 	return pNew;
 }

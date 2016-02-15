@@ -22,6 +22,7 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#include "ODScell.h"
 #include "ODStable.h"
 
 using namespace ODSlib;
@@ -53,13 +54,18 @@ void ODStable::setName(const QString &name)
 	m_sName = name;
 }
 
-ODScell *ODStable::cell(ST y, ST x)
+ODScell *ODStable::cell(st y, st x)
 {
 	ODSprototypeXMLfamiliar* pRow = item(y);
 
 	if ( pRow )
 	{
-		return (ODScell *)(pRow->item(x));
+		// Dynamic cast required because of virtual inheritance.
+		// I.e. this is wrong: return (ODScell *)(pRow->item(x));
+		// Note: GCC doesn't warn about this.
+		ODSprototypeXMLfamiliar* pFamiliar = pRow->item(x);
+		ODScell *pCell = dynamic_cast< ODScell* >(pFamiliar);
+		return pCell;
 	}
 
 	return NULL;

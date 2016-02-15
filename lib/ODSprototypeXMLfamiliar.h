@@ -56,7 +56,7 @@ public:
 	bool valid();
 	//bool isNull();
 
-	virtual TTableVector tables();
+	virtual std::vector<ODStable*> tables();
 
 protected:
 	bool m_bValid;
@@ -82,14 +82,14 @@ protected:
 	virtual ODSprototypeXMLfamiliar *item(ODSprototypeXMLfamiliar::TContainer::size_type pos);
 
 private:
-	const QString m_sElementName;
+	const QString m_sChildElementName;
 
 	friend class ODStable;
 	friend class ODSprototypeContentRepeatable;
 
 	friend class ODSelementFactory;
 };
-typedef ODSprototypeXMLfamiliar::TContainer::size_type ST;
+typedef ODSprototypeXMLfamiliar::TContainer::size_type st;
 }
 
 #endif // OSDPROTOTYPEXMLFAMILIAR_H

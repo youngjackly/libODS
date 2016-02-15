@@ -22,6 +22,7 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#include "ODStable.h"
 #include "ODSspreadsheet.h"
 
 using namespace ODSlib;
@@ -35,13 +36,19 @@ ODSspreadsheet::~ODSspreadsheet()
 {
 }
 
-/*TTableVector ODSspreadsheet::tables()
+std::vector<ODStable*> ODSspreadsheet::tables()
 {
 	// The container of this node contains a vector of tables.
-	TTableVector vReturn;
+	std::vector<ODStable*> vReturn;
 
-	for ( ST i = 0; i < m_vContainer.size(); ++i )
-		vReturn.push_back( (ODStable*)m_vContainer[i] );
+	for ( st i = 0; i < m_vContainer.size(); ++i )
+	{
+		// Dynamic cast required because of virtual inheritance.
+		// Note: GCC doesn't warn about this.
+		ODSprototypeXMLfamiliar* pFamiliar = m_vContainer[i];
+		ODStable* pTable = dynamic_cast< ODStable* >(pFamiliar);
+		vReturn.push_back( pTable );
+	}
 
 	return vReturn;
-}*/
+}

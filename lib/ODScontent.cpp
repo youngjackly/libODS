@@ -45,8 +45,7 @@ QString ODScontent::toString()
 {
 	for ( ST i = 0; i < m_vContainer.size(); ++i )
 	{
-		ODSspreadsheet *pSheet = (ODSspreadsheet*)m_vContainer[i];
-
+		ODSspreadsheet *pSheet = dynamic_cast< ODSspreadsheet* >(m_vContainer[i]);
 	}
 }
 

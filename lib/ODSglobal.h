@@ -30,7 +30,7 @@
 namespace ODSlib
 {
 class ODStable;
-typedef std::vector<ODStable*> TTableVector;
+//typedef std::vector<ODStable*> TTableVector;
 }
 
 #endif // ODSGLOBAL

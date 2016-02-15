@@ -36,10 +36,10 @@ class ODSspreadsheet : public ODSprototypeXMLfamiliar
 private:
 	ODSspreadsheet(QDomElement &element);
 public:
-	virtual ~ODSspreadsheet();
+	~ODSspreadsheet();
 
 private:
-	//virtual TTableVector tables();
+	std::vector<ODStable*> tables();
 
 	friend class ODSelementFactory;
 };

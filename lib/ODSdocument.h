@@ -39,7 +39,11 @@ public:
 
 	ODStable *getFirstTable();
 	ODStable *getTable(const QString &sTableName);
-	TTableVector getTables();
+	std::vector<ODStable*> getTables();
+
+	bool valid() const;
+	QString path() const;
+	QString fileName() const;
 
 private:
 	ODSfile     m_ioFile;
