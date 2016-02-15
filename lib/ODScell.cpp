@@ -56,175 +56,6 @@ public:
 	QString         m_sData;
 };
 
-ODScell::ODScell(QDomElement &element) :
-	ODSprototypeXMLfamiliar( ODS_TAG_TEXT_P, element), // req due to virtual inheritance
-	ODSprototypeRepeatable( ODS_TAG_TEXT_P, ODS_ATTR_TBL_CELL_REPEAT, element), // child: text; expecting repetitions for: cell
-	m_pCellData( new ODScellData( element ) )
-{
-
-}
-
-/*ODScell::ODScell(const ODScell &rhs) : pCellData(rhs.pCellData)
-{
-
-}
-
-ODScell &ODScell::operator=(const ODScell &rhs)
-{
-	if (this != &rhs)
-		pCellData.operator=(rhs.pCellData);
-	return *this;
-}*/
-
-ODScell::~ODScell()
-{
-}
-
-void ODScell::clear()
-{
-	m_oContent.clear();
-}
-
-CellType::Type ODScell::type() const
-{
-	return m_oContent.type();
-}
-
-float ODScell::value() const
-{
-	return m_oContent.value();
-}
-
-bool ODScell::setValue(float value)
-{
-	// manage data
-	bool bReturn1 = m_oContent.setValue( value );
-	bool bReturn2 = false;
-
-	// manage XML
-	switch ( m_oContent.type() )
-	{
-	case CellType::number:
-	case CellType::currency:
-	case CellType::percentage:
-		setAttribute( value, ODS_ATTR_OFFICE_VALUE );
-		bReturn2 = true;
-		break;
-
-	case CellType::boolean:
-		setAttribute( value, ODS_ATTR_OFFICE_BOOLVAL );
-		bReturn2 = true;
-		break;
-
-	default:
-		break;
-	}
-
-	refreshXMLText();
-	return bReturn1 && bReturn2;
-}
-
-bool ODScell::hasText() const
-{
-	return m_oContent.m_pText != NULL;
-}
-
-QString ODScell::text() const
-{
-	if ( hasText() )
-		return *m_oContent.m_pText;
-	else
-		return QString();
-}
-
-QString ODScell::contentString() const
-{
-	return m_oContent.contentString();
-}
-
-bool ODScell::setContentString(const QString &value)
-{
-	// manage data
-	bool bReturn1 = m_oContent.setContentString(value);
-	bool bReturn2 = false;
-
-	// mange XML
-	switch ( m_oContent.type() )
-	{
-	case CellType::stringContent:
-		// text node is updated by refreshXMLText();
-		bReturn2 = true;
-		break;
-
-	case CellType::date:
-		setAttribute( value, ODS_ATTR_OFFICE_DATEVAL );
-		bReturn2 = true;
-		break;
-
-	case CellType::time:
-		setAttribute( value, ODS_ATTR_OFFICE_TIMEVAL );
-		bReturn2 = true;
-		break;
-
-	default:
-		break;
-	}
-
-	refreshXMLText();
-	return bReturn1 && bReturn2;
-}
-
-void ODScell::parse()
-{
-	m_oContent.parse();
-	m_bValid = true;
-}
-
-ODSprototypeRepeatable *ODScell::clone()
-{
-	// create a deep copy of this node
-	QDomElement cloneElement = m_oAssociated.cloneNode( true ).toElement();
-	m_oAssociated.parentNode().insertAfter( cloneElement, m_oAssociated );
-
-	// and create a cell out of it
-	ODScell *pCell = new ODScell( cloneElement );
-	pCell->parse();
-	return pCell;
-}
-
-void ODScell::setAttribute(float nAttr, QString sTag)
-{
-	QString sValue = QString();
-	sValue.setNum( nAttr );
-	setAttribute( sValue, sTag );
-}
-
-void ODScell::setAttribute(const QString &sAttr, QString sTag)
-{
-	// get the attribute node
-	QDomAttr attribute = m_oAssociated.attributeNode( sTag );
-	attribute.setValue( sAttr );
-}
-
-void ODScell::refreshXMLText()
-{
-	// remove all XML text nodes (there should be only one)
-	QDomNodeList children = m_oAssociated.elementsByTagName( ODS_TAG_TEXT_P );
-	for ( int i = 0; i < children.size(); ++i )
-	{
-		m_oAssociated.removeChild( children.at(i) );
-	}
-
-	// refresh XML text node
-	if ( m_oContent.m_pText )
-	{
-		QDomElement textNode = m_oAssociated.ownerDocument().createElement( ODS_TAG_TEXT_P );
-		QDomNode text = m_oAssociated.ownerDocument().createTextNode( *m_oContent.m_pText );
-		textNode.appendChild( text );
-		m_oAssociated.appendChild( textNode );
-	}
-}
-
 ODScellData::ODScellData(QDomElement &element) :
 	m_pFormula( NULL ),
 	m_pText( NULL ),
@@ -574,5 +405,174 @@ void ODScellData::refreshText()
 
 	default:
 		break;
+	}
+}
+
+ODScell::ODScell(QDomElement &element) :
+	ODSprototypeXMLfamiliar( ODS_TAG_TEXT_P, element), // req due to virtual inheritance
+	ODSprototypeRepeatable( ODS_TAG_TEXT_P, ODS_ATTR_TBL_CELL_REPEAT, element), // child: text; expecting repetitions for: cell
+	m_pCellData( new ODScellData( element ) )
+{
+
+}
+
+/*ODScell::ODScell(const ODScell &rhs) : pCellData(rhs.pCellData)
+{
+
+}
+
+ODScell &ODScell::operator=(const ODScell &rhs)
+{
+	if (this != &rhs)
+		pCellData.operator=(rhs.pCellData);
+	return *this;
+}*/
+
+ODScell::~ODScell()
+{
+}
+
+void ODScell::clear()
+{
+	m_oContent.clear();
+}
+
+CellType::Type ODScell::type() const
+{
+	return m_oContent.type();
+}
+
+float ODScell::value() const
+{
+	return m_oContent.value();
+}
+
+bool ODScell::setValue(float value)
+{
+	// manage data
+	bool bReturn1 = m_oContent.setValue( value );
+	bool bReturn2 = false;
+
+	// manage XML
+	switch ( m_oContent.type() )
+	{
+	case CellType::number:
+	case CellType::currency:
+	case CellType::percentage:
+		setAttribute( value, ODS_ATTR_OFFICE_VALUE );
+		bReturn2 = true;
+		break;
+
+	case CellType::boolean:
+		setAttribute( value, ODS_ATTR_OFFICE_BOOLVAL );
+		bReturn2 = true;
+		break;
+
+	default:
+		break;
+	}
+
+	refreshXMLText();
+	return bReturn1 && bReturn2;
+}
+
+bool ODScell::hasText() const
+{
+	return m_oContent.m_pText != NULL;
+}
+
+QString ODScell::text() const
+{
+	if ( hasText() )
+		return *m_oContent.m_pText;
+	else
+		return QString();
+}
+
+QString ODScell::contentString() const
+{
+	return m_oContent.contentString();
+}
+
+bool ODScell::setContentString(const QString &value)
+{
+	// manage data
+	bool bReturn1 = m_oContent.setContentString(value);
+	bool bReturn2 = false;
+
+	// mange XML
+	switch ( m_oContent.type() )
+	{
+	case CellType::stringContent:
+		// text node is updated by refreshXMLText();
+		bReturn2 = true;
+		break;
+
+	case CellType::date:
+		setAttribute( value, ODS_ATTR_OFFICE_DATEVAL );
+		bReturn2 = true;
+		break;
+
+	case CellType::time:
+		setAttribute( value, ODS_ATTR_OFFICE_TIMEVAL );
+		bReturn2 = true;
+		break;
+
+	default:
+		break;
+	}
+
+	refreshXMLText();
+	return bReturn1 && bReturn2;
+}
+
+void ODScell::parse()
+{
+	m_oContent.parse();
+	m_bValid = true;
+}
+
+ODSprototypeRepeatable *ODScell::clone()
+{
+	// create a deep copy of this node
+	QDomElement cloneElement = m_oAssociated.cloneNode( true ).toElement();
+	m_oAssociated.parentNode().insertAfter( cloneElement, m_oAssociated );
+
+	// and create a cell out of it
+	ODScell *pCell = new ODScell( cloneElement );
+	pCell->parse();
+	return pCell;
+}
+
+void ODScell::setAttribute(float nAttr, QString sTag)
+{
+	QString sValue = QString();
+	sValue.setNum( nAttr );
+	setAttribute( sValue, sTag );
+}
+
+void ODScell::setAttribute(const QString &sAttr, QString sTag)
+{
+	// get the attribute node
+	QDomAttr attribute = m_oAssociated.attributeNode( sTag );
+	attribute.setValue( sAttr );
+}
+
+void ODScell::refreshXMLText()
+{
+	// remove all XML text nodes (there should be only one)
+	QDomNodeList children = m_oAssociated.elementsByTagName( ODS_TAG_TEXT_P );
+	for ( int i = 0; i < children.size(); ++i )
+	{
+		m_oAssociated.removeChild( children.at(i) );
+	}
+
+	// refresh XML text node
+	if ( m_oContent.m_pText )
+	{
+		QDomElement textNode = m_oAssociated.ownerDocument().createElement( ODS_TAG_TEXT_P );
+		QDomNode text = m_oAssociated.ownerDocument().createTextNode( *m_oContent.m_pText );
+		textNode.appendChild( text );
+		m_oAssociated.appendChild( textNode );
 	}
 }
