@@ -24,7 +24,8 @@
 
 #include "ODScell.h"
 
-using namespace ODSlib;
+namespace ODSlib
+{
 
 class ODScellData : public QSharedData
 {
@@ -576,3 +577,5 @@ void ODScell::refreshXMLText()
 		m_oAssociated.appendChild( textNode );
 	}
 }
+
+} // namespace ODSlib
