@@ -25,6 +25,8 @@
 #ifndef ODSCELL_H
 #define ODSCELL_H
 
+#include <QExplicitlySharedDataPointer>
+
 #include "ODSprototypeRepeatable.h"
 
 namespace ODSlib
@@ -47,45 +49,17 @@ enum Type
 };
 }
 
+class ODScellData;
 class ODSelementFactory;
 
 class ODScell : public ODSprototypeRepeatable
 {
-private:
-	class CellContent
-	{
-		CellContent(QDomElement &element);
-		virtual ~CellContent();
-
-		void            clear();
-		CellType::Type  type() const;
-
-		float       value() const;
-		bool        setValue(float value);
-
-		QString     contentString() const;
-		bool        setContentString(const QString &value);
-
-		QString*    m_pFormula;
-		QString*    m_pText;
-		bool        m_bHasCalcExtValueType;
-
-		void        parse();
-
-	private:
-		bool        parseType(const QString &sAttribute);
-		void        refreshText();
-
-		QDomElement     m_oAssociated;
-		CellType::Type  m_eType;
-		float           m_nValue;
-		QString         m_sData;
-
-		friend class ODScell;
-	};
+	friend class ODSelementFactory;
 
 private:
 	ODScell(QDomElement &element);
+	//ODScell(const ODScell &);
+	//ODScell &operator=(const ODScell &);
 
 public:
 	~ODScell();
@@ -121,13 +95,11 @@ protected:
 	virtual ODSprototypeRepeatable *clone();
 
 private:
-	CellContent m_oContent;
+	QExplicitlySharedDataPointer<ODScellData> m_pCellData;
 
 	void        setAttribute(float nAttr, QString sTag);
 	void        setAttribute(const QString &sAttr, QString sTag);
 	void        refreshXMLText();
-
-	friend class ODSelementFactory;
 };
 }
 

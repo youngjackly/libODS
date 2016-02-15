@@ -26,12 +26,55 @@
 
 using namespace ODSlib;
 
+class ODScellData : public QSharedData
+{
+public:
+	ODScellData(QDomElement &element);
+	virtual ~ODScellData();
+
+	void            clear();
+	CellType::Type  type() const;
+
+	float       value() const;
+	bool        setValue(float value);
+
+	QString     contentString() const;
+	bool        setContentString(const QString &value);
+
+	QString*    m_pFormula;
+	QString*    m_pText;
+	bool        m_bHasCalcExtValueType;
+
+	void        parse();
+
+	bool        parseType(const QString &sAttribute);
+	void        refreshText();
+
+	QDomElement     m_oAssociated;
+	CellType::Type  m_eType;
+	float           m_nValue;
+	QString         m_sData;
+};
+
 ODScell::ODScell(QDomElement &element) :
 	ODSprototypeXMLfamiliar( ODS_TAG_TEXT_P, element), // req due to virtual inheritance
 	ODSprototypeRepeatable( ODS_TAG_TEXT_P, ODS_ATTR_TBL_CELL_REPEAT, element), // child: text; expecting repetitions for: cell
-	m_oContent( element )
+	m_pCellData( new ODScellData( element ) )
 {
+
 }
+
+/*ODScell::ODScell(const ODScell &rhs) : pCellData(rhs.pCellData)
+{
+
+}
+
+ODScell &ODScell::operator=(const ODScell &rhs)
+{
+	if (this != &rhs)
+		pCellData.operator=(rhs.pCellData);
+	return *this;
+}*/
 
 ODScell::~ODScell()
 {
@@ -182,8 +225,7 @@ void ODScell::refreshXMLText()
 	}
 }
 
-
-ODScell::CellContent::CellContent(QDomElement &element) :
+ODScellData::ODScellData(QDomElement &element) :
 	m_pFormula( NULL ),
 	m_pText( NULL ),
 	m_bHasCalcExtValueType( false ),
@@ -192,7 +234,7 @@ ODScell::CellContent::CellContent(QDomElement &element) :
 {
 }
 
-ODScell::CellContent::~CellContent()
+ODScellData::~ODScellData()
 {
 	if ( m_pFormula )
 		delete m_pFormula;
@@ -201,7 +243,7 @@ ODScell::CellContent::~CellContent()
 		delete m_pText;
 }
 
-void ODScell::CellContent::clear()
+void ODScellData::clear()
 {
 	m_eType = CellType::unknown;
 
@@ -228,12 +270,12 @@ void ODScell::CellContent::clear()
 	}
 }
 
-CellType::Type ODScell::CellContent::type() const
+CellType::Type ODScellData::type() const
 {
 	return m_eType;
 }
 
-float ODScell::CellContent::value() const
+float ODScellData::value() const
 {
 	switch ( m_eType )
 	{
@@ -248,7 +290,7 @@ float ODScell::CellContent::value() const
 	}
 }
 
-bool ODScell::CellContent::setValue(float value)
+bool ODScellData::setValue(float value)
 {
 	bool bReturn = false;
 
@@ -274,7 +316,7 @@ bool ODScell::CellContent::setValue(float value)
 	return bReturn;
 }
 
-QString ODScell::CellContent::contentString() const
+QString ODScellData::contentString() const
 {
 	switch ( m_eType )
 	{
@@ -292,7 +334,7 @@ QString ODScell::CellContent::contentString() const
 	}
 }
 
-bool ODScell::CellContent::setContentString(const QString &value)
+bool ODScellData::setContentString(const QString &value)
 {
 	bool bReturn = false;
 
@@ -321,7 +363,7 @@ bool ODScell::CellContent::setContentString(const QString &value)
 	return bReturn;
 }
 
-void ODScell::CellContent::parse()
+void ODScellData::parse()
 {
 	// read the type
 	if ( !parseType( ODS_ATTR_OFFICE_VAL_T ) )
@@ -433,7 +475,7 @@ void ODScell::CellContent::parse()
 	}
 }
 
-bool ODScell::CellContent::parseType(const QString& sAttribute)
+bool ODScellData::parseType(const QString& sAttribute)
 {
 	// if there is no such attribute, an empty string is returned
 	QString sType = m_oAssociated.attribute( sAttribute );
@@ -481,7 +523,7 @@ bool ODScell::CellContent::parseType(const QString& sAttribute)
 	return bReturn;
 }
 
-void ODScell::CellContent::refreshText()
+void ODScellData::refreshText()
 {
 	switch ( m_eType )
 	{
