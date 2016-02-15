@@ -104,10 +104,11 @@ void ODSprototypeContentRepeatable::doMagic(ODSprototypeXMLfamiliar *pNew)
 	ODSprototypeXMLfamiliar::doMagic(pNew);
 }
 
-ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfamiliar::TContainer::size_type pos)
+ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(st pos)
 {
 	// The content of this node is repeatable (i.e. this is a table or a row node).
-	// This means that in a fully constructed node of this type there is at least one child node (at position 0).
+	// This means that in a fully constructed node of this type there is at least one child node
+	// (at position 0).
 	Q_ASSERT( m_pPCRData->m_mPositions.size() );
 
 	if ( m_pPCRData->m_mPositions.count(pos) )
@@ -120,7 +121,7 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 		else
 		{
 			// should never happen except if there is a bug in the counting code...
-			qCritical() << "ERROR: something really went wrong in ODSprototypeContentRepeatable::item!";
+			qCritical() << "ERROR: something went wrong in ODSprototypeContentRepeatable::item!";
 			Q_ASSERT( false ); // this is nicer for debugging
 			throw(42);         // in case assertions disabled, cause crash :)
 			return NULL;
@@ -128,8 +129,8 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 	}
 	else
 	{
-		st key = (*m_pPCRData->m_mPositions.begin()).first;
-		st val = (*m_pPCRData->m_mPositions.begin()).second;
+		st key = (*(m_pPCRData->m_mPositions).begin()).first;
+		st val = (*(m_pPCRData->m_mPositions).begin()).second;
 
 		// First item is always (key:0;val:0)
 		Q_ASSERT( !key );
@@ -138,7 +139,8 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 		//TContainer::iterator containerIt = m_pPXFData->m_vContainer.begin();
 		st nPosFirstBiggerItem = 0;
 
-		for ( std::map<st,st>::const_iterator it = m_pPCRData->m_mPositions.begin(); it != m_pPCRData->m_mPositions.end(); ++it )
+		for ( std::map<st,st>::const_iterator it = m_pPCRData->m_mPositions.begin();
+		      it != m_pPCRData->m_mPositions.end(); ++it )
 		{
 			if ( (*it).first < pos )
 			{
@@ -157,7 +159,8 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 
 		// At this point we need to make (and verify) an assumption:
 		// There is no way the item with index 0 doesn't exist because of repetition.
-		// This means that nPosLastSmallerItem is never 0 (because m_pPCRData->m_mPositions is supposed to contain the node with index 0)
+		// This means that nPosLastSmallerItem is never 0 (because m_mPositions is supposed to
+		// contain the node with index 0)
 		Q_ASSERT( nPosFirstBiggerItem );
 
 		// Now we are at the child item whose repetition is what we are looking for.
@@ -169,11 +172,12 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 		// OK, we know now which element to split...
 		ODSprototypeXMLfamiliar* pRepeatedChild = m_pPXFData->m_vContainer[nPosFirstBiggerItem];
 
-		// ...and we also know that all children stored in ODSprototypeContentRepeatable's are ODSprototypeRepeatable...
+		// ...and we also know that all children stored in ODSprototypeContentRepeatable's are
+		// ODSprototypeRepeatable...
 		ODSprototypeRepeatable* pChild = dynamic_cast< ODSprototypeRepeatable* >( pRepeatedChild );
 
 
-		// TODO: fix
+		// TODO: Finish implementation
 		return NULL;
 	}
 }

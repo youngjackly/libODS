@@ -63,7 +63,7 @@ protected:
 	 */
 	void doMagic(ODSprototypeXMLfamiliar* pNew);
 
-	virtual ODSprototypeXMLfamiliar *item(ODSprototypeXMLfamiliar::TContainer::size_type pos);
+	virtual ODSprototypeXMLfamiliar *item(st pos);
 
 private:
 	QExplicitlySharedDataPointer<ODSprototypeContentRepeatableData> m_pPCRData;
