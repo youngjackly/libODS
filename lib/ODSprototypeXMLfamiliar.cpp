@@ -40,6 +40,8 @@ public:
 
 	ODSprototypeXMLfamiliarData(QString sFilter, QDomElement &element);
 	~ODSprototypeXMLfamiliarData();
+
+	void parse();
 };
 
 ODSprototypeXMLfamiliarData::ODSprototypeXMLfamiliarData(QString sFilter, QDomElement &element) :
@@ -55,12 +57,45 @@ ODSprototypeXMLfamiliarData::~ODSprototypeXMLfamiliarData()
 	qDeleteAll(m_vContainer);
 }
 
+void ODSprototypeXMLfamiliarData::parse()
+{
+	bool bValid = false;
+
+	QDomNodeList list = m_oAssociated.elementsByTagName( m_sChildElementName );
+	const int nSize = list.size();
+	m_vContainer.reserve(nSize);
+
+	for ( int i = 0; i < nSize; ++i )
+	{
+		QDomElement element = list.at(i).toElement();
+		if ( !element.isNull() )
+		{
+			ODSprototypeXMLfamiliar *pNew = ODSprototypeFactory::generate( element,
+			                                                               m_sChildElementName );
+			if ( pNew->valid() )
+			{
+				doMagic(pNew);
+				m_vContainer.push_back(pNew);
+				bValid = true;
+			}
+			else
+			{
+				delete pNew;
+			}
+		}
+	}
+
+	m_vContainer.shrink_to_fit();
+	m_bValid = bValid;
+}
+
 ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(QString sChildElementFilter, QDomElement element) :
 	m_pPXFData( new ODSprototypeXMLfamiliarData( sChildElementFilter, element ) )
 {
 }
 
-/*ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(const ODSprototypeXMLfamiliar &rhs) : pPXFData(rhs.pPXFData)
+/*ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(const ODSprototypeXMLfamiliar &rhs) :
+	pPXFData(rhs.pPXFData)
 {
 
 }
@@ -106,34 +141,7 @@ std::vector<ODStable*> ODSprototypeXMLfamiliar::tables()
 
 void ODSprototypeXMLfamiliar::parse()
 {
-	bool bValid = false;
-	std::vector<ODSprototypeXMLfamiliar*> &vContainer = m_pPXFData->m_vContainer;
-
-	QDomNodeList list = m_pPXFData->m_oAssociated.elementsByTagName( m_pPXFData->m_sChildElementName );
-	const int nSize = list.size();
-	vContainer.reserve(nSize);
-
-	for ( int i = 0; i < nSize; ++i )
-	{
-		QDomElement element = list.at(i).toElement();
-		if ( !element.isNull() )
-		{
-			ODSprototypeXMLfamiliar *pNew = ODSprototypeFactory::generate( element, m_pPXFData->m_sChildElementName );
-			if ( pNew->valid() )
-			{
-				doMagic(pNew);
-				vContainer.push_back(pNew);
-				bValid = true;
-			}
-			else
-			{
-				delete pNew;
-			}
-		}
-	}
-
-	vContainer.shrink_to_fit();
-	m_pPXFData->m_bValid = bValid;
+	m_pPXFData->parse();
 }
 
 void ODSprototypeXMLfamiliar::doMagic(ODSprototypeXMLfamiliar *pNew)
