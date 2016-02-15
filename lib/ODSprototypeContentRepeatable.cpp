@@ -23,6 +23,7 @@
 */
 
 #include "ODSprototypeContentRepeatable.h"
+#include "ODSprototypeRepeatable.h"
 
 using namespace ODSlib;
 
@@ -69,6 +70,10 @@ void ODSprototypeContentRepeatable::doMagic(ODSprototypeXMLfamiliar *pNew)
 
 ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfamiliar::TContainer::size_type pos)
 {
+	// The content of this node is repeatable (i.e. this is a table or a row node).
+	// This means that in a fully constructed node of this type there is at least one child node (at position 0).
+	Q_ASSERT( m_mPositions.size() );
+
 	if ( m_mPositions.count(pos) )
 	{
 		st nStoragePos = m_mPositions.at(pos);
@@ -79,7 +84,9 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 		else
 		{
 			// should never happen except if there is a bug in the counting code...
-			throw(42);
+			qCritical() << "ERROR: something really went wrong in ODSprototypeContentRepeatable::item!";
+			Q_ASSERT( false ); // this is nicer for debugging
+			throw(42);         // in case assertions disabled, cause crash :)
 			return NULL;
 		}
 	}
@@ -88,7 +95,12 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 		st key = (*m_mPositions.begin()).first;
 		st val = (*m_mPositions.begin()).second;
 
-		TContainer::iterator containerIt = m_vContainer.begin();
+		// First item is always (key:0;val:0)
+		Q_ASSERT( !key );
+		Q_ASSERT( !val );
+
+		//TContainer::iterator containerIt = m_vContainer.begin();
+		st nPosFirstBiggerItem = 0;
 
 		for ( std::map<st,st>::const_iterator it = m_mPositions.begin(); it != m_mPositions.end(); ++it )
 		{
@@ -98,7 +110,8 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 				val = (*it).second;
 
 				// always points to the position after the last item with a smaller position
-				++containerIt;
+				//++containerIt;
+				++nPosFirstBiggerItem;
 			}
 			else
 			{
@@ -106,7 +119,22 @@ ODSprototypeXMLfamiliar *ODSprototypeContentRepeatable::item(ODSprototypeXMLfami
 			}
 		}
 
-		// OK we know now which element to split
+		// At this point we need to make (and verify) an assumption:
+		// There is no way the item with index 0 doesn't exist because of repetition.
+		// This means that nPosLastSmallerItem is never 0 (because m_mPositions is supposed to contain the node with index 0)
+		Q_ASSERT( nPosFirstBiggerItem );
+
+		// Now we are at the child item whose repetition is what we are looking for.
+		--nPosFirstBiggerItem;
+
+		// This should be guaranteed anyway.
+		Q_ASSERT( nPosFirstBiggerItem < m_vContainer.size() );
+
+		// OK, we know now which element to split...
+		ODSprototypeXMLfamiliar* pRepeatedChild = m_vContainer[nPosFirstBiggerItem];
+
+		// ...and we also know that all children stored in ODSprototypeContentRepeatable's are ODSprototypeRepeatable...
+		ODSprototypeRepeatable* pChild = dynamic_cast< ODSprototypeRepeatable* >( pRepeatedChild );
 
 
 		// TODO: fix
