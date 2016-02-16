@@ -530,7 +530,7 @@ bool ODScell::setContentString(const QString &value)
 void ODScell::parse()
 {
 	m_pCellData->parse();
-	m_bValid = true;
+	m_pPXFData->m_bValid = true;
 }
 
 /*ODSprototypeRepeatable *ODScell::clone()
@@ -555,26 +555,27 @@ void ODScell::setAttribute(float nAttr, QString sTag)
 void ODScell::setAttribute(const QString &sAttr, QString sTag)
 {
 	// get the attribute node
-	QDomAttr attribute = m_oAssociated.attributeNode( sTag );
+	QDomAttr attribute = m_pPXFData->m_oAssociated.attributeNode( sTag );
 	attribute.setValue( sAttr );
 }
 
 void ODScell::refreshXMLText()
 {
 	// remove all XML text nodes (there should be only one)
-	QDomNodeList children = m_oAssociated.elementsByTagName( ODS_TAG_TEXT_P );
+	QDomNodeList children = m_pPXFData->m_oAssociated.elementsByTagName( ODS_TAG_TEXT_P );
 	for ( int i = 0; i < children.size(); ++i )
 	{
-		m_oAssociated.removeChild( children.at(i) );
+		m_pPXFData->m_oAssociated.removeChild( children.at(i) );
 	}
 
 	// refresh XML text node
 	if ( m_pCellData->m_pText )
 	{
-		QDomElement textNode = m_oAssociated.ownerDocument().createElement( ODS_TAG_TEXT_P );
-		QDomNode text = m_oAssociated.ownerDocument().createTextNode( *m_pCellData->m_pText );
+		QDomElement &associated = m_pPXFData->m_oAssociated;
+		QDomElement textNode = associated.ownerDocument().createElement( ODS_TAG_TEXT_P );
+		QDomNode text = associated.ownerDocument().createTextNode( *m_pCellData->m_pText );
 		textNode.appendChild( text );
-		m_oAssociated.appendChild( textNode );
+		associated.appendChild( textNode );
 	}
 }
 
