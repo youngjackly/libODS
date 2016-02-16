@@ -25,24 +25,32 @@
 #ifndef ODSSPREADSHEET_H
 #define ODSSPREADSHEET_H
 
+#include <QExplicitlySharedDataPointer>
+
 #include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
 class ODSelementFactory;
+class ODSspreadsheetData;
 
 class ODSspreadsheet : public ODSprototypeXMLfamiliar
 {
+	friend class ODSelementFactory;
+
 private:
 	ODSspreadsheet(QDomElement &element);
+	//ODSspreadsheet(const ODSspreadsheet &);
+	//ODSspreadsheet &operator=(const ODSspreadsheet &);
 public:
 	~ODSspreadsheet();
 
-private:
 	std::vector<ODStable*> tables();
 
-	friend class ODSelementFactory;
+protected:
+	QExplicitlySharedDataPointer<ODSspreadsheetData> m_pSpreadsheetData;
 };
-}
+
+} // namespace ODSlib
 
 #endif // ODSSPREADSHEET_H

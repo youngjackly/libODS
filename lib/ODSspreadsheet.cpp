@@ -25,12 +25,32 @@
 #include "ODStable.h"
 #include "ODSspreadsheet.h"
 
-using namespace ODSlib;
+namespace ODSlib
+{
+
+class ODSspreadsheetData : public QSharedData
+{
+public:
+};
 
 ODSspreadsheet::ODSspreadsheet(QDomElement &element) :
-	ODSprototypeXMLfamiliar( ODS_TAG_TABLE, element )
+    ODSprototypeXMLfamiliar( ODS_TAG_TABLE, element )
+    ,m_pSpreadsheetData(new ODSspreadsheetData)
+{
+
+}
+
+/*ODSspreadsheet::ODSspreadsheet(const ODSspreadsheet &rhs) :
+    pSData(rhs.pSSpreadsheetData)
 {
 }
+
+ODSspreadsheet &ODSspreadsheet::operator=(const ODSspreadsheet &rhs)
+{
+	if (this != &rhs)
+		pSData.operator=(rhs.pSSpreadsheetData);
+	return *this;
+}*/
 
 ODSspreadsheet::~ODSspreadsheet()
 {
@@ -52,3 +72,6 @@ std::vector<ODStable*> ODSspreadsheet::tables()
 
 	return vReturn;
 }
+
+} // namespace ODSlib
+
