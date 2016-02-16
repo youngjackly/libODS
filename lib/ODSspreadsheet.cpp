@@ -28,27 +28,27 @@
 namespace ODSlib
 {
 
-class ODSspreadsheetData : public QSharedData
+/*class ODSspreadsheetData : public QSharedData
 {
 public:
-};
+};*/
 
 ODSspreadsheet::ODSspreadsheet(QDomElement &element) :
     ODSprototypeXMLfamiliar( ODS_TAG_TABLE, element )
-    ,m_pSpreadsheetData(new ODSspreadsheetData)
+    //,m_pSpreadsheetData(new ODSspreadsheetData)
 {
 
 }
 
 /*ODSspreadsheet::ODSspreadsheet(const ODSspreadsheet &rhs) :
-    pSData(rhs.pSSpreadsheetData)
+    pSData(rhs.pSpreadsheetData)
 {
 }
 
 ODSspreadsheet &ODSspreadsheet::operator=(const ODSspreadsheet &rhs)
 {
 	if (this != &rhs)
-		pSData.operator=(rhs.pSSpreadsheetData);
+		pSData.operator=(rhs.pSpreadsheetData);
 	return *this;
 }*/
 
@@ -61,11 +61,11 @@ std::vector<ODStable*> ODSspreadsheet::tables()
 	// The container of this node contains a vector of tables.
 	std::vector<ODStable*> vReturn;
 
-	for ( st i = 0; i < m_vContainer.size(); ++i )
+	for ( st i = 0; i < m_pPXFData->m_vContainer.size(); ++i )
 	{
 		// Dynamic cast required because of virtual inheritance.
 		// Note: GCC doesn't warn about this.
-		ODSprototypeXMLfamiliar* pFamiliar = m_vContainer[i];
+		ODSprototypeXMLfamiliar* pFamiliar = m_pPXFData->m_vContainer[i];
 		ODStable* pTable = dynamic_cast< ODStable* >(pFamiliar);
 		vReturn.push_back( pTable );
 	}

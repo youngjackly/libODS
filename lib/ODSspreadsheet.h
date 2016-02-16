@@ -32,7 +32,7 @@
 namespace ODSlib
 {
 class ODSelementFactory;
-class ODSspreadsheetData;
+//class ODSspreadsheetData;
 
 class ODSspreadsheet : public ODSprototypeXMLfamiliar
 {
@@ -48,7 +48,7 @@ public:
 	std::vector<ODStable*> tables();
 
 protected:
-	QExplicitlySharedDataPointer<ODSspreadsheetData> m_pSpreadsheetData;
+	//QExplicitlySharedDataPointer<ODSspreadsheetData> m_pSpreadsheetData;
 };
 
 } // namespace ODSlib
