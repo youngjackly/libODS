@@ -25,13 +25,33 @@
 #include "ODScell.h"
 #include "ODStable.h"
 
-using namespace ODSlib;
+namespace ODSlib
+{
+
+class ODStableData : public QSharedData
+{
+public:
+	QString m_sName;
+};
 
 ODStable::ODStable(QDomElement &element) :
-	ODSprototypeXMLfamiliar( ODS_TAG_TABLE_ROW, element ), // req due to virtual inheritance
-	ODSprototypeContentRepeatable( ODS_TAG_TABLE_ROW, ODS_ATTR_TBL_ROW_REPEAT, element ) // child: row; child repetitions for: row
+    ODSprototypeXMLfamiliar( ODS_TAG_TABLE_ROW, element ), // req due to virtual inheritance
+    ODSprototypeContentRepeatable( ODS_TAG_TABLE_ROW, ODS_ATTR_TBL_ROW_REPEAT, element ), // child: row; child repetitions for: row
+    m_pTableData( new ODStableData )
 {
 }
+
+/*ODStable::ODStable(const ODStable &rhs) :
+    m_pTableData(rhs.pTableData)
+{
+}
+
+ODStable &ODStable::operator=(const ODStable &rhs)
+{
+	if (this != &rhs)
+		m_pTableData.operator=(rhs.m_pTableData);
+	return *this;
+}*/
 
 ODStable::~ODStable()
 {
@@ -39,19 +59,19 @@ ODStable::~ODStable()
 
 void ODStable::parse()
 {
-	m_sName = m_oAssociated.attribute( ODS_ATTR_TBL_NAME );
+	m_pTableData->m_sName = m_oAssociated.attribute( ODS_ATTR_TBL_NAME );
 	ODSprototypeXMLfamiliar::parse();
 }
 
-const QString &ODStable::name()
+const QString &ODStable::name() const
 {
-	return m_sName;
+	return m_pTableData->m_sName;
 }
 
 void ODStable::setName(const QString &name)
 {
-	m_oAssociated.setAttribute( ODS_ATTR_TBL_NAME, name );
-	m_sName = name;
+	m_pPXFData->m_oAssociated.setAttribute( ODS_ATTR_TBL_NAME, name );
+	m_pTableData->m_sName = name;
 }
 
 ODScell *ODStable::cell(st y, st x)
@@ -70,4 +90,6 @@ ODScell *ODStable::cell(st y, st x)
 
 	return NULL;
 }
+
+} // namespace ODSlib
 

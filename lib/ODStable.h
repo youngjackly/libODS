@@ -25,31 +25,37 @@
 #ifndef ODSTABLE_H
 #define ODSTABLE_H
 
+#include <QExplicitlySharedDataPointer>
+
 #include "ODSprototypeContentRepeatable.h"
 
 namespace ODSlib
 {
 class ODScell;
+class ODStableData;
 class ODSelementFactory;
 
 class ODStable : public ODSprototypeContentRepeatable
 {
 private:
 	ODStable(QDomElement &element);
+	//ODStable(const ODStable &);
+	//ODStable &operator=(const ODStable &);
+
 public:
 	virtual ~ODStable();
 
 	virtual void parse();
 
-	const QString& name();
+	const QString& name() const;
 	void setName(const QString &name);
 
 	ODScell *cell(st y, st x);
 
-private:
-	QString m_sName;
-	friend class ODSelementFactory;
+protected:
+	QExplicitlySharedDataPointer<ODStableData> m_pTableData;
 };
-}
+
+} // namespace ODSlib
 
 #endif // ODSTABLE_H
