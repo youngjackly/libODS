@@ -1,7 +1,7 @@
 /*
 ** ReadData.h
 **
-** Copyright © libODS Development Team, 2015.
+** Copyright © libODS Development Team, 2016.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
 **
 ** libODS is free software; this file may be used under the terms of the GNU
