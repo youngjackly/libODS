@@ -82,7 +82,7 @@ protected:
 	 * @param pos
 	 * @return
 	 */
-	ODSprototypeXMLfamiliar *child(st pos);
+	ODSprototypeXMLfamiliar *child(ODSprototypeXMLfamiliar::TContainer::size_type pos);
 
 	/**
 	 * @brief item allows to access a child of this node by its logical index.
@@ -90,7 +90,7 @@ protected:
 	 * @param pos
 	 * @return
 	 */
-	virtual ODSprototypeXMLfamiliar *item(st pos);
+	virtual ODSprototypeXMLfamiliar *item(ODSprototypeXMLfamiliar::TContainer::size_type pos);
 
 protected:
 	QExplicitlySharedDataPointer<ODSprototypeXMLfamiliarData> m_pPXFData;
