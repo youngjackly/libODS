@@ -1,5 +1,5 @@
 /*
-** ODScontent.cpp
+** ODSprototypeXMLfamiliarData.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,51 +22,30 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ODScontent.h"
+#ifndef ODSPROTOTYPEXMLFAMILIARDATA_H
+#define ODSPROTOTYPEXMLFAMILIARDATA_H
 
-#include "ODSprototypeXMLfamiliarData.h"
-#include "ODScontentData.h"
+#include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
 
-ODScontent::ODScontent(QDomDocument &doc) :
-	ODSprototypeXMLfamiliar( ODS_TAG_OFFICE_SPREADSHEET, doc.documentElement() ),
-	m_pContentData( new ODScontentData( doc ) )
+class ODSprototypeXMLfamiliarData : public QSharedData
 {
-}
+public:
+	bool m_bValid;
+	//const bool m_bNull;
+	QDomElement m_oAssociated;
+	ODSprototypeXMLfamiliar::TContainer m_vContainer;
 
-/*ODScontent::ODScontent(const ODScontent &rhs) : pContentData(rhs.pContentData)
-{
-}
+	const QString m_sChildElementName;
 
-ODScontent &ODScontent::operator=(const ODScontent &rhs)
-{
-	if (this != &rhs)
-		pContentData.operator=(rhs.pContentData);
-	return *this;
-}*/
+	ODSprototypeXMLfamiliarData(QString sFilter, QDomElement &element);
+	~ODSprototypeXMLfamiliarData();
 
-ODScontent::~ODScontent()
-{
-}
-
-QString ODScontent::toString()
-{
-	return m_pContentData->m_oContentDocument.toString(-1);
-}
-
-/*ODSspreadsheet *ODScontent::sheet(const QString &sName)
-{
-	for ( ST i = 0; i < m_vContainer.size(); ++i )
-	{
-		ODSspreadsheet *pSheet = dynamic_cast< ODSspreadsheet* >(m_vContainer[i]);
-	}
-}
-
-ODSprototypeXMLfamiliar::TContainer ODScontent::sheets()
-{
-	return m_vContainer;
-}*/
+	void parse(ODSprototypeXMLfamiliar* pParent);
+};
 
 } // namespace ODSlib
+
+#endif // ODSPROTOTYPEXMLFAMILIARDATA_H

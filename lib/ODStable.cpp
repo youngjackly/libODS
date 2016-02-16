@@ -25,14 +25,12 @@
 #include "ODScell.h"
 #include "ODStable.h"
 
+#include "ODSprototypeXMLfamiliarData.h"
+#include "ODSprototypeContentRepeatableData.h"
+#include "ODStableData.h"
+
 namespace ODSlib
 {
-
-class ODStableData : public QSharedData
-{
-public:
-	QString m_sName;
-};
 
 ODStable::ODStable(QDomElement &element) :
     ODSprototypeXMLfamiliar( ODS_TAG_TABLE_ROW, element ), // req due to virtual inheritance
@@ -59,7 +57,7 @@ ODStable::~ODStable()
 
 void ODStable::parse()
 {
-	m_pTableData->m_sName = m_oAssociated.attribute( ODS_ATTR_TBL_NAME );
+	m_pTableData->m_sName = m_pPXFData->m_oAssociated.attribute( ODS_ATTR_TBL_NAME );
 	ODSprototypeXMLfamiliar::parse();
 }
 

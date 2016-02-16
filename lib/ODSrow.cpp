@@ -24,6 +24,10 @@
 
 #include "ODSrow.h"
 
+#include "ODSprototypeXMLfamiliarData.h"
+#include "ODSprototypeContentRepeatableData.h"
+#include "ODSprototypeRepeatableData.h"
+
 namespace ODSlib
 {
 /*class ODSrowData : public QSharedData

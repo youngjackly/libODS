@@ -44,34 +44,46 @@ include($$PWD/3rdparty/QuaZIP/quazip/quazip.pri)
 
 # Headers
 HEADERS += \
-	$$PWD/ODSlib.h \                        # this is a convenience header not used internally
-	$$[QT_INSTALL_HEADERS]/QtZlib/zlib.h \  # required for QuaZip compilation
-	$$PWD/ODScell.h \
-	$$PWD/ODSconstants.h \
-	$$PWD/ODScontent.h \
-	$$PWD/ODSdocument.h \
-	$$PWD/ODSelementFactory.h \
-	$$PWD/ODSfile.h \
-	$$PWD/ODSglobal.h \
-	$$PWD/ODSprototypeContentRepeatable.h \
-	$$PWD/ODSprototypeFactory.h \
-	$$PWD/ODSprototypeRepeatable.h \
-	$$PWD/ODSprototypeXMLfamiliar.h \
-	$$PWD/ODSrow.h \
-	$$PWD/ODSspreadsheet.h \
-	$$PWD/ODStable.h
+    $$PWD/ODSlib.h \                        # this is a convenience header not used internally
+    $$[QT_INSTALL_HEADERS]/QtZlib/zlib.h \  # required for QuaZip compilation
+    $$PWD/ODScell.h \
+    $$PWD/ODScellData.h \
+    $$PWD/ODSconstants.h \
+    $$PWD/ODScontent.h \
+    $$PWD/ODScontentData.h \
+    $$PWD/ODSdocument.h \
+    $$PWD/ODSelementFactory.h \
+    $$PWD/ODSfile.h \
+    $$PWD/ODSglobal.h \
+    $$PWD/ODSprototypeContentRepeatable.h \
+    $$PWD/ODSprototypeContentRepeatableData.h \
+    $$PWD/ODSprototypeFactory.h \
+    $$PWD/ODSprototypeRepeatable.h \
+    $$PWD/ODSprototypeRepeatableData.h \
+    $$PWD/ODSprototypeXMLfamiliar.h \
+    $$PWD/ODSprototypeXMLfamiliarData.h \
+    $$PWD/ODSrow.h \
+    $$PWD/ODSspreadsheet.h \
+    $$PWD/ODStable.h \
+    $$PWD/ODStableData.h
 
 # Sources
 SOURCES += \
-	$$PWD/ODScell.cpp \
-	$$PWD/ODScontent.cpp \
-	$$PWD/ODSdocument.cpp \
-	$$PWD/ODSelementFactory.cpp \
-	$$PWD/ODSfile.cpp \
-	$$PWD/ODSprototypeContentRepeatable.cpp \
-	$$PWD/ODSprototypeFactory.cpp \
-	$$PWD/ODSprototypeRepeatable.cpp \
-	$$PWD/ODSprototypeXMLfamiliar.cpp \
-	$$PWD/ODSrow.cpp \
-	$$PWD/ODSspreadsheet.cpp \
-	$$PWD/ODStable.cpp
+    $$PWD/ODScell.cpp \
+    $$PWD/ODScellData.cpp \
+    $$PWD/ODScontent.cpp \
+    $$PWD/ODScontentData.cpp \
+    $$PWD/ODSdocument.cpp \
+    $$PWD/ODSelementFactory.cpp \
+    $$PWD/ODSfile.cpp \
+    $$PWD/ODSprototypeContentRepeatable.cpp \
+    $$PWD/ODSprototypeContentRepeatableData.cpp \
+    $$PWD/ODSprototypeFactory.cpp \
+    $$PWD/ODSprototypeRepeatable.cpp \
+    $$PWD/ODSprototypeRepeatableData.cpp \
+    $$PWD/ODSprototypeXMLfamiliar.cpp \
+    $$PWD/ODSprototypeXMLfamiliarData.cpp \
+    $$PWD/ODSrow.cpp \
+    $$PWD/ODSspreadsheet.cpp \
+    $$PWD/ODStable.cpp \
+    $$PWD/ODStableData.cpp

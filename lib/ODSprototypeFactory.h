@@ -37,14 +37,13 @@ class ODSprototypeXMLfamiliar;
  */
 class ODSprototypeFactory
 {
+	friend class ODSprototypeXMLfamiliarData;
 private:
 	ODSprototypeFactory();
 	virtual ~ODSprototypeFactory();
 
 private:
 	static ODSprototypeXMLfamiliar *generate(QDomElement &element, const QString& sSelect);
-
-	friend class ODSprototypeXMLfamiliar;
 };
 }
 

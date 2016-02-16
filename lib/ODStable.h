@@ -37,6 +37,8 @@ class ODSelementFactory;
 
 class ODStable : public ODSprototypeContentRepeatable
 {
+	friend class ODSelementFactory;
+
 private:
 	ODStable(QDomElement &element);
 	//ODStable(const ODStable &);

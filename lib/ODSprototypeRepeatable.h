@@ -54,7 +54,7 @@ public:
 
 	size_t multiplicity() const;
 
-	ODSprototypeRepeatable *split(size_t afterN);
+	//ODSprototypeRepeatable *split(size_t afterN);
 
 protected:
 	//virtual ODSprototypeRepeatable *clone() = 0;

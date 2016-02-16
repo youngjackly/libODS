@@ -1,5 +1,5 @@
 /*
-** ODScontent.cpp
+** ODSprototypeContentRepeatableData.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,51 +22,24 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ODScontent.h"
+#ifndef ODSPROTOTYPECONTENTREPEATABLEDATA_H
+#define ODSPROTOTYPECONTENTREPEATABLEDATA_H
 
-#include "ODSprototypeXMLfamiliarData.h"
-#include "ODScontentData.h"
+#include "ODSprototypeXMLfamiliar.h"
 
 namespace ODSlib
 {
 
-ODScontent::ODScontent(QDomDocument &doc) :
-	ODSprototypeXMLfamiliar( ODS_TAG_OFFICE_SPREADSHEET, doc.documentElement() ),
-	m_pContentData( new ODScontentData( doc ) )
+class ODSprototypeContentRepeatableData : public QSharedData
 {
-}
+public:
+	const QString m_sRepeatFilter;
+	unsigned int m_nParseCounter;
+	std::map<st,st> m_mPositions;
 
-/*ODScontent::ODScontent(const ODScontent &rhs) : pContentData(rhs.pContentData)
-{
-}
-
-ODScontent &ODScontent::operator=(const ODScontent &rhs)
-{
-	if (this != &rhs)
-		pContentData.operator=(rhs.pContentData);
-	return *this;
-}*/
-
-ODScontent::~ODScontent()
-{
-}
-
-QString ODScontent::toString()
-{
-	return m_pContentData->m_oContentDocument.toString(-1);
-}
-
-/*ODSspreadsheet *ODScontent::sheet(const QString &sName)
-{
-	for ( ST i = 0; i < m_vContainer.size(); ++i )
-	{
-		ODSspreadsheet *pSheet = dynamic_cast< ODSspreadsheet* >(m_vContainer[i]);
-	}
-}
-
-ODSprototypeXMLfamiliar::TContainer ODScontent::sheets()
-{
-	return m_vContainer;
-}*/
+	ODSprototypeContentRepeatableData( const QString &sRepeat );
+};
 
 } // namespace ODSlib
+
+#endif // ODSPROTOTYPECONTENTREPEATABLEDATA_H

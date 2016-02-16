@@ -42,9 +42,10 @@ class ODSprototypeXMLfamiliarData;
  */
 class ODSprototypeXMLfamiliar
 {
-	//friend class ODStable;
-	//friend class ODSprototypeContentRepeatable;
+	friend class ODStable;
+	friend class ODSprototypeContentRepeatable;
 	friend class ODSelementFactory;
+	friend class ODSprototypeXMLfamiliarData;
 
 public:
 	typedef std::vector<ODSprototypeXMLfamiliar*> TContainer;

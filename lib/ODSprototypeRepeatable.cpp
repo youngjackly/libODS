@@ -24,28 +24,15 @@
 
 #include "ODSprototypeRepeatable.h"
 
+#include "ODSprototypeXMLfamiliarData.h"
+#include "ODSprototypeRepeatableData.h"
+
 namespace ODSlib
 {
 
-class ODSprototypeRepeatableData : public QSharedData
-{
-public:
-	size_t m_nMultiplicity;
-	const QString m_sRepeatAttribute;
-
-	ODSprototypeRepeatableData( const QString &sRepeatFilter, QDomElement &associatedElement );
-};
-
-ODSprototypeRepeatableData::
-ODSprototypeRepeatableData( const QString &sRepeatFilter, QDomElement &associatedElement ) :
-	m_nMultiplicity( associatedElement.attribute( sRepeatFilter, QString( "0" ) ).toUInt() ),
-	m_sRepeatAttribute( sRepeatFilter )
-{
-}
-
 ODSprototypeRepeatable::
 ODSprototypeRepeatable( const QString &sChildElementFilter, const QString &sRepeatFilter,
-                        QDomElement &associatedElement) :
+                        QDomElement &associatedElement ) :
 	ODSprototypeXMLfamiliar( sChildElementFilter, associatedElement ),
 	m_pPRData( new ODSprototypeRepeatableData( sRepeatFilter, associatedElement ) )
 {
@@ -72,7 +59,7 @@ size_t ODSprototypeRepeatable::multiplicity() const
 	return m_pPRData->m_nMultiplicity;
 }
 
-ODSprototypeRepeatable *ODSprototypeRepeatable::split(size_t afterN)
+/*ODSprototypeRepeatable *ODSprototypeRepeatable::split(size_t afterN)
 {
 	ODSprototypeRepeatable *pSplit = NULL;
 
@@ -85,7 +72,7 @@ ODSprototypeRepeatable *ODSprototypeRepeatable::split(size_t afterN)
 	}
 
 	return pSplit;
-}
+}*/
 
 void ODSprototypeRepeatable::setMultiplicity(const size_t &multiplicity)
 {

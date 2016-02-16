@@ -1,5 +1,5 @@
 /*
-** ODScontent.cpp
+** ODScellData.h
 **
 ** Copyright © libODS Development Team, 2015.
 ** This file is part of libODS (https://github.com/nweyand/libODS/)
@@ -22,51 +22,46 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "ODScontent.h"
+#ifndef ODSCELLDATA_H
+#define ODSCELLDATA_H
 
-#include "ODSprototypeXMLfamiliarData.h"
-#include "ODScontentData.h"
+#include <QSharedData>
+
+#include "ODScell.h"
 
 namespace ODSlib
 {
 
-ODScontent::ODScontent(QDomDocument &doc) :
-	ODSprototypeXMLfamiliar( ODS_TAG_OFFICE_SPREADSHEET, doc.documentElement() ),
-	m_pContentData( new ODScontentData( doc ) )
+class ODScellData : public QSharedData
 {
-}
+public:
+	ODScellData(QDomElement &element);
+	virtual ~ODScellData();
 
-/*ODScontent::ODScontent(const ODScontent &rhs) : pContentData(rhs.pContentData)
-{
-}
+	void            clear();
+	CellType::Type  type() const;
 
-ODScontent &ODScontent::operator=(const ODScontent &rhs)
-{
-	if (this != &rhs)
-		pContentData.operator=(rhs.pContentData);
-	return *this;
-}*/
+	float       value() const;
+	bool        setValue(float value);
 
-ODScontent::~ODScontent()
-{
-}
+	QString     contentString() const;
+	bool        setContentString(const QString &value);
 
-QString ODScontent::toString()
-{
-	return m_pContentData->m_oContentDocument.toString(-1);
-}
+	QString*    m_pFormula;
+	QString*    m_pText;
+	bool        m_bHasCalcExtValueType;
 
-/*ODSspreadsheet *ODScontent::sheet(const QString &sName)
-{
-	for ( ST i = 0; i < m_vContainer.size(); ++i )
-	{
-		ODSspreadsheet *pSheet = dynamic_cast< ODSspreadsheet* >(m_vContainer[i]);
-	}
-}
+	void        parse();
 
-ODSprototypeXMLfamiliar::TContainer ODScontent::sheets()
-{
-	return m_vContainer;
-}*/
+	bool        parseType(const QString &sAttribute);
+	void        refreshText();
+
+	QDomElement     m_oAssociated;
+	CellType::Type  m_eType;
+	float           m_nValue;
+	QString         m_sData;
+};
 
 } // namespace ODSlib
+
+#endif // ODSCELLDATA_H

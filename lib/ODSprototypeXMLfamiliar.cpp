@@ -25,72 +25,13 @@
 #include "ODSprototypeXMLfamiliar.h"
 #include "ODSprototypeFactory.h"
 
+#include "ODSprototypeXMLfamiliarData.h"
+
 namespace ODSlib
 {
 
-class ODSprototypeXMLfamiliarData : public QSharedData
-{
-public:
-	bool m_bValid;
-	//const bool m_bNull;
-	QDomElement m_oAssociated;
-	ODSprototypeXMLfamiliar::TContainer m_vContainer;
-
-	const QString m_sChildElementName;
-
-	ODSprototypeXMLfamiliarData(QString sFilter, QDomElement &element);
-	~ODSprototypeXMLfamiliarData();
-
-	void parse();
-};
-
-ODSprototypeXMLfamiliarData::ODSprototypeXMLfamiliarData(QString sFilter, QDomElement &element) :
-	m_bValid( false ),
-	//m_bNull( false ),
-	m_oAssociated( element ),
-	m_sChildElementName( sFilter )
-{
-}
-
-ODSprototypeXMLfamiliarData::~ODSprototypeXMLfamiliarData()
-{
-	qDeleteAll(m_vContainer);
-}
-
-void ODSprototypeXMLfamiliarData::parse()
-{
-	bool bValid = false;
-
-	QDomNodeList list = m_oAssociated.elementsByTagName( m_sChildElementName );
-	const int nSize = list.size();
-	m_vContainer.reserve(nSize);
-
-	for ( int i = 0; i < nSize; ++i )
-	{
-		QDomElement element = list.at(i).toElement();
-		if ( !element.isNull() )
-		{
-			ODSprototypeXMLfamiliar *pNew = ODSprototypeFactory::generate( element,
-			                                                               m_sChildElementName );
-			if ( pNew->valid() )
-			{
-				doMagic(pNew);
-				m_vContainer.push_back(pNew);
-				bValid = true;
-			}
-			else
-			{
-				delete pNew;
-			}
-		}
-	}
-
-	m_vContainer.shrink_to_fit();
-	m_bValid = bValid;
-}
-
 ODSprototypeXMLfamiliar::ODSprototypeXMLfamiliar(QString sChildElementFilter, QDomElement element) :
-	m_pPXFData( new ODSprototypeXMLfamiliarData( sChildElementFilter, element ) )
+    m_pPXFData( new ODSprototypeXMLfamiliarData( sChildElementFilter, element ) )
 {
 }
 
@@ -113,7 +54,7 @@ ODSprototypeXMLfamiliar::~ODSprototypeXMLfamiliar()
 
 bool ODSprototypeXMLfamiliar::valid()
 {
-	return m_bValid;
+	return m_pPXFData->m_bValid;
 }
 
 /*bool ODSprototypeXMLfamiliar::isNull()
@@ -141,7 +82,7 @@ std::vector<ODStable*> ODSprototypeXMLfamiliar::tables()
 
 void ODSprototypeXMLfamiliar::parse()
 {
-	m_pPXFData->parse();
+	m_pPXFData->parse(this);
 }
 
 void ODSprototypeXMLfamiliar::doMagic(ODSprototypeXMLfamiliar *pNew)
@@ -151,7 +92,7 @@ void ODSprototypeXMLfamiliar::doMagic(ODSprototypeXMLfamiliar *pNew)
 
 ODSprototypeXMLfamiliar *ODSprototypeXMLfamiliar::child(st pos)
 {
-	return m_pPXFData->vContainer.at(pos);
+	return m_pPXFData->m_vContainer.at(pos);
 }
 
 ODSprototypeXMLfamiliar *ODSprototypeXMLfamiliar::item(st pos)

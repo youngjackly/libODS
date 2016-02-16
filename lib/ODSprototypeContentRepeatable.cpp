@@ -25,35 +25,17 @@
 #include "ODSprototypeContentRepeatable.h"
 #include "ODSprototypeRepeatable.h"
 
+#include "ODSprototypeXMLfamiliarData.h"
+#include "ODSprototypeContentRepeatableData.h"
+
 namespace ODSlib
 {
-
-class ODSprototypeContentRepeatableData : public QSharedData
-{
-public:
-	const QString m_sRepeatFilter;
-	unsigned int m_nParseCounter;
-	std::map<st,st> m_mPositions;
-
-	ODSprototypeContentRepeatableData(const QString &sChild, const QString &sRepeat,
-	                                  QDomElement &element);
-};
-
-ODSprototypeContentRepeatableData::
-ODSprototypeContentRepeatableData(const QString &sChild, const QString &sRepeat,
-                                  QDomElement &element) :
-	m_sRepeatFilter( sRepeat ),
-	m_nParseCounter( 0 )
-{
-
-}
 
 ODSprototypeContentRepeatable::
 ODSprototypeContentRepeatable(const QString &sChild, const QString &sRepeat, QDomElement &element) :
 	ODSprototypeXMLfamiliar( sChild, element ),
-	m_pPCRData(new ODSprototypeContentRepeatableData)
+	m_pPCRData( new ODSprototypeContentRepeatableData( sRepeat ) )
 {
-
 }
 
 /*ODSprototypeContentRepeatable::

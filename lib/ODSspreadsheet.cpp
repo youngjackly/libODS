@@ -25,6 +25,8 @@
 #include "ODStable.h"
 #include "ODSspreadsheet.h"
 
+#include "ODSprototypeXMLfamiliarData.h"
+
 namespace ODSlib
 {
 
