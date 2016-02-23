@@ -64,10 +64,20 @@ void ModifySave::readOverwriteCelly0x0()
 
 void ModifySave::saveDocument()
 {
-
+	QVERIFY2( m_pDoc->save(), "Document counld not be saved!" );
 }
 
 void ModifySave::openVerifyDocument()
 {
+	ODSlib::ODSdocument* pTestDoc = new ODSlib::ODSdocument( m_sPath );
+	QVERIFY2( pTestDoc->valid(), "The saved document is not valid anymore afterwards." );
 
+	ODSlib::ODStable* pTable = pTestDoc->getFirstTable();
+	QVERIFY2( pTable, "No table could be obtained from the saved ODS document." );
+	QVERIFY2( pTable->valid(), "Got an invalid table from within the saved ODS document." );
+
+	ODSlib::ODScell* pCell = pTable->cell(0,0);
+	QVERIFY2( pCell, "Expected a cell from saved doc, got NULL." );
+	QVERIFY2( pCell->valid(), "Saved cell invalid." );
+	QVERIFY2( pCell->value() == 42.0f, "Could not verify the content of the saved cell." );
 }

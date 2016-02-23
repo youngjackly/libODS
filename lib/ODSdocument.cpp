@@ -91,3 +91,8 @@ QString ODSdocument::fileName() const
 	return m_ioFile.fileName();
 }
 
+bool ODSdocument::save()
+{
+	return true;
+}
+

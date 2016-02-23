@@ -44,6 +44,7 @@ public:
 	bool valid() const;
 	QString path() const;
 	QString fileName() const;
+	bool save();
 
 private:
 	ODSfile     m_ioFile;
