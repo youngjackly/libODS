@@ -36,11 +36,19 @@ class ReadData : public SingleDocumentTestCase
 public:
 	ReadData();
 
+private:
+	ODSlib::ODStable* m_pTable;
+
+	void checkCellNameConversion(ODSlib::st y, ODSlib::st x, QString s);
+	void checkCellNameConversionToString(ODSlib::st y, ODSlib::st x, QString s);
+	void checkCellNameConversionToCoordinates(ODSlib::st y, ODSlib::st x, QString s);
+
 private Q_SLOTS:
-	void checkDocumentValid();
+	void checkCellNameConversions();
+	void checkDocument();
 	void readLine0();       // numbers
 	void readLine8();       // letters
-	void readLine30();      // percentages
+	void readLine29();      // percentages
 	void readCelly18x14();  // radom pos read / string
 	void readCelly0x100();  // read repeated cell (normal row)
 	void readCelly100x20(); // read repeated cell (repeated row)

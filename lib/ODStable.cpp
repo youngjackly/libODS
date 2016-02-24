@@ -72,6 +72,49 @@ void ODStable::setName(const QString &name)
 	m_pTableData->m_sName = name;
 }
 
+QString ODStable::coordinatesToString(st y, st x)
+{
+	return coordinatesToString(x + 1).append( QString::number( y + 1 ) );
+}
+
+void ODStable::stringToCoordinates(QString s, st &y, st &x)
+{
+	x = 0;
+	y = 0;
+
+	QRegularExpression validator( "^([A-Z]+)(\\d+)$" );
+	QRegularExpressionMatch match = validator.match( s );
+
+	if ( match.hasMatch() )
+	{
+		// note: capturing group 0 matches the entire pattern
+		QString sx = match.captured( 1 );
+		QString sy = match.captured( 2 );
+
+		st multiplicator = 1;
+		for ( int i = 1; i <= sx.length(); ++i )
+		{
+			QChar c = sx.at( sx.length() - i );
+
+			ushort nc = c.unicode() - QChar( 'A' ).unicode();
+			++nc; // Correct value so that A causes multiplication by 1 and not 0.
+			nc *= multiplicator;
+
+			x += nc;
+
+			multiplicator *= 26;
+		}
+
+		y = sy.toULong() - 1;
+	}
+	else
+	{
+		--y;
+	}
+
+	--x; // make sure to transpose 1 based counting back to 0 based counting
+}
+
 ODScell *ODStable::cell(st y, st x)
 {
 	ODSprototypeXMLfamiliar* pRow = item(y);
@@ -89,5 +132,22 @@ ODScell *ODStable::cell(st y, st x)
 	return NULL;
 }
 
-} // namespace ODSlib
+QString ODStable::coordinatesToString(st x, QString s)
+{
+	--x; // for the caller, x = 1 corresponds to A, but it's more easy to work with x = 0 => A
+	QChar cNew = QChar( QChar( 'A' ).unicode() + ( x % 26 ) );
+	QString sNew = QString( cNew ).append( s );
 
+	x /= 26; // here we get a representation where x = 1 => A in the next step
+
+	if ( x )
+	{
+		return coordinatesToString( x, sNew );
+	}
+	else
+	{
+		return sNew;
+	}
+}
+
+} // namespace ODSlib

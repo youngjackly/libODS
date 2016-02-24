@@ -52,10 +52,16 @@ public:
 	const QString& name() const;
 	void setName(const QString &name);
 
+	static QString coordinatesToString(st y, st x);
+	static void stringToCoordinates(QString s, st &y, st &x);
+
 	ODScell *cell(st y, st x);
 
 protected:
 	QExplicitlySharedDataPointer<ODStableData> m_pTableData;
+
+private:
+	static QString coordinatesToString(st x, QString s = QString());
 };
 
 } // namespace ODSlib
