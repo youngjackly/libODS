@@ -159,8 +159,16 @@ void ReadData::readCellO19() // random position read (string)
 
 void ReadData::readCelly0x100() // read of repeated cell in standard row
 {
+	ODSlib::ODScell* pCell = m_pTable->cell( 0, 100 );
+	QVERIFY2( pCell, "Got NULL when querying cell at (y:0;x:100)." );
+
+	QVERIFY2( pCell->valid(), "Cell invalid!" );
 }
 
 void ReadData::readCelly100x20() // read of repeated cell in repeated row
 {
+	ODSlib::ODScell* pCell = m_pTable->cell( 100, 20 );
+	QVERIFY2( pCell, "Got NULL when querying cell at (y:100;x:20)." );
+
+	QVERIFY2( pCell->valid(), "Cell invalid!" );
 }
