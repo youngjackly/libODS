@@ -115,6 +115,22 @@ void ODStable::stringToCoordinates(QString s, st &y, st &x)
 	--x; // make sure to transpose 1 based counting back to 0 based counting
 }
 
+ODScell *ODStable::cell(QString pos)
+{
+	st y, x;
+	stringToCoordinates(pos, y, x);
+
+	st invalid = 0;
+	--invalid; // this definition works no matter the type of st (signed/unsigned)
+
+	if ( x != invalid && y != invalid )
+	{
+		return cell( y, x );
+	}
+
+	return NULL;
+}
+
 ODScell *ODStable::cell(st y, st x)
 {
 	ODSprototypeXMLfamiliar* pRow = item(y);

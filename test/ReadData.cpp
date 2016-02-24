@@ -146,8 +146,15 @@ void ReadData::readLine29() // percentages
 	}
 }
 
-void ReadData::readCelly18x14() // random position read (string)
+void ReadData::readCellO19() // random position read (string)
 {
+	ODSlib::ODScell* pCell = m_pTable->cell( "O19" );
+	QVERIFY2( pCell, "Got NULL when querying cell O19." );
+
+	QVERIFY2( pCell->valid(), "Cell O19 invalid." );
+	QVERIFY2( pCell->type() == ODSlib::CellType::stringContent, "Caught cell with unexpected type." );
+
+	QVERIFY2( pCell->contentString() == QString( "test" ), "Expected different value!" );
 }
 
 void ReadData::readCelly0x100() // read of repeated cell in standard row
