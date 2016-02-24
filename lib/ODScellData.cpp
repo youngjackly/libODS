@@ -28,11 +28,11 @@ namespace ODSlib
 {
 
 ODScellData::ODScellData(QDomElement &element) :
-	m_pFormula( NULL ),
-	m_pText( NULL ),
-	m_bHasCalcExtValueType( false ),
-	m_oAssociated( element ),
-	m_eType( CellType::unknown )
+    m_oAssociated( element ),
+    m_pFormula( NULL ),
+    m_pText( NULL ),
+    m_eType( CellType::unknown ),
+    m_bHasCalcExtValueType( false )
 {
 }
 

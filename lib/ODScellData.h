@@ -41,25 +41,26 @@ public:
 	void            clear();
 	CellType::Type  type() const;
 
-	float       value() const;
-	bool        setValue(float value);
+	float           value() const;
+	bool            setValue(float value);
 
-	QString     contentString() const;
-	bool        setContentString(const QString &value);
+	QString         contentString() const;
+	bool            setContentString(const QString &value);
 
-	QString*    m_pFormula;
-	QString*    m_pText;
-	bool        m_bHasCalcExtValueType;
-
-	void        parse();
-
-	bool        parseType(const QString &sAttribute);
-	void        refreshText();
+	void            parse();
 
 	QDomElement     m_oAssociated;
+	QString*        m_pFormula;
+	QString*        m_pText;
+
+private:
 	CellType::Type  m_eType;
 	float           m_nValue;
 	QString         m_sData;
+	bool            m_bHasCalcExtValueType;
+
+	bool            parseType(const QString &sAttribute);
+	void            refreshText();
 };
 
 } // namespace ODSlib
