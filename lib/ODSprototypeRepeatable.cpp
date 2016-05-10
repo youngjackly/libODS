@@ -76,7 +76,7 @@ size_t ODSprototypeRepeatable::multiplicity() const
 
 void ODSprototypeRepeatable::setMultiplicity(const size_t &multiplicity)
 {
-	m_pPXFData->m_oAssociated.setAttribute( m_pPRData->m_sRepeatAttribute, multiplicity );
+	m_pPXFData->m_oAssociated.setAttribute( m_pPRData->m_sRepeatAttribute, (unsigned int)multiplicity );
 	m_pPRData->m_nMultiplicity = multiplicity;
 }
 

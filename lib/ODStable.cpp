@@ -151,7 +151,7 @@ ODScell *ODStable::cell(st y, st x)
 QString ODStable::coordinatesToString(st x, QString s)
 {
 	--x; // for the caller, x = 1 corresponds to A, but it's more easy to work with x = 0 => A
-	QChar cNew = QChar( QChar( 'A' ).unicode() + ( x % 26 ) );
+	QChar cNew = QChar( (unsigned short)(QChar( 'A' ).unicode() + ( x % 26 )) );
 	QString sNew = QString( cNew ).append( s );
 
 	x /= 26; // here we get a representation where x = 1 => A in the next step

@@ -22,14 +22,16 @@
 ** Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "AllUnits.h"
+//#include "AllUnits.h"
 #include "ReadData.h"
 #include "ModifySave.h"
 
 int main( int argc, char *argv[] )
 {
-	AllUnits::addTest( new ReadData() );
-	AllUnits::addTest( new ModifySave() );
+    new ReadData();
+    new ModifySave();
+//	AllUnits::addTest( );
+//	AllUnits::addTest( );
 
-	return AllUnits::run( argc, argv );
+	return 0;
 }

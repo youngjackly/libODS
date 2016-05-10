@@ -47,7 +47,8 @@ TEMPLATE = app
 }
 
 include($$PWD/../lib/libods.pri)
-include($$PWD/allUnits/allunits.pri)
+
+LIBS += -lz
 
 SOURCES += main.cpp \
 	ModifySave.cpp \
